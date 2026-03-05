@@ -1,0 +1,106 @@
+@model IEnumerable<CafeWebsite.Models.MenuItem>
+
+@{
+    ViewData["Title"] = "Menu";
+}
+
+<div class="menu-header">
+    <h1>Our Menu</h1>
+    <div class="divider"></div>
+    <p>Crafted beverages and artisanal treats, made with care</p>
+</div>
+
+<div class="container">
+    <div class="category-filters">
+        <button class="category-btn active" data-category="all">All</button>
+        <button class="category-btn" data-category="coffee">Coffee</button>
+        <button class="category-btn" data-category="tea">Tea</button>
+        <button class="category-btn" data-category="pastry">Pastry</button>
+        <button class="category-btn" data-category="food">Food</button>
+        <button class="category-btn" data-category="dessert">Dessert</button>
+        <button class="category-btn" data-category="beverage">Beverage</button>
+    </div>
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert-success" style="padding: 1rem; margin-bottom: 2rem;">
+            @TempData["Success"]
+        </div>
+    }
+
+    <div class="menu-grid">
+        @foreach (var item in Model)
+        {
+            <div class="menu-item" data-category="@item.Category.ToLower()">
+                <div class="menu-card">
+                    <div class="card-img-wrapper">
+                        @if (!string.IsNullOrEmpty(item.ImageUrl))
+                        {
+                            <img src="@item.ImageUrl" class="card-img-top" alt="@item.Name">
+                        }
+                        else
+                        {
+                            <div class="card-img-top d-flex align-items-center justify-content-center" style="background: #f5f5f5;">
+                                <i class="fas fa-mug-hot fa-3x" style="color: #ccc;"></i>
+                            </div>
+                        }
+                        <div class="card-img-overlay">
+                            <span class="category-tag">@item.Category</span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h5>@item.Name</h5>
+                        <p class="description">@item.Description</p>
+                        
+                        @if (item.Rating > 0)
+                        {
+                            <div class="rating mb-3">
+                                @for (int i = 1; i <= 5; i++)
+                                {
+                                    <i class="fas fa-star" style="font-size: 0.75rem;"></i>
+                                }
+                                <span style="margin-left: 5px; color: #888;">@item.Rating.ToString("F1")</span>
+                            </div>
+                        }
+
+                        <div class="price-row">
+                            <span class="price">₱@item.Price.ToString("F2")</span>
+                            <div style="display: flex; gap: 0.5rem;">
+                                <form asp-controller="Cart" asp-action="Add" method="post">
+                                    <input type="hidden" name="id" value="@item.Id" />
+                                    <input type="hidden" name="name" value="@item.Name" />
+                                    <input type="hidden" name="price" value="@item.Price" />
+                                    <input type="hidden" name="quantity" value="1" />
+                                    <button type="submit" class="btn-outline" style="text-decoration: none; padding: 0.5rem 1rem; font-size: 0.7rem; cursor: pointer;">
+                                        <i class="fas fa-plus"></i> Add
+                                    </button>
+                                </form>
+                                <a href="@Url.Action("Details", "Menu", new { id = item.Id })" class="btn-outline" style="text-decoration: none; padding: 0.5rem 1rem; font-size: 0.7rem;">
+                                    View
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Category filtering
+        $('.category-btn').click(function() {
+            $('.category-btn').removeClass('active');
+            $(this).addClass('active');
+
+            var category = $(this).data('category');
+            if (category === 'all') {
+                $('.menu-item').fadeIn(300);
+            } else {
+                $('.menu-item').hide();
+                $('.menu-item[data-category="' + category + '"]').fadeIn(300);
+            }
+        });
+    </script>
+}

@@ -1,0 +1,118 @@
+@model CafeWebsite.Models.MenuItem
+
+@{
+    ViewData["Title"] = @Model.Name;
+}
+
+<div class="details-container">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                {
+                    <img src="@Model.ImageUrl" class="details-image" alt="@Model.Name">
+                }
+                else
+                {
+                    <div class="details-image d-flex align-items-center justify-content-center" style="background: #f5f5f5;">
+                        <i class="fas fa-mug-hot fa-5x" style="color: #ccc;"></i>
+                    </div>
+                }
+            </div>
+            <div class="col-lg-6 details-content">
+                <a href="@Url.Action("Index", "Menu")" style="color: #888; text-decoration: none; font-size: 0.85rem;">
+                    ← Back to Menu
+                </a>
+                
+                <h1>@Model.Name</h1>
+                <span style="color: #888; text-transform: uppercase; letter-spacing: 2px; font-size: 0.8rem;">@Model.Category</span>
+                
+                <p style="color: #666; margin: 1.5rem 0; line-height: 1.8;">@Model.Description</p>
+                
+                <div class="price">₱@Model.Price.ToString("F2")</div>
+
+                @if (Model.Rating > 0)
+                {
+                    <div class="rating" style="margin-bottom: 1.5rem;">
+                        @for (int i = 1; i <= 5; i++)
+                        {
+                            <i class="fas fa-star" style="font-size: 0.9rem;"></i>
+                        }
+                        <span style="margin-left: 8px; color: #888;">@Model.Rating.ToString("F1") (@Model.ReviewCount reviews)</span>
+                    </div>
+                }
+
+                <!-- Rating Section -->
+                <div style="border-top: 1px solid #eee; border-bottom: 1px solid #eee; padding: 1.5rem 0; margin: 1.5rem 0;">
+                    <h6 style="text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1rem;">Rate this item</h6>
+                    @if (TempData["Success"] != null)
+                    {
+                        <div class="alert-success" style="padding: 0.8rem; margin-bottom: 1rem;">@TempData["Success"]</div>
+                    }
+                    @if (TempData["Error"] != null)
+                    {
+                        <div class="alert-danger" style="padding: 0.8rem; margin-bottom: 1rem;">@TempData["Error"]</div>
+                    }
+                    <form asp-action="Rate" asp-controller="Menu" method="post">
+                        <input type="hidden" name="id" value="@Model.Id" />
+                        <input type="hidden" name="rating" id="selectedRating" value="0" />
+                        <div class="star-rating mb-3">
+                            @for (int i = 1; i <= 5; i++)
+                            {
+                                <i class="fas fa-star star-icon" data-rating="@i" style="cursor: pointer; font-size: 1.5rem; color: #ddd; margin-right: 5px;"></i>
+                            }
+                        </div>
+                        <button type="submit" class="btn-primary" id="submitRating" disabled style="padding: 0.8rem 2rem;">Submit Rating</button>
+                    </form>
+                </div>
+
+                <div style="margin-top: 2rem;">
+                    <button class="btn-primary add-to-cart" data-id="@Model.Id" data-name="@Model.Name" data-price="@Model.Price" style="padding: 1rem 2.5rem;">
+                        Add to Cart - ₱@Model.Price.ToString("F2")
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $('.add-to-cart').click(function() {
+            var id = $(this).data('id');
+            var name = $(this).data('name');
+            var price = $(this).data('price');
+            alert(name + ' added to cart for ₱' + price.toFixed(2) + '!');
+        });
+
+        // Star rating interactivity
+        $('.star-icon').hover(
+            function() {
+                var rating = $(this).data('rating');
+                updateStars(rating);
+            },
+            function() {
+                var currentRating = parseInt($('#selectedRating').val());
+                updateStars(currentRating);
+            }
+        );
+
+        $('.star-icon').click(function() {
+            var rating = $(this).data('rating');
+            $('#selectedRating').val(rating);
+            updateStars(rating);
+            $('#submitRating').prop('disabled', false);
+        });
+
+        function updateStars(rating) {
+            $('.star-icon').each(function() {
+                var starRating = $(this).data('rating');
+                if (starRating <= rating) {
+                    $(this).css('color', '#0a0a0a');
+                } else {
+                    $(this).css('color', '#ddd');
+                }
+            });
+        }
+    </script>
+}

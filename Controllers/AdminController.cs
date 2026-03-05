@@ -1,0 +1,226 @@
+using CafeWebsite.Data;
+using CafeWebsite.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+
+namespace CafeWebsite.Controllers
+{
+    [Authorize(Roles = "Admin")]
+    public class AdminController : Controller
+    {
+        private readonly CafeDbContext _context;
+
+        public AdminController(CafeDbContext context)
+        {
+            _context = context;
+        }
+
+        // Dashboard
+        public async Task<IActionResult> Index()
+        {
+            var stats = new AdminDashboardViewModel
+            {
+                TotalOrders = await _context.Orders.CountAsync(),
+                TotalRevenue = await _context.Orders.SumAsync(o => o.TotalAmount),
+                TotalMenuItems = await _context.MenuItems.CountAsync(),
+                TotalUsers = await _context.Users.CountAsync(),
+                RecentOrders = await _context.Orders
+                    .Include(o => o.User)
+                    .OrderByDescending(o => o.OrderDate)
+                    .Take(5)
+                    .ToListAsync(),
+                PendingOrders = await _context.Orders.CountAsync(o => o.Status == "Pending"),
+                TodayOrders = await _context.Orders.CountAsync(o => o.OrderDate.Date == DateTime.Today)
+            };
+            return View(stats);
+        }
+
+        // Menu Management
+        public async Task<IActionResult> MenuItems()
+        {
+            var menuItems = await _context.MenuItems.ToListAsync();
+            return View(menuItems);
+        }
+
+        public async Task<IActionResult> MenuDetails(int id)
+        {
+            var menuItem = await _context.MenuItems.FindAsync(id);
+            if (menuItem == null)
+            {
+                return NotFound();
+            }
+            return View(menuItem);
+        }
+
+        [HttpGet]
+        public IActionResult CreateMenuItem()
+        {
+            return View(new MenuItem());
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateMenuItem(MenuItem menuItem)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.MenuItems.Add(menuItem);
+                await _context.SaveChangesAsync();
+                TempData["Success"] = "Menu item created successfully!";
+                return RedirectToAction(nameof(MenuItems));
+            }
+            // Debug: show validation errors
+            var errors = string.Join(", ", ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage));
+            TempData["Error"] = string.IsNullOrEmpty(errors) ? "Validation failed" : errors;
+            return View(menuItem);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> EditMenuItem(int id)
+        {
+            var menuItem = await _context.MenuItems.FindAsync(id);
+            if (menuItem == null)
+            {
+                return NotFound();
+            }
+            return View(menuItem);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditMenuItem(MenuItem menuItem)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.MenuItems.Update(menuItem);
+                await _context.SaveChangesAsync();
+                TempData["Success"] = "Menu item updated successfully!";
+                return RedirectToAction(nameof(MenuItems));
+            }
+            return View(menuItem);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> DeleteMenuItem(int id)
+        {
+            var menuItem = await _context.MenuItems.FindAsync(id);
+            if (menuItem == null)
+            {
+                return NotFound();
+            }
+            return View(menuItem);
+        }
+
+        [HttpPost, ActionName("DeleteMenuItem")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteMenuItemConfirmed(int id)
+        {
+            var menuItem = await _context.MenuItems.FindAsync(id);
+            if (menuItem != null)
+            {
+                _context.MenuItems.Remove(menuItem);
+                await _context.SaveChangesAsync();
+                TempData["Success"] = "Menu item deleted successfully!";
+            }
+            return RedirectToAction(nameof(MenuItems));
+        }
+
+        // Order Management
+        public async Task<IActionResult> Orders(string? status = null)
+        {
+            var orders = _context.Orders
+                .Include(o => o.User)
+                .Include(o => o.OrderItems)
+                .ThenInclude(oi => oi.MenuItem)
+                .AsQueryable();
+
+            if (!string.IsNullOrEmpty(status))
+            {
+                orders = orders.Where(o => o.Status == status);
+            }
+
+            return View(await orders.OrderByDescending(o => o.OrderDate).ToListAsync());
+        }
+
+        public async Task<IActionResult> OrderDetails(int id)
+        {
+            var order = await _context.Orders
+                .Include(o => o.User)
+                .Include(o => o.OrderItems)
+                .ThenInclude(oi => oi.MenuItem)
+                .FirstOrDefaultAsync(o => o.Id == id);
+            
+            if (order == null)
+            {
+                return NotFound();
+            }
+            return View(order);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> UpdateOrderStatus(int id, string status)
+        {
+            var order = await _context.Orders.FindAsync(id);
+            if (order == null)
+            {
+                return NotFound();
+            }
+
+            order.Status = status;
+            await _context.SaveChangesAsync();
+            TempData["Success"] = "Order status updated successfully!";
+            return RedirectToAction(nameof(OrderDetails), new { id });
+        }
+
+        // User Management
+        public async Task<IActionResult> Users()
+        {
+            var users = await _context.Users.Include(u => u.Orders).ToListAsync();
+            return View(users);
+        }
+
+        public async Task<IActionResult> UserDetails(int id)
+        {
+            var user = await _context.Users
+                .Include(u => u.Orders)
+                .ThenInclude(o => o.OrderItems)
+                .ThenInclude(oi => oi.MenuItem)
+                .FirstOrDefaultAsync(u => u.Id == id);
+            
+            if (user == null)
+            {
+                return NotFound();
+            }
+            return View(user);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> UpdateUserRole(int id, string role)
+        {
+            var user = await _context.Users.FindAsync(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            user.Role = role;
+            await _context.SaveChangesAsync();
+            TempData["Success"] = "User role updated successfully!";
+            return RedirectToAction(nameof(UserDetails), new { id });
+        }
+    }
+
+    public class AdminDashboardViewModel
+    {
+        public int TotalOrders { get; set; }
+        public decimal TotalRevenue { get; set; }
+        public int TotalMenuItems { get; set; }
+        public int TotalUsers { get; set; }
+        public List<Order> RecentOrders { get; set; } = new();
+        public int PendingOrders { get; set; }
+        public int TodayOrders { get; set; }
+    }
+}

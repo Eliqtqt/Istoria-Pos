@@ -1,0 +1,148 @@
+@model CafeWebsite.Models.User
+@{
+    ViewData["Title"] = "User Details - " + Model.Username;
+}
+
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1><i class="fas fa-user"></i> @Model.Username</h1>
+        <a asp-action="Users" class="btn btn-secondary">
+            <i class="fas fa-arrow-left"></i> Back to Users
+        </a>
+    </div>
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["Success"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    <div class="row">
+        <!-- User Info -->
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0"><i class="fas fa-info-circle"></i> User Information</h5>
+                </div>
+                <div class="card-body">
+                    <dl class="row">
+                        <dt class="col-sm-4">User ID</dt>
+                        <dd class="col-sm-8">@Model.Id</dd>
+
+                        <dt class="col-sm-4">Username</dt>
+                        <dd class="col-sm-8"><strong>@Model.Username</strong></dd>
+
+                        <dt class="col-sm-4">Email</dt>
+                        <dd class="col-sm-8">@Model.Email</dd>
+
+                        <dt class="col-sm-4">Role</dt>
+                        <dd class="col-sm-8">
+                            @if (Model.Role == "Admin")
+                            {
+                                <span class="badge bg-danger"><i class="fas fa-crown"></i> Admin</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-secondary">Customer</span>
+                            }
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+
+        <!-- Update Role -->
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-header bg-warning text-dark">
+                    <h5 class="mb-0"><i class="fas fa-user-cog"></i> Update Role</h5>
+                </div>
+                <div class="card-body">
+                    @if (Model.Role == "Admin")
+                    {
+                        <div class="alert alert-info">
+                            <i class="fas fa-info-circle"></i> This user is an administrator.
+                        </div>
+                    }
+                    else
+                    {
+                        <form asp-action="UpdateUserRole" method="post">
+                            <input type="hidden" name="id" value="@Model.Id" />
+                            <div class="mb-3">
+                                <label for="role" class="form-label">New Role</label>
+                                <select name="role" id="role" class="form-select">
+                                    <option value="Customer" selected>Customer</option>
+                                    <option value="Admin">Admin</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">
+                                <i class="fas fa-save"></i> Update Role
+                            </button>
+                        </form>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- User Orders -->
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0"><i class="fas fa-shopping-cart"></i> Order History</h5>
+        </div>
+        <div class="card-body">
+            @if (Model.Orders != null && Model.Orders.Any())
+            {
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Order ID</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                                <th>Total</th>
+                                <th>Items</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var order in Model.Orders.OrderByDescending(o => o.OrderDate))
+                            {
+                                <tr>
+                                    <td>#@order.Id</td>
+                                    <td>@order.OrderDate.ToString("MMM dd, yyyy HH:mm")</td>
+                                    <td>
+                                        <span class="badge bg-@GetStatusBadgeColor(order.Status)">@order.Status</span>
+                                    </td>
+                                    <td><strong>@order.TotalAmount.ToString("C")</strong></td>
+                                    <td>@order.OrderItems?.Count items</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <p class="text-muted text-center py-3">No orders found for this user.</p>
+            }
+        </div>
+    </div>
+</div>
+
+@functions {
+    string GetStatusBadgeColor(string status)
+    {
+        return status switch
+        {
+            "Pending" => "warning",
+            "Confirmed" => "info",
+            "Preparing" => "primary",
+            "Ready" => "success",
+            "Completed" => "secondary",
+            "Cancelled" => "danger",
+            _ => "secondary"
+        };
+    }
+}

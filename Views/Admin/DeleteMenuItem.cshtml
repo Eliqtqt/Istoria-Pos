@@ -1,0 +1,43 @@
+@model CafeWebsite.Models.MenuItem
+@{
+    ViewData["Title"] = "Delete Menu Item";
+}
+
+<div class="container-fluid">
+    <h1 class="mb-4"><i class="fas fa-trash-alt text-danger"></i> Delete Menu Item</h1>
+
+    <div class="alert alert-warning">
+        <h4 class="alert-heading">Are you sure?</h4>
+        <p>You are about to delete the menu item "<strong>@Model.Name</strong>". This action cannot be undone.</p>
+    </div>
+
+    <div class="card">
+        <div class="card-header bg-danger text-white">
+            <h5 class="mb-0">Item Details</h5>
+        </div>
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-3">Name</dt>
+                <dd class="col-sm-9">@Model.Name</dd>
+
+                <dt class="col-sm-3">Category</dt>
+                <dd class="col-sm-9">@Model.Category</dd>
+
+                <dt class="col-sm-3">Price</dt>
+                <dd class="col-sm-9">@Model.Price.ToString("C")</dd>
+            </dl>
+        </div>
+        <div class="card-footer">
+            <form asp-action="DeleteMenuItem" method="post">
+                <input type="hidden" asp-for="Id" />
+                @Html.AntiForgeryToken()
+                <button type="submit" class="btn btn-danger">
+                    <i class="fas fa-trash"></i> Confirm Delete
+                </button>
+                <a asp-action="MenuItems" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left"></i> Cancel
+                </a>
+            </form>
+        </div>
+    </div>
+</div>

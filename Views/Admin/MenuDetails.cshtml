@@ -1,0 +1,62 @@
+@model CafeWebsite.Models.MenuItem
+@{
+    ViewData["Title"] = "Menu Item Details";
+}
+
+<div class="container-fluid">
+    <h1 class="mb-4"><i class="fas fa-info-circle"></i> Menu Item Details</h1>
+
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">@Model.Name</h5>
+        </div>
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-3">ID</dt>
+                <dd class="col-sm-9">@Model.Id</dd>
+
+                <dt class="col-sm-3">Name</dt>
+                <dd class="col-sm-9">@Model.Name</dd>
+
+                <dt class="col-sm-3">Category</dt>
+                <dd class="col-sm-9"><span class="badge bg-secondary">@Model.Category</span></dd>
+
+                <dt class="col-sm-3">Description</dt>
+                <dd class="col-sm-9">@Model.Description</dd>
+
+                <dt class="col-sm-3">Price</dt>
+                <dd class="col-sm-9">₱@Model.Price.ToString("F2")</dd>
+
+                <dt class="col-sm-3">Rating</dt>
+                <dd class="col-sm-9">
+                    @if (Model.Rating > 0)
+                    {
+                        <span><i class="fas fa-star text-warning"></i> @Model.Rating.ToString("F1") (@Model.ReviewCount reviews)</span>
+                    }
+                    else
+                    {
+                        <span class="text-muted">No ratings yet</span>
+                    }
+                </dd>
+
+                <dt class="col-sm-3">Dietary Info</dt>
+                <dd class="col-sm-9">
+                    @if (Model.IsVegetarian) { <span class="badge bg-success me-1">Vegetarian</span> }
+                    @if (Model.IsVegan) { <span class="badge bg-success me-1">Vegan</span> }
+                    @if (Model.IsGlutenFree) { <span class="badge bg-success">Gluten Free</span> }
+                </dd>
+            </dl>
+        </div>
+        <div class="card-footer">
+            <a asp-action="EditMenuItem" asp-route-id="@Model.Id" class="btn btn-primary">
+                <i class="fas fa-edit"></i> Edit
+            </a>
+            <a asp-action="DeleteMenuItem" asp-route-id="@Model.Id" class="btn btn-danger">
+                <i class="fas fa-trash"></i> Delete
+            </a>
+            <a asp-action="MenuItems" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Back to List
+            </a>
+        </div>
+    </div>
+</div>
