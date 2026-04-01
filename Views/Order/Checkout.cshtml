@@ -4,102 +4,164 @@
     decimal total = ViewBag.Total;
 }
 
-<div class="checkout-container">
-    <div class="checkout-header">
-        <h1>Checkout</h1>
-        <div class="divider"></div>
+<div class="checkout-page">
+    <!-- Back Link -->
+    <div class="container">
+        <a href="@Url.Action("Index", "Cart")" class="back-link">
+            <i class="fas fa-arrow-left"></i> Back to Cart
+        </a>
     </div>
 
-    <div class="row">
-        <div class="col-md-7">
-            <div class="checkout-form">
-                <h3>Order Details</h3>
-                
-                <form asp-controller="Order" asp-action="PlaceOrder" method="post">
-                    @Html.AntiForgeryToken()
-                    
-                    <div class="form-group mb-4">
-                        <label class="form-label">Delivery Address</label>
-                        <textarea name="deliveryAddress" class="form-control" rows="3" placeholder="Enter your delivery address..."></textarea>
-                    </div>
+    <div class="checkout-container">
+        <div class="checkout-header">
+            <h1>Complete Your Order</h1>
+            <div class="divider"></div>
+            <p class="checkout-subtitle">Please fill in your details to place your order</p>
+        </div>
 
-                    <div class="form-group mb-4">
-                        <label class="form-label">Order Notes</label>
-                        <textarea name="notes" class="form-control" rows="2" placeholder="Special instructions (optional)"></textarea>
-                    </div>
+        <form asp-action="PlaceOrder" asp-controller="Order" method="post">
+            @Html.AntiForgeryToken()
+            <div class="row">
+            <div class="col-lg-7">
+                <div class="checkout-form">
+                    <div class="form-section">
+                        <h3><i class="fas fa-map-marker-alt"></i> Delivery Details</h3>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Delivery Address</label>
+                            <textarea name="deliveryAddress" class="form-control" rows="3" placeholder="Enter your complete delivery address..." required></textarea>
+                        </div>
 
-                    <div class="form-group mb-4">
-                        <label class="form-label">Payment Method</label>
-                        <div class="payment-options">
-                            <label class="payment-option">
-                                <input type="radio" name="paymentMethod" value="Cash" checked />
-                                <span>💵 Cash on Delivery</span>
-                            </label>
-                            <label class="payment-option">
-                                <input type="radio" name="paymentMethod" value="GCash" />
-                                <span>📱 GCash</span>
-                            </label>
-                            <label class="payment-option">
-                                <input type="radio" name="paymentMethod" value="CreditCard" />
-                                <span>💳 Credit/Debit Card</span>
-                            </label>
+                        <div class="form-group">
+                            <label class="form-label">Order Notes</label>
+                            <textarea name="notes" class="form-control" rows="2" placeholder="Any special instructions for your order (optional)"></textarea>
                         </div>
                     </div>
 
-                    <div class="order-summary">
-                        <h4>Order Summary</h4>
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Item</th>
-                                    <th>Qty</th>
-                                    <th>Price</th>
-                                    <th>Total</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var item in Model)
-                                {
-                                    <tr>
-                                        <td>@item.Name</td>
-                                        <td>@item.Quantity</td>
-                                        <td>₱@item.Price.ToString("F2")</td>
-                                        <td>₱@((item.Price * item.Quantity).ToString("F2"))</td>
-                                    </tr>
-                                }
-                            </tbody>
-                            <tfoot>
-                                <tr class="total-row">
-                                    <td colspan="3"><strong>Total</strong></td>
-                                    <td><strong>₱@total.ToString("F2")</strong></td>
-                                </tr>
-                            </tfoot>
-                        </table>
+                    <div class="form-section">
+                        <h3><i class="fas fa-credit-card"></i> Payment Method</h3>
+                        <div class="payment-options">
+                            <label class="payment-option">
+                                <input type="radio" name="paymentMethod" value="Cash" checked />
+                                <div class="payment-content">
+                                    <i class="fas fa-money-bill-wave"></i>
+                                    <div>
+                                        <span class="payment-title">Cash on Delivery</span>
+                                        <span class="payment-desc">Pay when you receive your order</span>
+                                    </div>
+                                </div>
+                            </label>
+                            <label class="payment-option">
+                                <input type="radio" name="paymentMethod" value="GCash" />
+                                <div class="payment-content">
+                                    <i class="fas fa-mobile-alt"></i>
+                                    <div>
+                                        <span class="payment-title">GCash</span>
+                                        <span class="payment-desc">Pay via GCash e-wallet</span>
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
+                        
+                        <!-- GCash Payment Details -->
+                        <div class="gcash-details" style="display: none; margin-top: 1.5rem; padding: 1.5rem; background: #f8f8f8; border: 1px solid #ddd;">
+                            <h4 style="color: #0a0a0a; margin-bottom: 1rem; font-size: 1rem;"><i class="fas fa-info-circle"></i> GCash Payment Instructions</h4>
+                            <p style="color: #666; margin-bottom: 1rem; font-size: 0.9rem;">
+                                Scan the QR code below using your GCash app to pay. The amount will be filled automatically.
+                            </p>
+                            <div style="text-align: center; margin-bottom: 1rem;">
+                                <img src="~/Images/gcash.jpg" alt="GCash QR Code" style="max-width: 220px; border: 1px solid #ddd; padding: 10px; background: white; border-radius: 8px;">
+                            </div>
+                            <div style="background: #fff; padding: 1rem; border: 1px solid #0a0a0a; text-align: center;">
+                                <p style="color: #666; font-size: 0.85rem; margin-bottom: 0.5rem;">Or send to:</p>
+                                <p style="color: #0a0a0a; font-size: 1.5rem; font-weight: 700; margin: 0;">0963 178 3917</p>
+                                <p style="color: #888; font-size: 0.85rem; margin-top: 0.5rem;">Istoria Coffee</p>
+                            </div>
+                            <p style="color: #888; font-size: 0.85rem; margin-top: 1rem;">
+                                <i class="fas fa-check-circle"></i> Total to pay: <strong>₱@total.ToString("F2")</strong>
+                            </p>
+                            <p style="color: #666; font-size: 0.85rem; margin-top: 1rem;">
+                                After payment, take a screenshot and send it to our <a href="https://m.me/istoriacoffee" target="_blank" style="color: #0a0a0a;">Messenger</a> or email <a href="mailto:business.istoria@gmail.com" style="color: #0a0a0a;">business.istoria@gmail.com</a>
+                            </p>
+                        </div>
                     </div>
 
-                    <button type="submit" class="btn-submit">Place Order</button>
+                    <div class="form-section">
+                        <h3><i class="fas fa-receipt"></i> Order Summary</h3>
+                        <div class="order-items">
+                            @foreach (var item in Model)
+                            {
+                                <div class="order-item">
+                                    <div class="item-info">
+                                        <span class="item-name">@item.Name</span>
+                                        @if (item.IsCustomizable && !string.IsNullOrEmpty(item.GetCustomizationSummary()))
+                                        {
+                                            <span class="item-customization">@item.GetCustomizationSummary()</span>
+                                        }
+                                    </div>
+                                    <div class="item-qty">x @item.Quantity</div>
+                                    <div class="item-price">₱@item.GetTotalPrice().ToString("F2")</div>
+                                </div>
+                            }
+                        </div>
+                        <div class="order-total">
+                            <span>Total</span>
+                            <span class="total-amount">₱@total.ToString("F2")</span>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-place-order">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Place Order</span>
+                    </button>
                 </form>
             </div>
         </div>
+    </div>
+</div>
+            </div>
 
-        <div class="col-md-5">
-            <div class="order-info-card">
-                <h4>Order Information</h4>
-                <div class="info-item">
-                    <i class="fas fa-shopping-bag"></i>
-                    <span>Your order will be prepared fresh</span>
+            <div class="col-lg-5">
+                <div class="order-info-card">
+                    <div class="info-header">
+                        <i class="fas fa-coffee"></i>
+                        <h4>Istoria Coffee</h4>
+                    </div>
+                    <div class="info-items">
+                        <div class="info-item">
+                            <i class="fas fa-box"></i>
+                            <div>
+                                <span class="info-title">Fresh Preparation</span>
+                                <span class="info-desc">Your order will be prepared fresh</span>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-clock"></i>
+                            <div>
+                                <span class="info-title">Delivery Time</span>
+                                <span class="info-desc">15-30 minutes</span>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-phone"></i>
+                            <div>
+                                <span class="info-title">Need Help?</span>
+                                <span class="info-desc">Contact us anytime</span>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-shield-alt"></i>
+                            <div>
+                                <span class="info-title">Secure Checkout</span>
+                                <span class="info-desc">Your data is safe with us</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="info-item">
-                    <i class="fas fa-clock"></i>
-                    <span>Estimated time: 15-30 minutes</span>
-                </div>
-                <div class="info-item">
-                    <i class="fas fa-phone"></i>
-                    <span>Questions? Call us</span>
-                </div>
-                <div class="info-item">
-                    <i class="fas fa-undo"></i>
-                    <span>Easy returns within 24 hours</span>
+
+                <div class="promo-card">
+                    <i class="fas fa-tag"></i>
+                    <span>Have a promo code? Enter it at checkout</span>
                 </div>
             </div>
         </div>
@@ -107,10 +169,15 @@
 </div>
 
 <style>
+    .checkout-page {
+        min-height: 100vh;
+        background: #fafafa;
+    }
+
     .checkout-container {
         max-width: 1200px;
         margin: 0 auto;
-        padding: 2rem 1rem;
+        padding: 1rem 1rem 3rem;
     }
 
     .checkout-header {
@@ -120,124 +187,343 @@
 
     .checkout-header h1 {
         font-family: 'Playfair Display', serif;
-        color: #1a1a1a;
+        font-size: 2.5rem;
+        color: #0a0a0a;
+        margin-bottom: 0.5rem;
+    }
+
+    .checkout-header .divider {
+        width: 60px;
+        height: 2px;
+        background: #0a0a0a;
+        margin: 0 auto 1rem;
+    }
+
+    .checkout-subtitle {
+        color: #666;
+        font-size: 0.95rem;
     }
 
     .checkout-form {
         background: #fff;
         padding: 2rem;
-        border-radius: 8px;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        border: 1px solid #eee;
     }
 
-    .checkout-form h3 {
+    .form-section {
+        margin-bottom: 2rem;
+        padding-bottom: 2rem;
+        border-bottom: 1px solid #eee;
+    }
+
+    .form-section:last-of-type {
+        border-bottom: none;
+        margin-bottom: 1rem;
+        padding-bottom: 0;
+    }
+
+    .form-section h3 {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.3rem;
+        color: #0a0a0a;
         margin-bottom: 1.5rem;
-        color: #1a1a1a;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .form-section h3 i {
+        color: #0a0a0a;
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
     }
 
     .form-label {
+        display: block;
         font-weight: 600;
         color: #333;
         margin-bottom: 0.5rem;
+        font-size: 0.9rem;
     }
 
     .form-control {
+        width: 100%;
         border: 1px solid #ddd;
-        border-radius: 4px;
-        padding: 0.75rem;
+        border-radius: 0;
+        padding: 0.875rem 1rem;
+        font-size: 0.95rem;
+        transition: all 0.3s;
+        background: #fafafa;
     }
 
     .form-control:focus {
-        border-color: #1a1a1a;
+        outline: none;
+        border-color: #0a0a0a;
+        background: #fff;
         box-shadow: none;
+    }
+
+    .form-control::placeholder {
+        color: #aaa;
     }
 
     .payment-options {
         display: flex;
         flex-direction: column;
-        gap: 0.75rem;
+        gap: 1rem;
     }
 
     .payment-option {
         display: flex;
         align-items: center;
-        padding: 1rem;
-        border: 1px solid #ddd;
-        border-radius: 4px;
+        padding: 1.25rem;
+        border: 2px solid #eee;
+        border-radius: 0;
         cursor: pointer;
-        transition: all 0.2s;
+        transition: all 0.3s;
     }
 
     .payment-option:hover {
-        border-color: #1a1a1a;
+        border-color: #ccc;
+    }
+
+    .payment-option:has(input:checked) {
+        border-color: #0a0a0a;
+        background: #fafafa;
     }
 
     .payment-option input[type="radio"] {
-        margin-right: 0.75rem;
+        display: none;
     }
 
-    .order-summary {
-        margin-top: 2rem;
+    .payment-content {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        width: 100%;
     }
 
-    .order-summary h4 {
+    .payment-content > i {
+        font-size: 1.5rem;
+        color: #0a0a0a;
+        width: 40px;
+        text-align: center;
+    }
+
+    .payment-title {
+        display: block;
+        font-weight: 600;
+        color: #0a0a0a;
+        font-size: 0.95rem;
+    }
+
+    .payment-desc {
+        display: block;
+        color: #666;
+        font-size: 0.8rem;
+        margin-top: 2px;
+    }
+
+    .order-items {
+        background: #fafafa;
+        padding: 1rem;
         margin-bottom: 1rem;
     }
 
-    .table th {
-        border-bottom: 2px solid #1a1a1a;
-        color: #333;
-    }
-
-    .table td {
-        border-bottom: 1px solid #eee;
+    .order-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
         padding: 0.75rem 0;
+        border-bottom: 1px solid #eee;
     }
 
-    .total-row td {
-        border-top: 2px solid #1a1a1a;
-        padding-top: 1rem;
-        font-size: 1.1rem;
+    .order-item:last-child {
+        border-bottom: none;
     }
 
-    .btn-submit {
-        width: 100%;
+    .item-info {
+        flex: 1;
+    }
+
+    .item-name {
+        font-weight: 500;
+        color: #0a0a0a;
+    }
+
+    .item-customization {
+        display: block;
+        font-size: 0.75rem;
+        color: #666;
+        margin-top: 2px;
+    }
+
+    .item-qty {
+        color: #666;
+        margin: 0 1rem;
+    }
+
+    .item-price {
+        font-weight: 600;
+        color: #0a0a0a;
+    }
+
+    .order-total {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
         padding: 1rem;
-        background: #1a1a1a;
+        background: #0a0a0a;
+        color: #fff;
+    }
+
+    .order-total span:first-child {
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .total-amount {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.5rem;
+        font-weight: 600;
+    }
+
+    .btn-place-order {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        padding: 1.25rem 2rem;
+        background: #0a0a0a;
         color: white;
         border: none;
-        border-radius: 4px;
         font-size: 1rem;
         font-weight: 600;
-        margin-top: 1.5rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
         cursor: pointer;
-        transition: background 0.2s;
+        transition: all 0.3s;
     }
 
-    .btn-submit:hover {
+    .btn-place-order:hover {
         background: #333;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
     }
 
     .order-info-card {
-        background: #f8f8f8;
+        background: #fff;
+        border: 1px solid #eee;
         padding: 2rem;
-        border-radius: 8px;
-        margin-top: 2rem;
+        margin-bottom: 1.5rem;
     }
 
-    .order-info-card h4 {
+    .info-header {
+        display: flex;
+        align-items: center;
+        gap: 10px;
         margin-bottom: 1.5rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid #eee;
+    }
+
+    .info-header i {
+        font-size: 1.5rem;
+        color: #0a0a0a;
+    }
+
+    .info-header h4 {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.2rem;
+        margin: 0;
+        color: #0a0a0a;
+    }
+
+    .info-items {
+        display: flex;
+        flex-direction: column;
+        gap: 1.25rem;
     }
 
     .info-item {
         display: flex;
-        align-items: center;
-        margin-bottom: 1rem;
-        color: #555;
+        align-items: flex-start;
+        gap: 1rem;
     }
 
-    .info-item i {
-        width: 24px;
-        color: #1a1a1a;
+    .info-item > i {
+        width: 20px;
+        color: #0a0a0a;
+        font-size: 0.9rem;
+        margin-top: 2px;
+    }
+
+    .info-title {
+        display: block;
+        font-weight: 600;
+        color: #0a0a0a;
+        font-size: 0.9rem;
+    }
+
+    .info-desc {
+        display: block;
+        color: #666;
+        font-size: 0.8rem;
+        margin-top: 2px;
+    }
+
+    .promo-card {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 1rem 1.5rem;
+        background: #fafafa;
+        border: 1px dashed #ddd;
+        color: #666;
+        font-size: 0.85rem;
+    }
+
+    .promo-card i {
+        color: #0a0a0a;
+    }
+
+    /* Responsive */
+    @@media (max-width: 992px) {
+        .col-lg-5 {
+            margin-top: 2rem;
+        }
+    }
+    
+    /* GCash Details Toggle */
+    .gcash-details {
+        animation: fadeIn 0.3s ease;
+    }
+    
+    @@keyframes fadeIn {
+        from { opacity: 0; transform: translateY(-10px); }
+        to { opacity: 1; transform: translateY(0); }
     }
 </style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var orderTotal = @total;
+        
+        const gcashOption = document.querySelector('input[name="paymentMethod"][value="GCash"]');
+        const gcashDetails = document.querySelector('.gcash-details');
+        
+        if (gcashOption && gcashDetails) {
+            gcashOption.addEventListener('change', function() {
+                if (this.checked) {
+                    gcashDetails.style.display = 'block';
+                } else {
+                    gcashDetails.style.display = 'none';
+                }
+            });
+        }
+    });
+</script>

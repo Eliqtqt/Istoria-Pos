@@ -3,6 +3,7 @@ using CafeWebsite.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.IO;
 
 namespace CafeWebsite.Controllers
 {
@@ -39,6 +40,10 @@ namespace CafeWebsite.Controllers
         // Menu Management
         public async Task<IActionResult> MenuItems()
         {
+            Response.Headers.Append("Cache-Control", "no-cache, no-store, must-revalidate");
+            Response.Headers.Append("Pragma", "no-cache");
+            Response.Headers.Append("Expires", "0");
+            
             var menuItems = await _context.MenuItems.ToListAsync();
             return View(menuItems);
         }
@@ -210,6 +215,168 @@ namespace CafeWebsite.Controllers
             await _context.SaveChangesAsync();
             TempData["Success"] = "User role updated successfully!";
             return RedirectToAction(nameof(UserDetails), new { id });
+        }
+
+        // Event Management
+        public async Task<IActionResult> Events()
+        {
+            var events = await _context.Events.OrderBy(e => e.CreatedAt).ToListAsync();
+            return View(events);
+        }
+
+        [HttpGet]
+        public IActionResult CreateEvent()
+        {
+            return View(new Event());
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateEvent(Event eventModel, IFormFile? ImageFile)
+        {
+            if (ModelState.IsValid)
+            {
+                if (ImageFile != null && ImageFile.Length > 0)
+                {
+                    var fileName = Guid.NewGuid().ToString() + Path.GetExtension(ImageFile.FileName);
+                    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Images", "events", fileName);
+                    
+                    var directory = Path.GetDirectoryName(filePath);
+                    if (!Directory.Exists(directory))
+                    {
+                        Directory.CreateDirectory(directory);
+                    }
+
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await ImageFile.CopyToAsync(stream);
+                    }
+                    eventModel.ImagePath = $"/Images/events/{fileName}";
+                }
+
+                _context.Events.Add(eventModel);
+                await _context.SaveChangesAsync();
+                TempData["Success"] = "Event created successfully!";
+                return RedirectToAction(nameof(Events));
+            }
+            return View(eventModel);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> EditEvent(int id)
+        {
+            var eventModel = await _context.Events.FindAsync(id);
+            if (eventModel == null)
+            {
+                return NotFound();
+            }
+            return View(eventModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditEvent(Event eventModel, IFormFile? ImageFile, string? keepImage)
+        {
+            if (ModelState.IsValid)
+            {
+                var existingEvent = await _context.Events.FindAsync(eventModel.Id);
+                if (existingEvent == null)
+                {
+                    return NotFound();
+                }
+
+                existingEvent.Title = eventModel.Title;
+                existingEvent.Description = eventModel.Description;
+                existingEvent.Schedule = eventModel.Schedule;
+                existingEvent.Time = eventModel.Time;
+                existingEvent.Icon = eventModel.Icon;
+                existingEvent.IsActive = eventModel.IsActive;
+
+                if (ImageFile != null && ImageFile.Length > 0)
+                {
+                    // Delete old image if exists
+                    if (!string.IsNullOrEmpty(existingEvent.ImagePath))
+                    {
+                        var oldFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", existingEvent.ImagePath.TrimStart('/'));
+                        if (System.IO.File.Exists(oldFilePath))
+                        {
+                            System.IO.File.Delete(oldFilePath);
+                        }
+                    }
+
+                    var fileName = Guid.NewGuid().ToString() + Path.GetExtension(ImageFile.FileName);
+                    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Images", "events", fileName);
+                    
+                    var directory = Path.GetDirectoryName(filePath);
+                    if (!Directory.Exists(directory))
+                    {
+                        Directory.CreateDirectory(directory);
+                    }
+
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await ImageFile.CopyToAsync(stream);
+                    }
+                    existingEvent.ImagePath = $"/Images/events/{fileName}";
+                }
+                else if (keepImage == "on" && !string.IsNullOrEmpty(existingEvent.ImagePath))
+                {
+                    // Keep existing image
+                }
+                else if (string.IsNullOrEmpty(keepImage))
+                {
+                    // Remove image if checkbox is unchecked
+                    if (!string.IsNullOrEmpty(existingEvent.ImagePath))
+                    {
+                        var oldFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", existingEvent.ImagePath.TrimStart('/'));
+                        if (System.IO.File.Exists(oldFilePath))
+                        {
+                            System.IO.File.Delete(oldFilePath);
+                        }
+                        existingEvent.ImagePath = null;
+                    }
+                }
+
+                await _context.SaveChangesAsync();
+                TempData["Success"] = "Event updated successfully!";
+                return RedirectToAction(nameof(Events));
+            }
+            return View(eventModel);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> DeleteEvent(int id)
+        {
+            var eventModel = await _context.Events.FindAsync(id);
+            if (eventModel == null)
+            {
+                return NotFound();
+            }
+            return View(eventModel);
+        }
+
+        [HttpPost, ActionName("DeleteEvent")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteEventConfirmed(int id)
+        {
+            var eventModel = await _context.Events.FindAsync(id);
+            if (eventModel != null)
+            {
+                // Delete image if exists
+                if (!string.IsNullOrEmpty(eventModel.ImagePath))
+                {
+                    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", eventModel.ImagePath.TrimStart('/'));
+                    if (System.IO.File.Exists(filePath))
+                    {
+                        System.IO.File.Delete(filePath);
+                    }
+                }
+
+                _context.Events.Remove(eventModel);
+                await _context.SaveChangesAsync();
+                TempData["Success"] = "Event deleted successfully!";
+            }
+            return RedirectToAction(nameof(Events));
         }
     }
 

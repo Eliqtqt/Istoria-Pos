@@ -3,81 +3,376 @@
     ViewData["Title"] = "User Details - " + Model.Username;
 }
 
-<div class="container-fluid">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1><i class="fas fa-user"></i> @Model.Username</h1>
-        <a asp-action="Users" class="btn btn-secondary">
-            <i class="fas fa-arrow-left"></i> Back to Users
-        </a>
+<style>
+    /* Coffee Shop Theme - Matching Users.cshtml */
+    .detail-header {
+        background: linear-gradient(135deg, #3e2723 0%, #5d4037 50%, #4e342e 100%);
+        padding: 2rem;
+        margin-bottom: 2rem;
+        border-radius: 12px;
+        color: #fff;
+        box-shadow: 0 8px 32px rgba(62, 39, 35, 0.3);
+    }
+    
+    .detail-header h1 {
+        font-family: 'Playfair Display', Georgia, serif;
+        font-size: 1.8rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+    }
+    
+    .back-btn {
+        background: rgba(255,255,255,0.15);
+        color: #fff;
+        padding: 0.6rem 1.25rem;
+        border-radius: 25px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-weight: 500;
+    }
+    
+    .back-btn:hover {
+        background: rgba(255,255,255,0.25);
+        color: #fff;
+        transform: translateX(-3px);
+    }
+    
+    .coffee-card {
+        background: #fff;
+        border: none;
+        border-radius: 16px;
+        box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+        overflow: hidden;
+        margin-bottom: 1.5rem;
+    }
+    
+    .coffee-card .card-header {
+        background: linear-gradient(135deg, #5d4037 0%, #4e342e 100%);
+        color: #fff;
+        padding: 1.25rem 1.5rem;
+        border: none;
+        font-family: 'Helvetica Neue', sans-serif;
+        letter-spacing: 0.5px;
+        font-size: 0.9rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    
+    .coffee-card .card-body {
+        padding: 1.5rem;
+    }
+    
+    .info-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1.5rem;
+    }
+    
+    .info-item {
+        padding: 1rem;
+        background: #faf8f5;
+        border-radius: 12px;
+        border-left: 3px solid #6d4c41;
+    }
+    
+    .info-item dt {
+        color: #8d6e63;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 0.5rem;
+    }
+    
+    .info-item dd {
+        color: #3e2723;
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin: 0;
+    }
+    
+    /* Role badges */
+    .badge-admin {
+        background: linear-gradient(135deg, #3e2723 0%, #5d4037 100%);
+        color: #fff;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+    }
+    
+    .badge-customer {
+        background: #f5f0eb;
+        color: #5d4037;
+        border: 1px solid #d7ccc8;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+    }
+    
+    /* Form styling */
+    .coffee-form-select {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        border: 1px solid #d7ccc8;
+        border-radius: 12px;
+        background: #faf8f5;
+        color: #3e2723;
+        font-size: 0.95rem;
+        transition: all 0.3s ease;
+    }
+    
+    .coffee-form-select:focus {
+        outline: none;
+        border-color: #6d4c41;
+        box-shadow: 0 0 0 3px rgba(109, 76, 65, 0.1);
+    }
+    
+    .coffee-btn {
+        background: linear-gradient(135deg, #6d4c41 0%, #5d4037 100%);
+        color: #fff;
+        padding: 0.75rem 1.5rem;
+        border: none;
+        border-radius: 25px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    
+    .coffee-btn:hover {
+        background: linear-gradient(135deg, #5d4037 0%, #3e2723 100%);
+        color: #fff;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(62, 39, 35, 0.4);
+    }
+    
+    /* Info alert */
+    .coffee-alert {
+        background: linear-gradient(135deg, #faf8f5 0%, #f5f0eb 100%);
+        border: 1px solid #d7ccc8;
+        border-radius: 12px;
+        padding: 1rem 1.5rem;
+        color: #5d4037;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+    }
+    
+    /* Table styling */
+    .coffee-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    
+    .coffee-table th {
+        background: #faf8f5;
+        color: #3e2723;
+        font-weight: 700;
+        padding: 1rem;
+        text-align: left;
+        border-bottom: 2px solid #d7ccc8;
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+    
+    .coffee-table td {
+        padding: 1rem;
+        border-bottom: 1px solid #eee8e5;
+        color: #4a4a4a;
+    }
+    
+    .coffee-table tr:hover {
+        background: #faf8f5;
+    }
+    
+    /* Status badges */
+    .badge-pending {
+        background: #fff3e0;
+        color: #e65100;
+        padding: 0.4rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 600;
+    }
+    
+    .badge-confirmed {
+        background: #e3f2fd;
+        color: #1565c0;
+        padding: 0.4rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 600;
+    }
+    
+    .badge-preparing {
+        background: #f3e5f5;
+        color: #7b1fa2;
+        padding: 0.4rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 600;
+    }
+    
+    .badge-ready {
+        background: #e8f5e9;
+        color: #2e7d32;
+        padding: 0.4rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 600;
+    }
+    
+    .badge-completed {
+        background: #f5f5f5;
+        color: #616161;
+        padding: 0.4rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 600;
+    }
+    
+    .badge-cancelled {
+        background: #ffebee;
+        color: #c62828;
+        padding: 0.4rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 600;
+    }
+    
+    .order-total {
+        color: #3e2723;
+        font-weight: 700;
+    }
+    
+    .empty-state {
+        padding: 3rem;
+        text-align: center;
+        color: #8d6e63;
+    }
+    
+    .empty-state i {
+        font-size: 3rem;
+        color: #bcaaa4;
+        margin-bottom: 1rem;
+    }
+    
+    /* User avatar */
+    .user-avatar-large {
+        width: 80px;
+        height: 80px;
+        background: linear-gradient(135deg, #6d4c41 0%, #4e342e 100%);
+        color: #fff;
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 2rem;
+        box-shadow: 0 4px 16px rgba(62, 39, 35, 0.3);
+    }
+</style>
+
+<div class="container-fluid" style="padding: 2rem;">
+    <!-- Header -->
+    <div class="detail-header">
+        <div class="d-flex justify-content-between align-items-center">
+            <h1><i class="fas fa-user-circle"></i> ☕ @Model.Username</h1>
+            <a asp-action="Users" class="back-btn">
+                <i class="fas fa-arrow-left"></i> Back to Users
+            </a>
+        </div>
     </div>
 
     @if (TempData["Success"] != null)
     {
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <div class="coffee-alert" style="margin-bottom: 1.5rem;">
+            <i class="fas fa-check-circle"></i>
             @TempData["Success"]
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         </div>
     }
 
     <div class="row">
-        <!-- User Info -->
+        <!-- User Info Card -->
         <div class="col-md-6 mb-4">
-            <div class="card">
-                <div class="card-header bg-primary text-white">
-                    <h5 class="mb-0"><i class="fas fa-info-circle"></i> User Information</h5>
+            <div class="coffee-card">
+                <div class="card-header">
+                    <i class="fas fa-info-circle"></i> Customer Information
                 </div>
                 <div class="card-body">
-                    <dl class="row">
-                        <dt class="col-sm-4">User ID</dt>
-                        <dd class="col-sm-8">@Model.Id</dd>
-
-                        <dt class="col-sm-4">Username</dt>
-                        <dd class="col-sm-8"><strong>@Model.Username</strong></dd>
-
-                        <dt class="col-sm-4">Email</dt>
-                        <dd class="col-sm-8">@Model.Email</dd>
-
-                        <dt class="col-sm-4">Role</dt>
-                        <dd class="col-sm-8">
-                            @if (Model.Role == "Admin")
-                            {
-                                <span class="badge bg-danger"><i class="fas fa-crown"></i> Admin</span>
-                            }
-                            else
-                            {
-                                <span class="badge bg-secondary">Customer</span>
-                            }
-                        </dd>
+                    <div style="text-align: center; margin-bottom: 1.5rem;">
+                        <div class="user-avatar-large">☕ @Model.Username[0].ToString().ToUpper()</div>
+                    </div>
+                    <dl class="info-grid">
+                        <div class="info-item">
+                            <dt>User ID</dt>
+                            <dd>#@Model.Id</dd>
+                        </div>
+                        <div class="info-item">
+                            <dt>Username</dt>
+                            <dd>@Model.Username</dd>
+                        </div>
+                        <div class="info-item">
+                            <dt>Email Address</dt>
+                            <dd>@Model.Email</dd>
+                        </div>
+                        <div class="info-item">
+                            <dt>Account Role</dt>
+                            <dd>
+                                @if (Model.Role == "Admin")
+                                {
+                                    <span class="badge-admin"><i class="fas fa-crown" style="margin-right: 4px;"></i> Admin</span>
+                                }
+                                else
+                                {
+                                    <span class="badge-customer"><i class="fas fa-mug-hot" style="margin-right: 4px;"></i> Customer</span>
+                                }
+                            </dd>
+                        </div>
                     </dl>
                 </div>
             </div>
         </div>
 
-        <!-- Update Role -->
+        <!-- Update Role Card -->
         <div class="col-md-6 mb-4">
-            <div class="card">
-                <div class="card-header bg-warning text-dark">
-                    <h5 class="mb-0"><i class="fas fa-user-cog"></i> Update Role</h5>
+            <div class="coffee-card">
+                <div class="card-header">
+                    <i class="fas fa-user-cog"></i> Manage Role
                 </div>
                 <div class="card-body">
                     @if (Model.Role == "Admin")
                     {
-                        <div class="alert alert-info">
-                            <i class="fas fa-info-circle"></i> This user is an administrator.
+                        <div class="coffee-alert">
+                            <i class="fas fa-shield-alt"></i>
+                            <div>
+                                <strong>Administrator Account</strong>
+                                <p style="margin: 0; font-size: 0.9rem; opacity: 0.8;">This user has full access to the admin panel.</p>
+                            </div>
                         </div>
                     }
                     else
                     {
+                        <p style="color: #5d4037; margin-bottom: 1rem;">Promote this customer to admin to grant them access to the admin panel.</p>
                         <form asp-action="UpdateUserRole" method="post">
                             <input type="hidden" name="id" value="@Model.Id" />
                             <div class="mb-3">
-                                <label for="role" class="form-label">New Role</label>
-                                <select name="role" id="role" class="form-select">
-                                    <option value="Customer" selected>Customer</option>
-                                    <option value="Admin">Admin</option>
+                                <label for="role" class="form-label" style="color: #3e2723; font-weight: 600;">Select New Role</label>
+                                <select name="role" id="role" class="coffee-form-select">
+                                    <option value="Customer" selected>☕ Customer</option>
+                                    <option value="Admin">👑 Admin</option>
                                 </select>
                             </div>
-                            <button type="submit" class="btn btn-primary w-100">
+                            <button type="submit" class="coffee-btn w-100">
                                 <i class="fas fa-save"></i> Update Role
                             </button>
                         </form>
@@ -87,36 +382,36 @@
         </div>
     </div>
 
-    <!-- User Orders -->
-    <div class="card">
-        <div class="card-header bg-primary text-white">
-            <h5 class="mb-0"><i class="fas fa-shopping-cart"></i> Order History</h5>
+    <!-- User Orders Card -->
+    <div class="coffee-card">
+        <div class="card-header">
+            <i class="fas fa-shopping-bag"></i> Order History - ☕ Coffee Orders
         </div>
         <div class="card-body">
             @if (Model.Orders != null && Model.Orders.Any())
             {
                 <div class="table-responsive">
-                    <table class="table">
+                    <table class="coffee-table">
                         <thead>
                             <tr>
-                                <th>Order ID</th>
-                                <th>Date</th>
-                                <th>Status</th>
-                                <th>Total</th>
-                                <th>Items</th>
+                                <th><i class="fas fa-hashtag"></i> Order ID</th>
+                                <th><i class="fas fa-calendar"></i> Date</th>
+                                <th><i class="fas fa-info"></i> Status</th>
+                                <th><i class="fas fa-coins"></i> Total</th>
+                                <th><i class="fas fa-coffee"></i> Items</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach (var order in Model.Orders.OrderByDescending(o => o.OrderDate))
                             {
                                 <tr>
-                                    <td>#@order.Id</td>
+                                    <td><span style="color: #8d6e63; font-weight: 600;">#</span>@order.Id</td>
                                     <td>@order.OrderDate.ToString("MMM dd, yyyy HH:mm")</td>
                                     <td>
-                                        <span class="badge bg-@GetStatusBadgeColor(order.Status)">@order.Status</span>
+                                        <span class="badge-@order.Status.ToLower()">@order.Status</span>
                                     </td>
-                                    <td><strong>@order.TotalAmount.ToString("C")</strong></td>
-                                    <td>@order.OrderItems?.Count items</td>
+                                    <td class="order-total">@order.TotalAmount.ToString("C")</td>
+                                    <td><i class="fas fa-mug-hot" style="color: #6d4c41;"></i> @order.OrderItems?.Count items</td>
                                 </tr>
                             }
                         </tbody>
@@ -125,24 +420,11 @@
             }
             else
             {
-                <p class="text-muted text-center py-3">No orders found for this user.</p>
+                <div class="empty-state">
+                    <i class="fas fa-coffee"></i>
+                    <p>No orders yet. Time for a coffee! ☕</p>
+                </div>
             }
         </div>
     </div>
 </div>
-
-@functions {
-    string GetStatusBadgeColor(string status)
-    {
-        return status switch
-        {
-            "Pending" => "warning",
-            "Confirmed" => "info",
-            "Preparing" => "primary",
-            "Ready" => "success",
-            "Completed" => "secondary",
-            "Cancelled" => "danger",
-            _ => "secondary"
-        };
-    }
-}

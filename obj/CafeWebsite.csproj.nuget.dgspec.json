@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "c:\\Users\\Admin\\Desktop\\cafewebsite\\CafeWebsite.csproj": {}
+    "C:\\Users\\Admin\\Desktop\\cafewebsite\\CafeWebsite.csproj": {}
   },
   "projects": {
-    "c:\\Users\\Admin\\Desktop\\cafewebsite\\CafeWebsite.csproj": {
+    "C:\\Users\\Admin\\Desktop\\cafewebsite\\CafeWebsite.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\Admin\\Desktop\\cafewebsite\\CafeWebsite.csproj",
+        "projectUniqueName": "C:\\Users\\Admin\\Desktop\\cafewebsite\\CafeWebsite.csproj",
         "projectName": "CafeWebsite",
-        "projectPath": "c:\\Users\\Admin\\Desktop\\cafewebsite\\CafeWebsite.csproj",
+        "projectPath": "C:\\Users\\Admin\\Desktop\\cafewebsite\\CafeWebsite.csproj",
         "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\Admin\\Desktop\\cafewebsite\\obj\\",
+        "outputPath": "C:\\Users\\Admin\\Desktop\\cafewebsite\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config"

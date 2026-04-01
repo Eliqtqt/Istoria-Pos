@@ -1,0 +1,85 @@
+@model CafeWebsite.Models.Event
+@{
+    ViewData["Title"] = "Create Event";
+}
+
+<div class="page-header">
+    <h1>Create Event</h1>
+    <div class="divider"></div>
+</div>
+
+<div class="container">
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert-danger" style="padding: 1rem; margin-bottom: 2rem;">@TempData["Error"]</div>
+    }
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert-success" style="padding: 1rem; margin-bottom: 2rem;">@TempData["Success"]</div>
+    }
+
+    <div class="admin-card">
+        <form asp-action="CreateEvent" method="post" enctype="multipart/form-data">
+            @Html.AntiForgeryToken()
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <label for="Title" class="form-label" style="font-weight: 500; text-transform: uppercase; letter-spacing: 1px; font-size: 0.8rem;">Title *</label>
+                    <input type="text" id="Title" name="Title" class="form-control" required style="border: none; border-bottom: 1px solid #ddd; border-radius: 0; padding: 0.8rem 0;" />
+                </div>
+                <div class="col-md-6 mb-4">
+                    <label for="Icon" class="form-label" style="font-weight: 500; text-transform: uppercase; letter-spacing: 1px; font-size: 0.8rem;">Icon Class</label>
+                    <select id="Icon" name="Icon" class="form-select" style="border: none; border-bottom: 1px solid #ddd; border-radius: 0;">
+                        <option value="fa-calendar">Calendar</option>
+                        <option value="fa-coffee">Coffee</option>
+                        <option value="fa-music">Music</option>
+                        <option value="fa-leaf">Leaf</option>
+                        <option value="fa-birthday-cake">Birthday</option>
+                        <option value="fa-laptop">Laptop</option>
+                        <option value="fa-palette">Art</option>
+                        <option value="fa-users">Group</option>
+                        <option value="fa-glass-cheers">Cheers</option>
+                        <option value="fa-book">Book</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <label for="Description" class="form-label" style="font-weight: 500; text-transform: uppercase; letter-spacing: 1px; font-size: 0.8rem;">Description *</label>
+                <textarea id="Description" name="Description" class="form-control" rows="4" required style="border: none; border-bottom: 1px solid #ddd; border-radius: 0;"></textarea>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <label for="Schedule" class="form-label" style="font-weight: 500; text-transform: uppercase; letter-spacing: 1px; font-size: 0.8rem;">Schedule</label>
+                    <input type="text" id="Schedule" name="Schedule" class="form-control" placeholder="e.g., Every Saturday" style="border: none; border-bottom: 1px solid #ddd; border-radius: 0; padding: 0.8rem 0;" />
+                </div>
+                <div class="col-md-6 mb-4">
+                    <label for="Time" class="form-label" style="font-weight: 500; text-transform: uppercase; letter-spacing: 1px; font-size: 0.8rem;">Time</label>
+                    <input type="text" id="Time" name="Time" class="form-control" placeholder="e.g., 10:00 AM - 12:00 PM" style="border: none; border-bottom: 1px solid #ddd; border-radius: 0; padding: 0.8rem 0;" />
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <label for="ImageFile" class="form-label" style="font-weight: 500; text-transform: uppercase; letter-spacing: 1px; font-size: 0.8rem;">Event Image</label>
+                <input type="file" id="ImageFile" name="ImageFile" class="form-control" accept="image/*" style="border: none; border-bottom: 1px solid #ddd; border-radius: 0; padding: 0.8rem 0;" />
+                <small style="color: #888; font-size: 0.8rem;">Supported formats: JPG, PNG, GIF, WebP</small>
+            </div>
+
+            <div class="row mb-4">
+                <div class="col-md-12">
+                    <div class="form-check">
+                        <input type="checkbox" id="IsActive" name="IsActive" class="form-check-input" value="true" checked style="accent-color: #0a0a0a;" />
+                        <label for="IsActive" class="form-check-label" style="margin-left: 0.5rem;">Active (Show on website)</label>
+                    </div>
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                <button type="submit" class="btn-primary" style="padding: 1rem 3rem;">Create Event</button>
+                <a asp-action="Events" class="btn-outline" style="text-decoration: none; padding: 1rem 2rem;">
+                    ← Back to List
+                </a>
+            </div>
+        </form>
+    </div>
+</div>

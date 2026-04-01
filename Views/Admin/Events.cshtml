@@ -1,0 +1,80 @@
+@model IEnumerable<CafeWebsite.Models.Event>
+@{
+    ViewData["Title"] = "Events";
+}
+
+<div class="page-header">
+    <h1>Events</h1>
+    <div class="divider"></div>
+    <a asp-action="CreateEvent" class="btn-primary" style="text-decoration: none; display: inline-block; margin-top: 1rem;">
+        + Add New Event
+    </a>
+</div>
+
+<div class="container">
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert-success" style="padding: 1rem; margin-bottom: 2rem;">
+            @TempData["Success"]
+        </div>
+    }
+
+    <div class="admin-card" style="padding: 0; overflow: hidden;">
+        <table class="table table-hover mb-0">
+            <thead>
+                <tr>
+                    <th style="width: 60px;">ID</th>
+                    <th>Image</th>
+                    <th>Title</th>
+                    <th>Schedule</th>
+                    <th>Time</th>
+                    <th>Status</th>
+                    <th style="width: 120px;">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>#@item.Id</td>
+                        <td>
+                            @if (!string.IsNullOrEmpty(item.ImagePath))
+                            {
+                                <img src="@item.ImagePath" alt="@item.Title" style="width: 60px; height: 60px; object-fit: cover; border-radius: 4px;" />
+                            }
+                            else
+                            {
+                                <div style="width: 60px; height: 60px; background: #f0f0f0; border-radius: 4px; display: flex; align-items: center; justify-content: center;">
+                                    <i class="fas fa-image" style="color: #ccc;"></i>
+                                </div>
+                            }
+                        </td>
+                        <td><strong>@item.Title</strong></td>
+                        <td>@item.Schedule</td>
+                        <td>@item.Time</td>
+                        <td>
+                            @if (item.IsActive)
+                            {
+                                <span style="background: #28a745; color: white; padding: 0.3em 0.8em; font-size: 0.75rem;">Active</span>
+                            }
+                            else
+                            {
+                                <span style="background: #dc3545; color: white; padding: 0.3em 0.8em; font-size: 0.75rem;">Inactive</span>
+                            }
+                        </td>
+                        <td>
+                            <div style="display: flex; gap: 0.5rem;">
+                                <a asp-action="EditEvent" asp-route-id="@item.Id" style="color: #0a0a0a; padding: 0.4rem 0.8rem; border: 1px solid #ddd; font-size: 0.8rem;" title="Edit">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <a asp-action="DeleteEvent" asp-route-id="@item.Id" style="color: #fff; background: #0a0a0a; padding: 0.4rem 0.8rem; border: 1px solid #0a0a0a; font-size: 0.8rem;" title="Delete">
+                                    <i class="fas fa-trash"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

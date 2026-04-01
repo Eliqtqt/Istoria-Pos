@@ -9,115 +9,127 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = CafeWebsite
 build_property.RootNamespace = CafeWebsite
-build_property.ProjectDir = c:\Users\Admin\Desktop\cafewebsite\
+build_property.ProjectDir = C:\Users\Admin\Desktop\cafewebsite\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 8.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = c:\Users\Admin\Desktop\cafewebsite
+build_property.MSBuildProjectDirectory = C:\Users\Admin\Desktop\cafewebsite
 build_property._RazorSourceGeneratorDebug = 
 
-[c:/Users/Admin/Desktop/cafewebsite/Views/Account/AccessDenied.cshtml]
+[C:/Users/Admin/Desktop/cafewebsite/Views/Account/AccessDenied.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxBY2Nlc3NEZW5pZWQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/Admin/Desktop/cafewebsite/Views/Account/Login.cshtml]
+[C:/Users/Admin/Desktop/cafewebsite/Views/Account/Login.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxMb2dpbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/Admin/Desktop/cafewebsite/Views/Account/Register.cshtml]
+[C:/Users/Admin/Desktop/cafewebsite/Views/Account/Register.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxSZWdpc3Rlci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/Admin/Desktop/cafewebsite/Views/Admin/CreateMenuItem.cshtml]
+[C:/Users/Admin/Desktop/cafewebsite/Views/Admin/CreateEvent.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cQ3JlYXRlRXZlbnQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Desktop/cafewebsite/Views/Admin/CreateMenuItem.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cQ3JlYXRlTWVudUl0ZW0uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/Admin/Desktop/cafewebsite/Views/Admin/DeleteMenuItem.cshtml]
+[C:/Users/Admin/Desktop/cafewebsite/Views/Admin/DeleteMenuItem.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cRGVsZXRlTWVudUl0ZW0uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/Admin/Desktop/cafewebsite/Views/Admin/EditMenuItem.cshtml]
+[C:/Users/Admin/Desktop/cafewebsite/Views/Admin/EditMenuItem.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cRWRpdE1lbnVJdGVtLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/Admin/Desktop/cafewebsite/Views/Admin/Index.cshtml]
+[C:/Users/Admin/Desktop/cafewebsite/Views/Admin/Events.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cRXZlbnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Desktop/cafewebsite/Views/Admin/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/Admin/Desktop/cafewebsite/Views/Admin/MenuDetails.cshtml]
+[C:/Users/Admin/Desktop/cafewebsite/Views/Admin/MenuDetails.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cTWVudURldGFpbHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/Admin/Desktop/cafewebsite/Views/Admin/MenuItems.cshtml]
+[C:/Users/Admin/Desktop/cafewebsite/Views/Admin/MenuItems.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cTWVudUl0ZW1zLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/Admin/Desktop/cafewebsite/Views/Admin/OrderDetails.cshtml]
+[C:/Users/Admin/Desktop/cafewebsite/Views/Admin/OrderDetails.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cT3JkZXJEZXRhaWxzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/Admin/Desktop/cafewebsite/Views/Admin/Orders.cshtml]
+[C:/Users/Admin/Desktop/cafewebsite/Views/Admin/Orders.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cT3JkZXJzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/Admin/Desktop/cafewebsite/Views/Admin/UserDetails.cshtml]
+[C:/Users/Admin/Desktop/cafewebsite/Views/Admin/UserDetails.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cVXNlckRldGFpbHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/Admin/Desktop/cafewebsite/Views/Admin/Users.cshtml]
+[C:/Users/Admin/Desktop/cafewebsite/Views/Admin/Users.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cVXNlcnMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/Admin/Desktop/cafewebsite/Views/Cart/Index.cshtml]
+[C:/Users/Admin/Desktop/cafewebsite/Views/Cart/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2FydFxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/Admin/Desktop/cafewebsite/Views/Home/About.cshtml]
+[C:/Users/Admin/Desktop/cafewebsite/Views/Home/About.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxBYm91dC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/Admin/Desktop/cafewebsite/Views/Home/Index.cshtml]
+[C:/Users/Admin/Desktop/cafewebsite/Views/Home/Events.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxFdmVudHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Desktop/cafewebsite/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/Admin/Desktop/cafewebsite/Views/Home/Privacy.cshtml]
+[C:/Users/Admin/Desktop/cafewebsite/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/Admin/Desktop/cafewebsite/Views/Menu/Details.cshtml]
+[C:/Users/Admin/Desktop/cafewebsite/Views/Menu/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWVudVxEZXRhaWxzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/Admin/Desktop/cafewebsite/Views/Menu/Index.cshtml]
+[C:/Users/Admin/Desktop/cafewebsite/Views/Menu/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWVudVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/Admin/Desktop/cafewebsite/Views/Order/Checkout.cshtml]
+[C:/Users/Admin/Desktop/cafewebsite/Views/Order/Checkout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJcQ2hlY2tvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/Admin/Desktop/cafewebsite/Views/Order/Confirmation.cshtml]
+[C:/Users/Admin/Desktop/cafewebsite/Views/Order/Confirmation.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJcQ29uZmlybWF0aW9uLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/Admin/Desktop/cafewebsite/Views/Shared/Error.cshtml]
+[C:/Users/Admin/Desktop/cafewebsite/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/Admin/Desktop/cafewebsite/Views/Shared/_ValidationScriptsPartial.cshtml]
+[C:/Users/Admin/Desktop/cafewebsite/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/Admin/Desktop/cafewebsite/Views/_ViewImports.cshtml]
+[C:/Users/Admin/Desktop/cafewebsite/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/Admin/Desktop/cafewebsite/Views/_ViewStart.cshtml]
+[C:/Users/Admin/Desktop/cafewebsite/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/Admin/Desktop/cafewebsite/Views/Shared/_Layout.cshtml]
+[C:/Users/Admin/Desktop/cafewebsite/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-wmdk9fxiv9

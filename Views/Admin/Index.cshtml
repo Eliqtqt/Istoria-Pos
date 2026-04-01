@@ -3,109 +3,320 @@
     ViewData["Title"] = "Admin Dashboard";
 }
 
+<style>
+    .admin-header {
+        background: linear-gradient(135deg, #1a1a1a 0%, #000 100%);
+        padding: 2rem;
+        margin-bottom: 2rem;
+        border-radius: 8px;
+        color: #fff;
+    }
+    
+    .stat-card {
+        background: #fff;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        padding: 1.5rem;
+        transition: all 0.3s ease;
+        height: 100%;
+    }
+    
+    .stat-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+    
+    .stat-card.dark {
+        background: #1a1a1a;
+        color: #fff;
+        border: none;
+    }
+    
+    .stat-card.dark .stat-icon {
+        color: #fff;
+        opacity: 0.3;
+    }
+    
+    .stat-icon {
+        font-size: 3rem;
+        color: #1a1a1a;
+        opacity: 0.2;
+    }
+    
+    .section-card {
+        background: #fff;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+    
+    .section-card .card-header {
+        background: #1a1a1a;
+        color: #fff;
+        border: none;
+        padding: 1rem 1.5rem;
+    }
+    
+    .section-card.dark .card-header {
+        background: #fff;
+        color: #1a1a1a;
+        border-bottom: 1px solid #e0e0e0;
+    }
+    
+    .section-card .card-body {
+        padding: 1.5rem;
+    }
+    
+    .action-btn {
+        background: #1a1a1a;
+        color: #fff;
+        border: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 4px;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-block;
+    }
+    
+    .action-btn:hover {
+        background: #333;
+        color: #fff;
+        transform: translateY(-2px);
+    }
+    
+    .action-btn.outline {
+        background: transparent;
+        border: 1px solid #1a1a1a;
+        color: #1a1a1a;
+    }
+    
+    .action-btn.outline:hover {
+        background: #1a1a1a;
+        color: #fff;
+    }
+    
+    .action-btn.white {
+        background: #fff;
+        color: #1a1a1a;
+        border: 1px solid #fff;
+    }
+    
+    .action-btn.white:hover {
+        background: #f0f0f0;
+        color: #1a1a1a;
+    }
+    
+    .data-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    
+    .data-table th {
+        background: #f8f8f8;
+        color: #1a1a1a;
+        font-weight: 600;
+        padding: 1rem;
+        text-align: left;
+        border-bottom: 2px solid #1a1a1a;
+    }
+    
+    .data-table td {
+        padding: 1rem;
+        border-bottom: 1px solid #e0e0e0;
+        color: #333;
+    }
+    
+    .data-table tr:hover {
+        background: #f8f8f8;
+    }
+    
+    .badge-custom {
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+        font-size: 0.85rem;
+        font-weight: 500;
+    }
+    
+    .badge-pending {
+        background: #f0f0f0;
+        color: #333;
+    }
+    
+    .badge-confirmed {
+        background: #e0e0e0;
+        color: #1a1a1a;
+    }
+    
+    .badge-preparing {
+        background: #1a1a1a;
+        color: #fff;
+    }
+    
+    .badge-ready {
+        background: #333;
+        color: #fff;
+    }
+    
+    .badge-completed {
+        background: #000;
+        color: #fff;
+    }
+    
+    .badge-cancelled {
+        background: #fff;
+        color: #000;
+        border: 1px solid #000;
+    }
+    
+    .view-btn {
+        background: #1a1a1a;
+        color: #fff;
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+    
+    .view-btn:hover {
+        background: #333;
+        color: #fff;
+    }
+    
+    .stat-number {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #1a1a1a;
+        line-height: 1;
+    }
+    
+    .stat-label {
+        color: #666;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-top: 0.5rem;
+    }
+    
+    .stat-card.dark .stat-number {
+        color: #fff;
+    }
+    
+    .stat-card.dark .stat-label {
+        color: #999;
+    }
+</style>
+
 <div class="container-fluid">
-    <h1 class="mb-4"><i class="fas fa-tachometer-alt"></i> Admin Dashboard</h1>
+    <!-- Admin Header -->
+    <div class="admin-header">
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <h1 style="font-size: 2rem; margin-bottom: 0.5rem; font-weight: 300;">
+                    <i class="fas fa-crown" style="margin-right: 0.5rem;"></i> Admin Dashboard
+                </h1>
+                <p style="margin: 0; opacity: 0.7;">Welcome back! Here's what's happening today.</p>
+            </div>
+            <div style="text-align: right;">
+                <p style="margin: 0; opacity: 0.7;">@DateTime.Now.ToString("dddd, MMMM dd, yyyy")</p>
+            </div>
+        </div>
+    </div>
     
     @if (TempData["Success"] != null)
     {
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <div class="alert alert-success alert-dismissible fade show" role="alert" style="border-radius: 4px; border: none; background: #1a1a1a; color: #fff;">
             @TempData["Success"]
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" style="filter: invert(1);"></button>
         </div>
     }
 
     <!-- Stats Cards -->
     <div class="row mb-4">
-        <div class="col-md-3">
-            <div class="card bg-primary text-white">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div>
-                            <h6 class="card-title">Total Orders</h6>
-                            <h2 class="mb-0">@Model.TotalOrders</h2>
-                        </div>
-                        <i class="fas fa-shopping-cart fa-3x opacity-50"></i>
+        <div class="col-md-3 mb-3">
+            <div class="stat-card">
+                <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                        <div class="stat-number">@Model.TotalOrders</div>
+                        <div class="stat-label">Total Orders</div>
                     </div>
+                    <i class="fas fa-shopping-bag stat-icon"></i>
                 </div>
             </div>
         </div>
-        <div class="col-md-3">
-            <div class="card bg-success text-white">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div>
-                            <h6 class="card-title">Total Revenue</h6>
-                            <h2 class="mb-0">@Model.TotalRevenue.ToString("C")</h2>
-                        </div>
-                        <i class="fas fa-dollar-sign fa-3x opacity-50"></i>
+        <div class="col-md-3 mb-3">
+            <div class="stat-card dark">
+                <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                        <div class="stat-number">@Model.TotalRevenue.ToString("C")</div>
+                        <div class="stat-label">Total Revenue</div>
                     </div>
+                    <i class="fas fa-wallet stat-icon"></i>
                 </div>
             </div>
         </div>
-        <div class="col-md-3">
-            <div class="card bg-warning text-dark">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div>
-                            <h6 class="card-title">Menu Items</h6>
-                            <h2 class="mb-0">@Model.TotalMenuItems</h2>
-                        </div>
-                        <i class="fas fa-coffee fa-3x opacity-50"></i>
+        <div class="col-md-3 mb-3">
+            <div class="stat-card">
+                <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                        <div class="stat-number">@Model.TotalMenuItems</div>
+                        <div class="stat-label">Menu Items</div>
                     </div>
+                    <i class="fas fa-mug-hot stat-icon"></i>
                 </div>
             </div>
         </div>
-        <div class="col-md-3">
-            <div class="card bg-info text-white">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div>
-                            <h6 class="card-title">Total Users</h6>
-                            <h2 class="mb-0">@Model.TotalUsers</h2>
-                        </div>
-                        <i class="fas fa-users fa-3x opacity-50"></i>
+        <div class="col-md-3 mb-3">
+            <div class="stat-card dark">
+                <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                        <div class="stat-number">@Model.TotalUsers</div>
+                        <div class="stat-label">Total Users</div>
                     </div>
+                    <i class="fas fa-users stat-icon"></i>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Quick Stats -->
+    <!-- Quick Stats and Actions -->
     <div class="row mb-4">
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-header bg-primary text-white">
-                    <h5 class="mb-0"><i class="fas fa-clock"></i> Today's Summary</h5>
+        <div class="col-md-6 mb-4">
+            <div class="section-card">
+                <div class="card-header">
+                    <h5 class="mb-0"><i class="fas fa-chart-line" style="margin-right: 0.5rem;"></i> Today's Summary</h5>
                 </div>
                 <div class="card-body">
                     <div class="row text-center">
                         <div class="col-6">
-                            <h3>@Model.TodayOrders</h3>
-                            <p class="text-muted mb-0">Orders Today</p>
+                            <div class="stat-number" style="font-size: 3rem;">@Model.TodayOrders</div>
+                            <div class="stat-label">Orders Today</div>
                         </div>
                         <div class="col-6">
-                            <h3>@Model.PendingOrders</h3>
-                            <p class="text-muted mb-0">Pending Orders</p>
+                            <div class="stat-number" style="font-size: 3rem;">@Model.PendingOrders</div>
+                            <div class="stat-label">Pending Orders</div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-header bg-primary text-white">
-                    <h5 class="mb-0"><i class="fas fa-bolt"></i> Quick Actions</h5>
+        <div class="col-md-6 mb-4">
+            <div class="section-card dark">
+                <div class="card-header">
+                    <h5 class="mb-0"><i class="fas fa-bolt" style="margin-right: 0.5rem;"></i> Quick Actions</h5>
                 </div>
                 <div class="card-body">
-                    <div class="d-grid gap-2">
-                        <a asp-action="MenuItems" class="btn btn-outline-primary">
-                            <i class="fas fa-plus"></i> Add Menu Item
+                    <div class="d-grid gap-2" style="grid-template-columns: repeat(3, 1fr);">
+                        <a asp-action="MenuItems" class="action-btn outline" style="text-align: center;">
+                            <i class="fas fa-plus" style="display: block; font-size: 1.5rem; margin-bottom: 0.5rem;"></i>
+                            Add Menu Item
                         </a>
-                        <a asp-action="Orders" class="btn btn-outline-success">
-                            <i class="fas fa-list"></i> View All Orders
+                        <a asp-action="Orders" class="action-btn outline" style="text-align: center;">
+                            <i class="fas fa-list" style="display: block; font-size: 1.5rem; margin-bottom: 0.5rem;"></i>
+                            View Orders
                         </a>
-                        <a asp-action="Users" class="btn btn-outline-info">
-                            <i class="fas fa-user-cog"></i> Manage Users
+                        <a asp-action="Users" class="action-btn outline" style="text-align: center;">
+                            <i class="fas fa-user-cog" style="display: block; font-size: 1.5rem; margin-bottom: 0.5rem;"></i>
+                            Manage Users
                         </a>
                     </div>
                 </div>
@@ -114,13 +325,16 @@
     </div>
 
     <!-- Recent Orders -->
-    <div class="card">
-        <div class="card-header bg-primary text-white">
-            <h5 class="mb-0"><i class="fas fa-history"></i> Recent Orders</h5>
+    <div class="section-card">
+        <div class="card-header">
+            <div class="d-flex justify-content-between align-items-center">
+                <h5 class="mb-0"><i class="fas fa-history" style="margin-right: 0.5rem;"></i> Recent Orders</h5>
+                <a asp-action="Orders" class="action-btn white" style="padding: 0.5rem 1rem; font-size: 0.85rem;">View All</a>
+            </div>
         </div>
-        <div class="card-body">
+        <div class="card-body" style="padding: 0;">
             <div class="table-responsive">
-                <table class="table table-hover">
+                <table class="data-table">
                     <thead>
                         <tr>
                             <th>Order ID</th>
@@ -135,16 +349,16 @@
                         @foreach (var order in Model.RecentOrders)
                         {
                             <tr>
-                                <td>#@order.Id</td>
+                                <td><strong>#@order.Id</strong></td>
                                 <td>@order.User?.Username ?? "Guest"</td>
                                 <td>@order.OrderDate.ToString("MMM dd, yyyy HH:mm")</td>
-                                <td>@order.TotalAmount.ToString("C")</td>
+                                <td><strong>@order.TotalAmount.ToString("C")</strong></td>
                                 <td>
-                                    <span class="badge bg-@GetStatusBadgeColor(order.Status)">@order.Status</span>
+                                    <span class="badge-custom @GetStatusBadgeClass(order.Status)">@order.Status</span>
                                 </td>
                                 <td>
-                                    <a asp-action="OrderDetails" asp-route-id="@order.Id" class="btn btn-sm btn-outline-primary">
-                                        <i class="fas fa-eye"></i>
+                                    <a asp-action="OrderDetails" asp-route-id="@order.Id" class="view-btn">
+                                        <i class="fas fa-eye"></i> View
                                     </a>
                                 </td>
                             </tr>
@@ -157,17 +371,17 @@
 </div>
 
 @functions {
-    string GetStatusBadgeColor(string status)
+    string GetStatusBadgeClass(string status)
     {
         return status switch
         {
-            "Pending" => "warning",
-            "Confirmed" => "info",
-            "Preparing" => "primary",
-            "Ready" => "success",
-            "Completed" => "secondary",
-            "Cancelled" => "danger",
-            _ => "secondary"
+            "Pending" => "badge-pending",
+            "Confirmed" => "badge-confirmed",
+            "Preparing" => "badge-preparing",
+            "Ready" => "badge-ready",
+            "Completed" => "badge-completed",
+            "Cancelled" => "badge-cancelled",
+            _ => "badge-completed"
         };
     }
 }

@@ -16,7 +16,7 @@
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
-                    ISTORIA COFFEE
+                    <img src="~/Images/image.png" alt="Istoria Coffee Logo" style="height: 80px; margin-right: 10px;" />
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse">
                     <span class="navbar-toggler-icon"></span>
@@ -31,6 +31,9 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Home" asp-action="About">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Events">Events</a>
                         </li>
                         @if (User.IsInRole("Admin"))
                         {
@@ -88,8 +91,9 @@
         @RenderBody()
     </main>
 
-    <footer class="footer">
-        <div class="container">
+    <footer class="footer" style="background-image: url('/Images/logo.jpg'); background-size: cover; background-position: center; position: relative;">
+        <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(0,0,0,0.7); z-index: 1;"></div>
+        <div class="container" style="position: relative; z-index: 2;">
             <div class="row">
                 <div class="col-md-4 mb-4">
                     <div class="footer-brand">ISTORIA COFFEE</div>
@@ -101,14 +105,17 @@
                         <li><a asp-controller="Home" asp-action="Index">Home</a></li>
                         <li><a asp-controller="Menu" asp-action="Index">Menu</a></li>
                         <li><a asp-controller="Home" asp-action="About">About</a></li>
+                        <li><a asp-controller="Home" asp-action="Events">Events</a></li>
                     </ul>
                 </div>
                 <div class="col-md-4 mb-4">
                     <h5>Contact</h5>
                     <ul class="footer-links">
-                        <li><a href="#">123 Coffee Street</a></li>
-                        <li><a href="#">contact@cafe.com</a></li>
-                        <li><a href="#">+1 234 567 890</a></li>
+                        <li>Istoria Coffee Shop, Brgy. Maitim, Bay, Philippines, 4033</li>
+                        <li>National Hwy, Manila S Road</li>
+                        <li><a href="mailto:business.istoria@gmail.com">business.istoria@gmail.com</a></li>
+                        <li><a href="https://m.me/istoriacoffee" target="_blank">Istoria Coffee</a></li>
+                        <li>+63 912 345 6789</li>
                     </ul>
                 </div>
             </div>

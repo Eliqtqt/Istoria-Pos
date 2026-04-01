@@ -2,47 +2,263 @@
     ViewData["Title"] = "Register";
 }
 
-<div class="row justify-content-center">
-    <div class="col-md-6 col-lg-4">
-        <div class="card shadow-sm">
-            <div class="card-body">
-                <h2 class="card-title text-center mb-4">@ViewData["Title"]</h2>
-                
-                @if (ViewData.ModelState.ErrorCount > 0)
-                {
-                    <div class="alert alert-danger">
-                        @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
-                        {
-                            <p class="mb-0">@error.ErrorMessage</p>
-                        }
-                    </div>
-                }
+<div class="auth-page">
+    <div class="auth-container">
+        <div class="auth-card">
+            <!-- Header -->
+            <div class="auth-header">
+                <h1>Create Account</h1>
+                <p class="subtitle">Join us and start your journey</p>
+            </div>
 
-                <form asp-action="Register" method="post">
-                    <div class="mb-3">
-                        <label for="username" class="form-label">Username</label>
-                        <input type="text" class="form-control" id="username" name="username" required />
-                    </div>
-                    
-                    <div class="mb-3">
-                        <label for="email" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="email" name="email" required />
-                    </div>
-                    
-                    <div class="mb-3">
-                        <label for="password" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="password" name="password" required />
-                    </div>
-                    
-                    <div class="d-grid">
-                        <button type="submit" class="btn btn-primary">Register</button>
-                    </div>
-                </form>
-                
-                <div class="text-center mt-3">
-                    <p>Already have an account? <a asp-action="Login">Login here</a></p>
+            <!-- Error Messages -->
+            @if (ViewData.ModelState.ErrorCount > 0)
+            {
+                <div class="alert-message error">
+                    <i class="fas fa-exclamation-circle"></i>
+                    @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                    {
+                        <p class="mb-0">@error.ErrorMessage</p>
+                    }
                 </div>
+            }
+
+            <!-- Register Form -->
+            <form asp-action="Register" method="post" class="auth-form">
+                <div class="form-group">
+                    <label for="username" class="form-label">Username</label>
+                    <input type="text" class="form-control" id="username" name="username" 
+                           placeholder="Choose a username" required />
+                </div>
+                
+                <div class="form-group">
+                    <label for="email" class="form-label">Email Address</label>
+                    <input type="email" class="form-control" id="email" name="email" 
+                           placeholder="Enter your email" required />
+                </div>
+                
+                <div class="form-group">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="password" name="password" 
+                           placeholder="Create a password" required />
+                </div>
+
+                <div class="form-group">
+                    <label for="confirmPassword" class="form-label">Confirm Password</label>
+                    <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" 
+                           placeholder="Confirm your password" required />
+                </div>
+
+                <div class="terms-check">
+                    <label class="checkbox-label">
+                        <input type="checkbox" class="checkbox-input" id="termsAccept" required />
+                        <span class="checkbox-custom"></span>
+                        <span>I agree to the <a href="#">Terms</a> and <a href="#">Privacy Policy</a></span>
+                    </label>
+                </div>
+                
+                <button type="submit" class="btn-submit">
+                    Create Account
+                </button>
+            </form>
+
+            <!-- Login Link -->
+            <div class="auth-footer">
+                <p>Already have an account? <a asp-action="Login">Sign in</a></p>
             </div>
         </div>
     </div>
 </div>
+
+<style>
+    .auth-page {
+        min-height: calc(100vh - 200px);
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        padding: 6rem 1rem 3rem;
+        background-color: #f5f5f5;
+    }
+
+    .auth-container {
+        width: 100%;
+        max-width: 400px;
+    }
+
+    .auth-card {
+        background: white;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        padding: 2.5rem;
+    }
+
+    .auth-header {
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+
+    .auth-header h1 {
+        font-family: 'Playfair Display', Georgia, serif;
+        font-size: 1.75rem;
+        color: #1a1a1a;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+        letter-spacing: -0.02em;
+    }
+
+    .subtitle {
+        color: #666;
+        font-size: 0.9rem;
+        margin: 0;
+    }
+
+    .alert-message {
+        padding: 0.875rem 1rem;
+        border-radius: 4px;
+        margin-bottom: 1.5rem;
+        font-size: 0.875rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .alert-message.error {
+        background: #f5f5f5;
+        color: #1a1a1a;
+        border: 1px solid #e0e0e0;
+    }
+
+    .form-group {
+        margin-bottom: 1.25rem;
+    }
+
+    .form-label {
+        display: block;
+        font-weight: 500;
+        color: #1a1a1a;
+        margin-bottom: 0.5rem;
+        font-size: 0.875rem;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        border: 1px solid #d0d0d0;
+        border-radius: 4px;
+        font-size: 0.95rem;
+        transition: border-color 0.2s, box-shadow 0.2s;
+        background: white;
+        color: #1a1a1a;
+    }
+
+    .form-control:focus {
+        outline: none;
+        border-color: #1a1a1a;
+        box-shadow: 0 0 0 2px rgba(26, 26, 26, 0.1);
+    }
+
+    .form-control::placeholder {
+        color: #999;
+    }
+
+    .terms-check {
+        margin-bottom: 1.5rem;
+    }
+
+    .checkbox-label {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.5rem;
+        cursor: pointer;
+        color: #666;
+        font-size: 0.8rem;
+        line-height: 1.4;
+        user-select: none;
+    }
+
+    .checkbox-input {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+    }
+
+    .checkbox-custom {
+        width: 16px;
+        height: 16px;
+        min-width: 16px;
+        border: 1px solid #999;
+        border-radius: 2px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s;
+        margin-top: 2px;
+    }
+
+    .checkbox-input:checked + .checkbox-custom {
+        background: #1a1a1a;
+        border-color: #1a1a1a;
+    }
+
+    .checkbox-input:checked + .checkbox-custom::after {
+        content: '✓';
+        color: white;
+        font-size: 10px;
+    }
+
+    .checkbox-label a {
+        color: #1a1a1a;
+        text-decoration: none;
+        font-weight: 500;
+    }
+
+    .checkbox-label a:hover {
+        text-decoration: underline;
+    }
+
+    .btn-submit {
+        width: 100%;
+        padding: 0.875rem 1.5rem;
+        background: #1a1a1a;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        font-size: 0.95rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background 0.2s;
+    }
+
+    .btn-submit:hover {
+        background: #333;
+    }
+
+    .btn-submit:active {
+        background: #000;
+    }
+
+    .auth-footer {
+        text-align: center;
+        margin-top: 1.5rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid #e0e0e0;
+        color: #666;
+        font-size: 0.875rem;
+    }
+
+    .auth-footer a {
+        color: #1a1a1a;
+        font-weight: 500;
+        text-decoration: none;
+    }
+
+    .auth-footer a:hover {
+        text-decoration: underline;
+    }
+
+    @@media (max-width: 480px) {
+        .auth-card {
+            padding: 1.5rem;
+        }
+    }
+</style>

@@ -2,9 +2,9 @@
     ViewData["Title"] = "About";
 }
 
-<div class="page-header" style="background: #0a0a0a; color: white;">
+<div class="page-header" style="background: var(--bw-black);">
     <h1>About Istoria</h1>
-    <div class="divider"></div>
+    <div class="divider" style="background: var(--bw-white);"></div>
     <p style="color: rgba(255,255,255,0.7);">Where every cup tells a story</p>
 </div>
 
@@ -12,59 +12,194 @@
     <div class="row align-items-center">
         <div class="col-lg-6 mb-5">
             <h2 style="font-size: 2.5rem; margin-bottom: 1.5rem;">Our Story</h2>
-            <p style="color: #666; line-height: 1.8; margin-bottom: 1.5rem;">
+            <p style="color: var(--bw-medium-gray); line-height: 1.8; margin-bottom: 1.5rem;">
                 Founded with a passion for exceptional coffee, Istoria Coffee has been serving the community 
                 with carefully curated beverages and artisanal treats. We believe in quality ingredients, 
                 sustainable practices, and creating memorable moments for every guest.
             </p>
-            <p style="color: #666; line-height: 1.8;">
+            <p style="color: var(--bw-medium-gray); line-height: 1.8;">
                 Our skilled baristas bring craftsmanship to every cup, ensuring precision and care in each brew. 
                 From our signature espresso to freshly baked goods, we strive to make your visit unforgettable.
             </p>
         </div>
         <div class="col-lg-6 mb-5">
-            <div class="admin-card">
-                <h3 style="font-size: 1.5rem; margin-bottom: 1.5rem;">Why Istoria</h3>
-                <ul style="list-style: none; padding: 0;">
-                    <li style="padding: 1rem 0; border-bottom: 1px solid #eee; display: flex; align-items: center;">
-                        <i class="fas fa-mug-hot" style="width: 40px; color: #0a0a0a;"></i>
-                        <span><strong>Premium Beans</strong> — Sustainably sourced</span>
+            <div class="about-card">
+                <h3>Why Istoria</h3>
+                <ul class="about-features">
+                    <li>
+                        <span class="about-icon"><i class="fas fa-mug-hot"></i></span>
+                        <div>
+                            <strong>Premium Beans</strong>
+                            <span>Sustainably sourced</span>
+                        </div>
                     </li>
-                    <li style="padding: 1rem 0; border-bottom: 1px solid #eee; display: flex; align-items: center;">
-                        <i class="fas fa-bread-slice" style="width: 40px; color: #0a0a0a;"></i>
-                        <span><strong>Fresh Baked</strong> — Made daily</span>
+                    <li>
+                        <span class="about-icon"><i class="fas fa-bread-slice"></i></span>
+                        <div>
+                            <strong>Fresh Baked</strong>
+                            <span>Made daily</span>
+                        </div>
                     </li>
-                    <li style="padding: 1rem 0; border-bottom: 1px solid #eee; display: flex; align-items: center;">
-                        <i class="fas fa-user-tie" style="width: 40px; color: #0a0a0a;"></i>
-                        <span><strong>Expert Baristas</strong> — Passionate craft</span>
+                    <li>
+                        <span class="about-icon"><i class="fas fa-user-tie"></i></span>
+                        <div>
+                            <strong>Expert Baristas</strong>
+                            <span>Passionate craft</span>
+                        </div>
                     </li>
-                    <li style="padding: 1rem 0; display: flex; align-items: center;">
-                        <i class="fas fa-leaf" style="width: 40px; color: #0a0a0a;"></i>
-                        <span><strong>Sustainable</strong> — Eco-conscious</span>
+                    <li>
+                        <span class="about-icon"><i class="fas fa-leaf"></i></span>
+                        <div>
+                            <strong>Sustainable</strong>
+                            <span>Eco-conscious</span>
+                        </div>
                     </li>
                 </ul>
             </div>
         </div>
     </div>
 
-    <div style="background: #fafafa; padding: 4rem 2rem; margin: 3rem 0; text-align: center;">
-        <h2 style="font-size: 2rem; margin-bottom: 2rem;">Visit Us</h2>
+    <div class="visit-section">
+        <h2>Visit Us</h2>
         <div class="row">
-            <div class="col-md-4 mb-4">
-                <i class="fas fa-map-marker-alt" style="font-size: 1.5rem; color: #0a0a0a; margin-bottom: 1rem;"></i>
-                <h5 style="margin-bottom: 0.5rem;">Location</h5>
-                <p style="color: #666; margin: 0;">123 Coffee Street<br>Manila, Philippines</p>
+            <div class="col-md-3">
+                <div class="visit-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <h5>Location</h5>
+                    <p>Istoria Coffee Shop<br>Brgy. Maitim, Bay, Philippines 4033<br>National Hwy, Manila S Road</p>
+                </div>
             </div>
-            <div class="col-md-4 mb-4">
-                <i class="fas fa-clock" style="font-size: 1.5rem; color: #0a0a0a; margin-bottom: 1rem;"></i>
-                <h5 style="margin-bottom: 0.5rem;">Hours</h5>
-                <p style="color: #666; margin: 0;">Mon-Fri: 6AM - 9PM<br>Sat-Sun: 7AM - 10PM</p>
+            <div class="col-md-3">
+                <div class="visit-item">
+                    <i class="fas fa-clock"></i>
+                    <h5>Hours</h5>
+                    <p>Mon-Fri: 6AM - 9PM<br>Sat-Sun: 7AM - 10PM</p>
+                </div>
             </div>
-            <div class="col-md-4 mb-4">
-                <i class="fas fa-phone" style="font-size: 1.5rem; color: #0a0a0a; margin-bottom: 1rem;"></i>
-                <h5 style="margin-bottom: 0.5rem;">Contact</h5>
-                <p style="color: #666; margin: 0;">+63 912 345 6789<br>hello@istoriacoffee.com</p>
+            <div class="col-md-3">
+                <div class="visit-item">
+                    <i class="fas fa-envelope"></i>
+                    <h5>Email</h5>
+                    <p><a href="mailto:business.istoria@gmail.com" style="color: rgba(255,255,255,0.7); text-decoration: none;">business.istoria@gmail.com</a></p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="visit-item">
+                    <i class="fab fa-facebook-messenger"></i>
+                    <h5>Messenger</h5>
+                    <p><a href="https://m.me/istoriacoffee" target="_blank" style="color: rgba(255,255,255,0.7); text-decoration: none;">Message Us</a></p>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
+<style>
+    /* About Card Styles */
+    .about-card {
+        background: var(--bw-white);
+        border: 1px solid #eee;
+        padding: 2.5rem;
+    }
+
+    .about-card h3 {
+        font-size: 1.5rem;
+        margin-bottom: 2rem;
+        color: var(--bw-black);
+    }
+
+    .about-features {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .about-features li {
+        padding: 1.25rem 0;
+        border-bottom: 1px solid #eee;
+        display: flex;
+        align-items: center;
+        gap: 1.25rem;
+    }
+
+    .about-features li:last-child {
+        border-bottom: none;
+    }
+
+    .about-icon {
+        width: 50px;
+        height: 50px;
+        background: var(--bw-black);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+
+    .about-icon i {
+        color: var(--bw-white);
+        font-size: 1.2rem;
+    }
+
+    .about-features li div {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .about-features li strong {
+        color: var(--bw-black);
+        font-size: 1rem;
+        font-weight: 600;
+    }
+
+    .about-features li span {
+        color: var(--bw-medium-gray);
+        font-size: 0.9rem;
+    }
+
+    /* Visit Section */
+    .visit-section {
+        background: var(--bw-black);
+        padding: 4rem 3rem;
+        margin: 4rem 0 2rem;
+        text-align: center;
+    }
+
+    .visit-section h2 {
+        color: var(--bw-white);
+        font-size: 2rem;
+        margin-bottom: 3rem;
+    }
+
+    .visit-item {
+        padding: 1rem;
+    }
+
+    .visit-item i {
+        font-size: 1.75rem;
+        color: var(--bw-white);
+        margin-bottom: 1rem;
+    }
+
+    .visit-item h5 {
+        color: var(--bw-white);
+        font-size: 1rem;
+        font-weight: 600;
+        margin-bottom: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .visit-item p {
+        color: rgba(255,255,255,0.7);
+        margin: 0;
+        line-height: 1.8;
+    }
+
+    /* Divider */
+    .divider {
+        width: 60px;
+        height: 1px;
+        margin: 1.5rem auto;
+    }
+</style>

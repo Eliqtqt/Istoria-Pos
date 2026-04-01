@@ -16,6 +16,10 @@ namespace CafeWebsite.Controllers
 
         public async Task<IActionResult> Index()
         {
+            Response.Headers.Append("Cache-Control", "no-cache, no-store, must-revalidate");
+            Response.Headers.Append("Pragma", "no-cache");
+            Response.Headers.Append("Expires", "0");
+            
             var menuItems = await _context.MenuItems.ToListAsync();
             return View(menuItems);
         }

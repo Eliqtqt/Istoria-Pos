@@ -2,117 +2,812 @@
 
 @{
     ViewData["Title"] = @Model.Name;
+    var isDrink = Model.Category.ToLower() == "coffee" || Model.Category.ToLower() == "non-coffee" || 
+                  Model.Category.ToLower() == "specials" || Model.Category.ToLower() == "latte" ||
+                  Model.Category.ToLower() == "tea" || Model.Category.ToLower() == "frappe" || 
+                  Model.Category.ToLower() == "milk tea";
 }
 
-<div class="details-container">
+<div class="details-page">
+    <!-- Back Link -->
     <div class="container">
-        <div class="row align-items-center">
-            <div class="col-lg-6">
-                @if (!string.IsNullOrEmpty(Model.ImageUrl))
-                {
-                    <img src="@Model.ImageUrl" class="details-image" alt="@Model.Name">
-                }
-                else
-                {
-                    <div class="details-image d-flex align-items-center justify-content-center" style="background: #f5f5f5;">
-                        <i class="fas fa-mug-hot fa-5x" style="color: #ccc;"></i>
-                    </div>
-                }
-            </div>
-            <div class="col-lg-6 details-content">
-                <a href="@Url.Action("Index", "Menu")" style="color: #888; text-decoration: none; font-size: 0.85rem;">
-                    ← Back to Menu
-                </a>
-                
-                <h1>@Model.Name</h1>
-                <span style="color: #888; text-transform: uppercase; letter-spacing: 2px; font-size: 0.8rem;">@Model.Category</span>
-                
-                <p style="color: #666; margin: 1.5rem 0; line-height: 1.8;">@Model.Description</p>
-                
-                <div class="price">₱@Model.Price.ToString("F2")</div>
+        <a href="@Url.Action("Index", "Menu")" class="back-link">
+            <i class="fas fa-arrow-left"></i> Back to Menu
+        </a>
+    </div>
 
-                @if (Model.Rating > 0)
-                {
-                    <div class="rating" style="margin-bottom: 1.5rem;">
-                        @for (int i = 1; i <= 5; i++)
-                        {
-                            <i class="fas fa-star" style="font-size: 0.9rem;"></i>
-                        }
-                        <span style="margin-left: 8px; color: #888;">@Model.Rating.ToString("F1") (@Model.ReviewCount reviews)</span>
-                    </div>
-                }
+    <div class="container">
+        <div class="product-showcase">
+            <!-- Product Image -->
+            <div class="product-gallery">
+                <div class="main-image">
+                    @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                    {
+                        <img src="@Model.ImageUrl" alt="@Model.Name" class="gallery-main">
+                        <div class="image-overlay"></div>
+                    }
+                    else
+                    {
+                        <div class="main-image-placeholder">
+                            <i class="fas fa-mug-hot"></i>
+                        </div>
+                    }
+                </div>
+                <div class="image-badges">
+                    <span class="category-badge">@Model.Category</span>
+                    @if (Model.IsVegetarian)
+                    {
+                        <span class="option-badge vegetarian"><i class="fas fa-leaf"></i> Vegetarian</span>
+                    }
+                    @if (Model.IsVegan)
+                    {
+                        <span class="option-badge vegan"><i class="fas fa-seedling"></i> Vegan</span>
+                    }
+                    @if (Model.IsGlutenFree)
+                    {
+                        <span class="option-badge gluten-free"><i class="fas fa-wheat-awn"></i> Gluten-Free</span>
+                    }
+                </div>
+            </div>
+
+            <!-- Product Info -->
+            <div class="product-info">
+                <div class="product-header">
+                    <h1>@Model.Name</h1>
+                    <div class="product-price">₱@Model.Price.ToString("F2")</div>
+                </div>
 
                 <!-- Rating Section -->
-                <div style="border-top: 1px solid #eee; border-bottom: 1px solid #eee; padding: 1.5rem 0; margin: 1.5rem 0;">
-                    <h6 style="text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1rem;">Rate this item</h6>
+                @if (Model.Rating > 0)
+                {
+                    <div class="rating-section">
+                        <div class="stars-display">
+                            @for (int i = 1; i <= 5; i++)
+                            {
+                                <i class="fas fa-star @(i <= Math.Round(Model.Rating) ? "filled" : "")"></i>
+                            }
+                        </div>
+                        <div class="rating-text">
+                            <span class="rating-value">@Model.Rating.ToString("F1")</span>
+                            <span class="review-count">(@Model.ReviewCount reviews)</span>
+                        </div>
+                    </div>
+                }
+
+                <p class="product-description">@Model.Description</p>
+
+                <!-- Add to Cart Section -->
+                <div class="add-to-cart-section">
+                    @if (isDrink)
+                    {
+                        <button class="btn-customize-main" onclick="openCustomizeModal(@Model.Id, '@Model.Name', @Model.Price, true)">
+                            <i class="fas fa-sliders-h"></i>
+                            <span>Customize Your Drink</span>
+                        </button>
+                        <p class="customize-hint">Click to customize size, sweetness, ice & toppings</p>
+                    }
+                    else
+                    {
+                        <form asp-controller="Cart" asp-action="Add" method="post" class="add-form">
+                            <input type="hidden" name="id" value="@Model.Id" />
+                            <input type="hidden" name="name" value="@Model.Name" />
+                            <input type="hidden" name="price" value="@Model.Price" />
+                            <input type="hidden" name="quantity" value="1" />
+                            <button type="submit" class="btn-add-cart">
+                                <i class="fas fa-shopping-bag"></i>
+                                <span>Add to Cart - ₱@Model.Price.ToString("F2")</span>
+                            </button>
+                        </form>
+                    }
+                </div>
+
+                <!-- Rating Form Section -->
+                <div class="rating-form-section">
+                    <div class="section-header">
+                        <i class="fas fa-star"></i>
+                        <span>Rate This Item</span>
+                    </div>
+                    
                     @if (TempData["Success"] != null)
                     {
-                        <div class="alert-success" style="padding: 0.8rem; margin-bottom: 1rem;">@TempData["Success"]</div>
+                        <div class="alert-success">@TempData["Success"]</div>
                     }
                     @if (TempData["Error"] != null)
                     {
-                        <div class="alert-danger" style="padding: 0.8rem; margin-bottom: 1rem;">@TempData["Error"]</div>
+                        <div class="alert-error">@TempData["Error"]</div>
                     }
-                    <form asp-action="Rate" asp-controller="Menu" method="post">
+                    
+                    <form asp-action="Rate" asp-controller="Menu" method="post" class="rating-form">
                         <input type="hidden" name="id" value="@Model.Id" />
                         <input type="hidden" name="rating" id="selectedRating" value="0" />
-                        <div class="star-rating mb-3">
+                        <div class="star-rating">
                             @for (int i = 1; i <= 5; i++)
                             {
-                                <i class="fas fa-star star-icon" data-rating="@i" style="cursor: pointer; font-size: 1.5rem; color: #ddd; margin-right: 5px;"></i>
+                                <i class="fas fa-star star-icon" data-rating="@i"></i>
                             }
                         </div>
-                        <button type="submit" class="btn-primary" id="submitRating" disabled style="padding: 0.8rem 2rem;">Submit Rating</button>
+                        <button type="submit" class="btn-submit-rating" id="submitRating" disabled>
+                            Submit Rating
+                        </button>
                     </form>
                 </div>
+            </div>
+        </div>
 
-                <div style="margin-top: 2rem;">
-                    <button class="btn-primary add-to-cart" data-id="@Model.Id" data-name="@Model.Name" data-price="@Model.Price" style="padding: 1rem 2.5rem;">
-                        Add to Cart - ₱@Model.Price.ToString("F2")
+        <!-- Related Items or Gallery could go here -->
+    </div>
+</div>
+
+<!-- Customization Modal for Drinks -->
+@if (isDrink)
+{
+    <div class="modal fade" id="customizeModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <i class="fas fa-coffee"></i>Craft Your Perfect Drink
+                    </h5>
+                    <button type="button" class="close" onclick="$('#customizeModal').modal('hide')">
+                        <span>&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="customizationFormDetail">
+                        <input type="hidden" id="detailItemId" value="@Model.Id" />
+                        <input type="hidden" id="detailItemName" value="@Model.Name" />
+                        <input type="hidden" id="detailItemPrice" value="@Model.Price" />
+                        
+                        <div class="customize-item-header">
+                            <h4>@Model.Name</h4>
+                            <p>Base Price: ₱@Model.Price.ToString("F2")</p>
+                        </div>
+                        
+                        <div class="option-group">
+                            <label><i class="fas fa-expand"></i> Size</label>
+                            <div class="size-options">
+                                <label><input type="radio" name="size" value="Regular" checked><span>Regular</span></label>
+                                <label><input type="radio" name="size" value="Large"><span>Large +₱20</span></label>
+                                <label><input type="radio" name="size" value="Extra Large"><span>XL +₱35</span></label>
+                            </div>
+                        </div>
+                        
+                        <div class="option-group">
+                            <label><i class="fas fa-tint"></i> Sweetness</label>
+                            <input type="range" id="detailSweetness" min="0" max="100" value="100" step="25">
+                            <div class="sweetness-display"><span id="sweetnessText">100%</span></div>
+                        </div>
+                        
+                        <div class="option-group">
+                            <label><i class="fas fa-cubes"></i> Ice Level</label>
+                            <div class="ice-options">
+                                <label><input type="radio" name="iceLevel" value="Regular" checked><span>Regular</span></label>
+                                <label><input type="radio" name="iceLevel" value="Less Ice"><span>Less Ice</span></label>
+                                <label><input type="radio" name="iceLevel" value="No Ice"><span>No Ice</span></label>
+                                <label><input type="radio" name="iceLevel" value="Extra Ice"><span>Extra Ice</span></label>
+                            </div>
+                        </div>
+                        
+                        <div class="option-group">
+                            <label><i class="fas fa-plus-circle"></i> Toppings (+₱15 each)</label>
+                            <div class="topping-options">
+                                <label><input type="checkbox" name="toppings" value="Pearl"><span>Pearl</span></label>
+                                <label><input type="checkbox" name="toppings" value="Coconut"><span>Coconut</span></label>
+                                <label><input type="checkbox" name="toppings" value="Grass Jelly"><span>Grass Jelly</span></label>
+                                <label><input type="checkbox" name="toppings" value="Pudding"><span>Pudding</span></label>
+                                <label><input type="checkbox" name="toppings" value="Nata"><span>Nata</span></label>
+                                <label><input type="checkbox" name="toppings" value="Cheese Foam"><span>Cheese Foam</span></label>
+                            </div>
+                        </div>
+                        
+                        <div class="option-group">
+                            <label><i class="fas fa-sticky-note"></i> Special Instructions</label>
+                            <textarea id="detailInstructions" placeholder="Any special requests..."></textarea>
+                        </div>
+                        
+                        <div class="qty-section">
+                            <label>Quantity</label>
+                            <div class="qty-controls">
+                                <button type="button" onclick="detailDecreaseQty()">-</button>
+                                <input type="number" id="detailQty" value="1" min="1">
+                                <button type="button" onclick="detailIncreaseQty()">+</button>
+                            </div>
+                        </div>
+                        
+                        <div class="total-display">
+                            <span>Total:</span>
+                            <span id="detailTotal">₱@Model.Price.ToString("F2")</span>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-cancel" onclick="$('#customizeModal').modal('hide')">Cancel</button>
+                    <button type="button" class="btn-add" onclick="addCustomizedToCart()">
+                        <i class="fas fa-shopping-cart"></i> Add to Cart
                     </button>
                 </div>
             </div>
         </div>
     </div>
-</div>
+}
+
+<style>
+    /* Page Layout */
+    .details-page {
+        min-height: 100vh;
+        background: #fff;
+    }
+
+    /* Product Showcase */
+    .product-showcase {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 3rem;
+        padding: 3rem 0;
+    }
+
+    /* Gallery */
+    .product-gallery {
+        position: relative;
+    }
+
+    .main-image {
+        position: relative;
+        border-radius: 8px;
+        overflow: hidden;
+        background: #fff;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+    }
+
+    .gallery-main {
+        width: 100%;
+        height: 500px;
+        object-fit: cover;
+    }
+
+    .main-image-placeholder {
+        height: 500px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%);
+    }
+
+    .main-image-placeholder i {
+        font-size: 8rem;
+        color: #ccc;
+    }
+
+    .image-overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 100px;
+        background: linear-gradient(to top, rgba(0,0,0,0.1), transparent);
+    }
+
+    .image-badges {
+        display: flex;
+        gap: 10px;
+        margin-top: 1.5rem;
+        flex-wrap: wrap;
+    }
+
+    .category-badge {
+        background: #0a0a0a;
+        color: #fff;
+        padding: 8px 16px;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-weight: 600;
+    }
+
+    .option-badge {
+        padding: 8px 16px;
+        font-size: 0.75rem;
+        border: 1px solid #ddd;
+    }
+
+    .option-badge.vegetarian { color: #28a745; border-color: #28a745; }
+    .option-badge.vegan { color: #20c997; border-color: #20c997; }
+    .option-badge.gluten-free { color: #fd7e14; border-color: #fd7e14; }
+
+    /* Product Info */
+    .product-info {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .product-header h1 {
+        font-family: 'Playfair Display', serif;
+        font-size: 2.5rem;
+        margin-bottom: 0.5rem;
+        color: #0a0a0a;
+    }
+
+    .product-price {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: #0a0a0a;
+        font-family: 'Playfair Display', serif;
+    }
+
+    /* Rating Section */
+    .rating-section {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin: 1.5rem 0;
+        padding: 1rem;
+        background: #fff;
+        border: 1px solid #eee;
+    }
+
+    .stars-display {
+        display: flex;
+        gap: 5px;
+    }
+
+    .stars-display i {
+        font-size: 1.2rem;
+        color: #ddd;
+    }
+
+    .stars-display i.filled {
+        color: #0a0a0a;
+    }
+
+    .rating-text .rating-value {
+        font-weight: 700;
+        font-size: 1.1rem;
+        margin-right: 5px;
+    }
+
+    .rating-text .review-count {
+        color: #888;
+        font-size: 0.9rem;
+    }
+
+    .product-description {
+        color: #666;
+        line-height: 1.8;
+        font-size: 1rem;
+        margin: 1.5rem 0;
+    }
+
+    /* Add to Cart Section */
+    .add-to-cart-section {
+        margin: 2rem 0;
+        padding: 1.5rem;
+        background: #fff;
+        border: 1px solid #eee;
+    }
+
+    .btn-customize-main {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        padding: 1.2rem 2rem;
+        background: linear-gradient(135deg, #1a1a1a 0%, #333 100%);
+        color: #fff;
+        border: none;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+
+    .btn-customize-main:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    }
+
+    .customize-hint {
+        text-align: center;
+        color: #888;
+        font-size: 0.85rem;
+        margin-top: 10px;
+    }
+
+    .add-form {
+        width: 100%;
+    }
+
+    .btn-add-cart {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        padding: 1.2rem 2rem;
+        background: #0a0a0a;
+        color: #fff;
+        border: none;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+
+    .btn-add-cart:hover {
+        background: #333;
+    }
+
+    /* Rating Form */
+    .rating-form-section {
+        margin-top: 2rem;
+        padding: 1.5rem;
+        background: #fff;
+        border: 1px solid #eee;
+    }
+
+    .section-header {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 1.5rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-size: 0.9rem;
+    }
+
+    .section-header i {
+        color: #0a0a0a;
+    }
+
+    .star-rating {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 1rem;
+    }
+
+    .star-icon {
+        font-size: 1.8rem;
+        color: #ddd;
+        cursor: pointer;
+        transition: color 0.2s;
+    }
+
+    .star-icon:hover,
+    .star-icon.active {
+        color: #0a0a0a;
+    }
+
+    .btn-submit-rating {
+        padding: 0.8rem 1.5rem;
+        background: #fff;
+        border: 1px solid #0a0a0a;
+        color: #0a0a0a;
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+
+    .btn-submit-rating:hover:not(:disabled) {
+        background: #0a0a0a;
+        color: #fff;
+    }
+
+    .btn-submit-rating:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+
+    .alert-success {
+        background: #d4edda;
+        color: #155724;
+        padding: 1rem;
+        margin-bottom: 1rem;
+        border: 1px solid #c3e6cb;
+    }
+
+    .alert-error {
+        background: #f8d7da;
+        color: #721c24;
+        padding: 1rem;
+        margin-bottom: 1rem;
+        border: 1px solid #f5c6cb;
+    }
+
+    /* Modal Styles */
+    .modal-header {
+        background: #0a0a0a;
+        color: #fff;
+        border: none;
+    }
+
+    .modal-header .modal-title i {
+        margin-right: 10px;
+    }
+
+    .modal-header .close {
+        color: #fff;
+        opacity: 1;
+    }
+
+    .modal-body {
+        padding: 2rem;
+        background: #fafafa;
+    }
+
+    .customize-item-header {
+        text-align: center;
+        padding: 1rem;
+        background: #fff;
+        margin-bottom: 1.5rem;
+        border-left: 3px solid #0a0a0a;
+    }
+
+    .customize-item-header h4 {
+        margin: 0;
+        font-family: 'Playfair Display', serif;
+    }
+
+    .option-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .option-group label {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-weight: 600;
+        margin-bottom: 0.8rem;
+        text-transform: uppercase;
+        font-size: 0.8rem;
+        letter-spacing: 1px;
+    }
+
+    .option-group label i {
+        color: #0a0a0a;
+    }
+
+    .size-options, .ice-options, .topping-options {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .size-options label, .ice-options label, .topping-options label {
+        flex: 1;
+        min-width: 80px;
+        cursor: pointer;
+    }
+
+    .size-options input, .ice-options input, .topping-options input {
+        display: none;
+    }
+
+    .size-options span, .ice-options span, .topping-options span {
+        display: block;
+        padding: 10px;
+        border: 1px solid #ddd;
+        text-align: center;
+        font-size: 0.85rem;
+        transition: all 0.3s;
+    }
+
+    .size-options input:checked + span,
+    .ice-options input:checked + span,
+    .topping-options input:checked + span {
+        background: #0a0a0a;
+        color: #fff;
+        border-color: #0a0a0a;
+    }
+
+    .sweetness-display {
+        text-align: center;
+        font-weight: 600;
+        margin-top: 10px;
+    }
+
+    .option-group textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        resize: none;
+    }
+
+    .qty-section {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin: 1.5rem 0;
+    }
+
+    .qty-section label {
+        font-weight: 600;
+    }
+
+    .qty-controls {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .qty-controls button {
+        width: 35px;
+        height: 35px;
+        border: 1px solid #ddd;
+        background: #fff;
+        cursor: pointer;
+    }
+
+    .qty-controls input {
+        width: 50px;
+        text-align: center;
+        padding: 5px;
+        border: 1px solid #ddd;
+    }
+
+    .total-display {
+        display: flex;
+        justify-content: space-between;
+        padding: 1rem;
+        background: #0a0a0a;
+        color: #fff;
+        font-size: 1.2rem;
+        font-weight: 600;
+    }
+
+    .modal-footer {
+        background: #0a0a0a;
+        border: none;
+        padding: 1rem 2rem;
+    }
+
+    .btn-cancel {
+        background: transparent;
+        border: 1px solid rgba(255,255,255,0.3);
+        color: #fff;
+        padding: 0.8rem 1.5rem;
+    }
+
+    .btn-add {
+        background: #fff;
+        color: #0a0a0a;
+        border: none;
+        padding: 0.8rem 1.5rem;
+        font-weight: 600;
+    }
+
+    .btn-add i {
+        margin-right: 8px;
+    }
+
+    /* Responsive */
+    @@media (max-width: 992px) {
+        .product-showcase {
+            grid-template-columns: 1fr;
+        }
+        
+        .gallery-main, .main-image-placeholder {
+            height: 350px;
+        }
+    }
+</style>
 
 @section Scripts {
     <script>
-        $('.add-to-cart').click(function() {
-            var id = $(this).data('id');
-            var name = $(this).data('name');
-            var price = $(this).data('price');
-            alert(name + ' added to cart for ₱' + price.toFixed(2) + '!');
-        });
-
         // Star rating interactivity
         $('.star-icon').hover(
             function() {
                 var rating = $(this).data('rating');
-                updateStars(rating);
+                updateDetailStars(rating);
             },
             function() {
                 var currentRating = parseInt($('#selectedRating').val());
-                updateStars(currentRating);
+                updateDetailStars(currentRating);
             }
         );
 
         $('.star-icon').click(function() {
             var rating = $(this).data('rating');
             $('#selectedRating').val(rating);
-            updateStars(rating);
+            updateDetailStars(rating);
             $('#submitRating').prop('disabled', false);
         });
 
-        function updateStars(rating) {
+        function updateDetailStars(rating) {
             $('.star-icon').each(function() {
                 var starRating = $(this).data('rating');
                 if (starRating <= rating) {
-                    $(this).css('color', '#0a0a0a');
+                    $(this).addClass('active');
                 } else {
-                    $(this).css('color', '#ddd');
+                    $(this).removeClass('active');
                 }
             });
+        }
+
+        // Drink customization
+        function openCustomizeModal() {
+            $('#customizeModal').modal('show');
+        }
+
+        function detailIncreaseQty() {
+            var qty = parseInt($('#detailQty').val());
+            $('#detailQty').val(qty + 1);
+            updateDetailTotal();
+        }
+
+        function detailDecreaseQty() {
+            var qty = parseInt($('#detailQty').val());
+            if (qty > 1) {
+                $('#detailQty').val(qty - 1);
+                updateDetailTotal();
+            }
+        }
+
+        $('#detailSweetness').on('input', function() {
+            $('#sweetnessText').text($(this).val() + '%');
+        });
+
+        $('input[name="size"]').change(updateDetailTotal);
+        $('input[name="toppings"]').change(updateDetailTotal);
+        $('#detailQty').change(updateDetailTotal);
+
+        var basePrice = @Model.Price;
+
+        function updateDetailTotal() {
+            var size = $('input[name="size"]:checked').val();
+            var toppings = $('input[name="toppings"]:checked').length;
+            var quantity = parseInt($('#detailQty').val()) || 1;
+            
+            var additionalPrice = 0;
+            if (size === 'Large') additionalPrice += 20;
+            if (size === 'Extra Large') additionalPrice += 35;
+            additionalPrice += toppings * 15;
+            
+            var total = (basePrice + additionalPrice) * quantity;
+            $('#detailTotal').text('₱' + total.toFixed(2));
+        }
+
+        function addCustomizedToCart() {
+            var id = $('#detailItemId').val();
+            var name = $('#detailItemName').val();
+            var price = $('#detailItemPrice').val();
+            var quantity = $('#detailQty').val();
+            var size = $('input[name="size"]:checked').val();
+            var sweetness = $('#detailSweetness').val();
+            var iceLevel = $('input[name="iceLevel"]:checked').val();
+            var toppings = $('input[name="toppings"]:checked').map(function() { return this.value; }).get().join(',');
+            var specialInstructions = $('#detailInstructions').val();
+            
+            var form = document.createElement('form');
+            form.method = 'POST';
+            form.action = '@Url.Action("AddWithCustomization", "Cart")';
+            
+            var fields = {
+                id: id,
+                name: name,
+                price: price,
+                quantity: quantity,
+                size: size,
+                sweetness: sweetness,
+                iceLevel: iceLevel,
+                toppings: toppings,
+                specialInstructions: specialInstructions,
+                isCustomizable: 'true'
+            };
+            
+            for (var key in fields) {
+                var input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = key;
+                input.value = fields[key];
+                form.appendChild(input);
+            }
+            
+            document.body.appendChild(form);
+            form.submit();
         }
     </script>
 }

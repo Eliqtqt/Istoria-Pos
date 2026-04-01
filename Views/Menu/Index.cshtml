@@ -4,21 +4,59 @@
     ViewData["Title"] = "Menu";
 }
 
-<div class="menu-header">
-    <h1>Our Menu</h1>
-    <div class="divider"></div>
-    <p>Crafted beverages and artisanal treats, made with care</p>
+<!-- Hero Carousel with Video -->
+<div id="menuCarousel" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+        <!-- Video Slide - Full Screen HD -->
+        <div class="carousel-item active" style="height: 60vh; min-height: 500px;">
+            <video autoplay muted loop playsinline style="width: 100%; height: 100%; object-fit: cover;">
+                <source src="~/Videos/istoriajo.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center;">
+                <div class="text-center" style="padding: 2rem;">
+                    <h1 style="font-size: 4rem; color: white; margin-bottom: 1rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">ISTORIA COFFEE</h1>
+                    <p style="color: rgba(255,255,255,0.9); font-size: 1.3rem; max-width: 500px; margin: 0 auto; text-shadow: 1px 1px 2px rgba(0,0,0,0.5);">Experience the finest coffee culture</p>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
-<div class="container">
+<style>
+    .carousel-item {
+        transition: transform 0.8s ease-in-out;
+    }
+    
+    #menuCarousel .carousel-control-prev,
+    #menuCarousel .carousel-control-next {
+        width: 5%;
+        opacity: 0.5;
+    }
+    
+    #menuCarousel .carousel-control-prev:hover,
+    #menuCarousel .carousel-control-next:hover {
+        opacity: 1;
+    }
+    
+    .carousel-control-prev-icon,
+    .carousel-control-next-icon {
+        filter: invert(1);
+        width: 3rem;
+        height: 3rem;
+    }
+</style>
+
+<div class="container" style="margin-top: -3rem; position: relative; background: white; padding: 2rem; border-radius: 8px 8px 0 0;">
     <div class="category-filters">
         <button class="category-btn active" data-category="all">All</button>
         <button class="category-btn" data-category="coffee">Coffee</button>
-        <button class="category-btn" data-category="tea">Tea</button>
-        <button class="category-btn" data-category="pastry">Pastry</button>
-        <button class="category-btn" data-category="food">Food</button>
-        <button class="category-btn" data-category="dessert">Dessert</button>
-        <button class="category-btn" data-category="beverage">Beverage</button>
+        <button class="category-btn" data-category="non-coffee">Non-Coffee</button>
+        <button class="category-btn" data-category="specials">Specials</button>
+        <button class="category-btn" data-category="latte">Latte</button>
+        <button class="category-btn" data-category="pasta">Pasta</button>
+        <button class="category-btn" data-category="potato">Potato</button>
+        <button class="category-btn" data-category="chkn poppers">Chkn Poppers</button>
     </div>
 
     @if (TempData["Success"] != null)
@@ -31,6 +69,11 @@
     <div class="menu-grid">
         @foreach (var item in Model)
         {
+            var isDrink = item.Category.ToLower() == "coffee" || item.Category.ToLower() == "non-coffee" || 
+                          item.Category.ToLower() == "specials" || item.Category.ToLower() == "latte" ||
+                          item.Category.ToLower() == "tea" || item.Category.ToLower() == "frappe" || 
+                          item.Category.ToLower() == "milk tea";
+            
             <div class="menu-item" data-category="@item.Category.ToLower()">
                 <div class="menu-card">
                     <div class="card-img-wrapper">
@@ -66,15 +109,25 @@
                         <div class="price-row">
                             <span class="price">₱@item.Price.ToString("F2")</span>
                             <div style="display: flex; gap: 0.5rem;">
-                                <form asp-controller="Cart" asp-action="Add" method="post">
-                                    <input type="hidden" name="id" value="@item.Id" />
-                                    <input type="hidden" name="name" value="@item.Name" />
-                                    <input type="hidden" name="price" value="@item.Price" />
-                                    <input type="hidden" name="quantity" value="1" />
-                                    <button type="submit" class="btn-outline" style="text-decoration: none; padding: 0.5rem 1rem; font-size: 0.7rem; cursor: pointer;">
-                                        <i class="fas fa-plus"></i> Add
+                                @if (isDrink)
+                                {
+                                    <button type="button" class="btn-customize" style="text-decoration: none; padding: 0.6rem 1.2rem; font-size: 0.7rem; cursor: pointer;"
+                                            onclick="openCustomizeModal(@item.Id, '@item.Name', @item.Price, true)">
+                                        <i class="fas fa-sliders-h"></i> Customize
                                     </button>
-                                </form>
+                                }
+                                else
+                                {
+                                    <form asp-controller="Cart" asp-action="Add" method="post">
+                                        <input type="hidden" name="id" value="@item.Id" />
+                                        <input type="hidden" name="name" value="@item.Name" />
+                                        <input type="hidden" name="price" value="@item.Price" />
+                                        <input type="hidden" name="quantity" value="1" />
+                                        <button type="submit" class="btn-outline" style="text-decoration: none; padding: 0.5rem 1rem; font-size: 0.7rem; cursor: pointer;">
+                                            <i class="fas fa-plus"></i> Add
+                                        </button>
+                                    </form>
+                                }
                                 <a href="@Url.Action("Details", "Menu", new { id = item.Id })" class="btn-outline" style="text-decoration: none; padding: 0.5rem 1rem; font-size: 0.7rem;">
                                     View
                                 </a>
@@ -87,20 +140,8 @@
     </div>
 </div>
 
-@section Scripts {
-    <script>
-        // Category filtering
-        $('.category-btn').click(function() {
-            $('.category-btn').removeClass('active');
-            $(this).addClass('active');
-
-            var category = $(this).data('category');
-            if (category === 'all') {
-                $('.menu-item').fadeIn(300);
-            } else {
-                $('.menu-item').hide();
-                $('.menu-item[data-category="' + category + '"]').fadeIn(300);
-            }
-        });
-    </script>
-}
+<style>
+    .menu-header {
+        display: none;
+    }
+</style>
