@@ -1,20 +1,15 @@
 using CafeWebsite.Data;
 using Microsoft.EntityFrameworkCore;
-using Pomelo.EntityFrameworkCore.MySql;
-using System.Text.Json;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using System.Text.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 builder.Services.AddControllersWithViews();
 
-// Add DbContext
 builder.Services.AddDbContext<CafeWebsite.Data.CafeDbContext>(options =>
-    options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"),
-    new MySqlServerVersion(new Version(8, 0, 33))));
+    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Add session support
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
 {
@@ -23,7 +18,6 @@ builder.Services.AddSession(options =>
     options.Cookie.IsEssential = true;
 });
 
-// Add authentication
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
@@ -40,14 +34,12 @@ using (var scope = app.Services.CreateScope())
     DbInitializer.Initialize(services.GetRequiredService<CafeDbContext>());
 }
 
-// Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
     app.UseHsts();
 }
 
-app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
@@ -62,7 +54,6 @@ app.MapControllerRoute(
 
 app.Run();
 
-// Session extension methods
 public static class SessionExtensions
 {
     public static void SetObject<T>(this ISession session, string key, T value)
