@@ -20,10 +20,14 @@ namespace CafeWebsite.Controllers
         // Dashboard
         public async Task<IActionResult> Index()
         {
+            var now = DateTime.UtcNow;
+            var startOfDay = now.Date;
+            var endOfDay = startOfDay.AddDays(1);
+            
             var stats = new AdminDashboardViewModel
             {
                 TotalOrders = await _context.Orders.CountAsync(),
-                TotalRevenue = await _context.Orders.SumAsync(o => o.TotalAmount),
+                TotalRevenue = await _context.Orders.AnyAsync() ? await _context.Orders.SumAsync(o => o.TotalAmount) : 0,
                 TotalMenuItems = await _context.MenuItems.CountAsync(),
                 TotalUsers = await _context.Users.CountAsync(),
                 RecentOrders = await _context.Orders
@@ -32,7 +36,7 @@ namespace CafeWebsite.Controllers
                     .Take(5)
                     .ToListAsync(),
                 PendingOrders = await _context.Orders.CountAsync(o => o.Status == "Pending"),
-                TodayOrders = await _context.Orders.CountAsync(o => o.OrderDate.Date == DateTime.Today)
+                TodayOrders = await _context.Orders.CountAsync(o => o.OrderDate >= startOfDay && o.OrderDate < endOfDay)
             };
             return View(stats);
         }
