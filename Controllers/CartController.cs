@@ -70,8 +70,19 @@ namespace CafeWebsite.Controllers
         {
             var cart = GetCart();
             
+            // Calculate additional price based on customizations
+            decimal additionalPrice = 0;
+            if (size == "Large") additionalPrice += 20;
+            if (size == "Extra Large") additionalPrice += 35;
+            if (!string.IsNullOrEmpty(toppings))
+            {
+                var toppingList = toppings.Split(',');
+                additionalPrice += toppingList.Length * 15;
+            }
+            
+            decimal finalPrice = price + additionalPrice;
+            
             // Create unique key for cart item including customizations
-            var cartKey = $"{id}_{size}_{sweetness}_{iceLevel}_{toppings}";
             var existingItem = cart.FirstOrDefault(c => 
                 c.MenuItemId == id && 
                 c.Size == size && 
@@ -89,7 +100,7 @@ namespace CafeWebsite.Controllers
                 {
                     MenuItemId = id,
                     Name = name,
-                    Price = price,
+                    Price = finalPrice,
                     Quantity = quantity,
                     Size = size ?? "Regular",
                     Sweetness = sweetness,
