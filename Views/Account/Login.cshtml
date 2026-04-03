@@ -34,6 +34,7 @@
 
             <!-- Login Form -->
             <form asp-action="Login" asp-route-returnUrl="@returnUrl" method="post" class="auth-form">
+                @Html.AntiForgeryToken()
                 <input type="hidden" name="returnUrl" value="@returnUrl" />
                 
                 <div class="form-group">
