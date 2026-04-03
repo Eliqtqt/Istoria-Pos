@@ -4,9 +4,13 @@
     var categories = new[] { "All", "Coffee", "Non-Coffee", "Specials", "Latte", "Pasta", "Potato", "Chkn Poppers" };
 }
 
-<div class="page-header">
-    <h1>Edit Menu Item</h1>
-    <div class="divider"></div>
+<div style="background: #f8f8f8; padding: 1.5rem 0; text-align: center; border-bottom: 1px solid #ddd; margin-bottom: 2rem;">
+    <div style="max-width: 600px; margin: 0 auto;">
+        <h1 style="font-size: 1.75rem; margin-bottom: 0.5rem; font-weight: 600;">Edit Menu Item</h1>
+        <p style="font-size: 0.8rem; color: #555; margin: 0; font-family: Georgia, serif; font-style: italic;">[is-tor-yuh] • noun</p>
+        <p style="font-size: 0.75rem; color: #777; margin: 0.25rem 0 0 0;">a place of laughter, comfort and acceptance; where memories are made over a cup of coffee and friends.</p>
+        <div style="width: 50px; height: 1px; background: #0a0a0a; margin: 0.75rem auto 0;"></div>
+    </div>
 </div>
 
 <div class="container">
@@ -47,7 +51,14 @@
                 </div>
                 <div class="col-md-4 mb-4">
                     <label for="ImageUrl" class="form-label" style="font-weight: 500; text-transform: uppercase; letter-spacing: 1px; font-size: 0.8rem;">Image URL</label>
-                    <input type="text" id="ImageUrl" name="ImageUrl" class="form-control" value="@Model.ImageUrl" style="border: none; border-bottom: 1px solid #ddd; border-radius: 0; padding: 0.8rem 0;" />
+                    <input type="text" id="ImageUrl" name="ImageUrl" class="form-control" value="@Model.ImageUrl" placeholder="Paste image URL here..." style="border: none; border-bottom: 1px solid #ddd; border-radius: 0; padding: 0.8rem 0;" />
+                    <small style="color: #888; font-size: 0.7rem;">Right-click an image online → Copy image address → Paste here</small>
+                    @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                    {
+                        <div style="margin-top: 0.5rem;">
+                            <img src="@Model.ImageUrl" alt="Current" style="max-width: 80px; max-height: 80px; object-fit: cover; border: 1px solid #ddd;" />
+                        </div>
+                    }
                 </div>
                 <div class="col-md-4 mb-4">
                     <label for="Rating" class="form-label" style="font-weight: 500; text-transform: uppercase; letter-spacing: 1px; font-size: 0.8rem;">Rating</label>

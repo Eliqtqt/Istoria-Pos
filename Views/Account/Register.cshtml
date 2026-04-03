@@ -72,49 +72,53 @@
 
 <style>
     .auth-page {
-        min-height: calc(100vh - 200px);
+        min-height: calc(100vh - 100px);
         display: flex;
         align-items: flex-start;
         justify-content: center;
-        padding: 6rem 1rem 3rem;
-        background-color: #f5f5f5;
+        padding: 10rem 1rem 4rem;
+        background: linear-gradient(180deg, #f8f8f8 0%, #eeeeee 100%);
     }
 
     .auth-container {
         width: 100%;
-        max-width: 400px;
+        max-width: 420px;
     }
 
     .auth-card {
-        background: white;
-        border: 1px solid #e0e0e0;
-        border-radius: 8px;
-        padding: 2.5rem;
+        background: #ffffff;
+        border: 1px solid #d0d0d0;
+        border-radius: 0;
+        padding: 3rem 2.5rem;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
     }
 
     .auth-header {
         text-align: center;
         margin-bottom: 2rem;
+        padding-bottom: 1.5rem;
+        border-bottom: 1px solid #e0e0e0;
     }
 
     .auth-header h1 {
         font-family: 'Playfair Display', Georgia, serif;
-        font-size: 1.75rem;
-        color: #1a1a1a;
+        font-size: 1.8rem;
+        color: #0a0a0a;
         margin-bottom: 0.5rem;
         font-weight: 600;
         letter-spacing: -0.02em;
     }
 
     .subtitle {
-        color: #666;
+        color: #808080;
         font-size: 0.9rem;
         margin: 0;
+        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     }
 
     .alert-message {
         padding: 0.875rem 1rem;
-        border-radius: 4px;
+        border-radius: 0;
         margin-bottom: 1.5rem;
         font-size: 0.875rem;
         display: flex;
@@ -123,9 +127,9 @@
     }
 
     .alert-message.error {
-        background: #f5f5f5;
-        color: #1a1a1a;
-        border: 1px solid #e0e0e0;
+        background: #f8f8f8;
+        color: #0a0a0a;
+        border: 1px solid #d0d0d0;
     }
 
     .form-group {
@@ -135,30 +139,34 @@
     .form-label {
         display: block;
         font-weight: 500;
-        color: #1a1a1a;
+        color: #0a0a0a;
         margin-bottom: 0.5rem;
-        font-size: 0.875rem;
+        font-size: 0.85rem;
+        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        letter-spacing: 0.5px;
     }
 
     .form-control {
         width: 100%;
-        padding: 0.75rem 1rem;
-        border: 1px solid #d0d0d0;
-        border-radius: 4px;
+        padding: 0.875rem 1rem;
+        border: 1px solid #cccccc;
+        border-radius: 0;
         font-size: 0.95rem;
         transition: border-color 0.2s, box-shadow 0.2s;
-        background: white;
-        color: #1a1a1a;
+        background: #fafafa;
+        color: #0a0a0a;
     }
 
     .form-control:focus {
         outline: none;
-        border-color: #1a1a1a;
-        box-shadow: 0 0 0 2px rgba(26, 26, 26, 0.1);
+        border-color: #0a0a0a;
+        box-shadow: 0 0 0 3px rgba(10, 10, 10, 0.08);
+        background: #ffffff;
     }
 
     .form-control::placeholder {
-        color: #999;
+        color: #999999;
+        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     }
 
     .terms-check {
@@ -170,10 +178,11 @@
         align-items: flex-start;
         gap: 0.5rem;
         cursor: pointer;
-        color: #666;
+        color: #808080;
         font-size: 0.8rem;
         line-height: 1.4;
         user-select: none;
+        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     }
 
     .checkbox-input {
@@ -183,11 +192,11 @@
     }
 
     .checkbox-custom {
-        width: 16px;
-        height: 16px;
-        min-width: 16px;
-        border: 1px solid #999;
-        border-radius: 2px;
+        width: 18px;
+        height: 18px;
+        min-width: 18px;
+        border: 1px solid #999999;
+        border-radius: 0;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -196,20 +205,20 @@
     }
 
     .checkbox-input:checked + .checkbox-custom {
-        background: #1a1a1a;
-        border-color: #1a1a1a;
+        background: #0a0a0a;
+        border-color: #0a0a0a;
     }
 
     .checkbox-input:checked + .checkbox-custom::after {
         content: '✓';
         color: white;
-        font-size: 10px;
+        font-size: 11px;
     }
 
     .checkbox-label a {
-        color: #1a1a1a;
+        color: #0a0a0a;
         text-decoration: none;
-        font-weight: 500;
+        font-weight: 600;
     }
 
     .checkbox-label a:hover {
@@ -218,23 +227,28 @@
 
     .btn-submit {
         width: 100%;
-        padding: 0.875rem 1.5rem;
-        background: #1a1a1a;
+        padding: 1rem 1.5rem;
+        background: #0a0a0a;
         color: white;
-        border: none;
-        border-radius: 4px;
-        font-size: 0.95rem;
-        font-weight: 500;
+        border: 1px solid #0a0a0a;
+        border-radius: 0;
+        font-size: 0.85rem;
+        font-weight: 600;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
         cursor: pointer;
-        transition: background 0.2s;
+        transition: all 0.3s ease;
+        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     }
 
     .btn-submit:hover {
-        background: #333;
+        background: #333333;
+        border-color: #333333;
     }
 
     .btn-submit:active {
-        background: #000;
+        background: #000000;
+        border-color: #000000;
     }
 
     .auth-footer {
@@ -242,23 +256,27 @@
         margin-top: 1.5rem;
         padding-top: 1.5rem;
         border-top: 1px solid #e0e0e0;
-        color: #666;
-        font-size: 0.875rem;
+        color: #808080;
+        font-size: 0.85rem;
+        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     }
 
     .auth-footer a {
-        color: #1a1a1a;
-        font-weight: 500;
+        color: #0a0a0a;
+        font-weight: 600;
         text-decoration: none;
+        border-bottom: 1px solid transparent;
+        transition: all 0.2s;
     }
 
     .auth-footer a:hover {
-        text-decoration: underline;
+        text-decoration: none;
+        border-bottom-color: #0a0a0a;
     }
 
     @@media (max-width: 480px) {
         .auth-card {
-            padding: 1.5rem;
+            padding: 2rem 1.5rem;
         }
     }
 </style>

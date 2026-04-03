@@ -3,7 +3,6 @@ using CafeWebsite.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.IO;
 
 namespace CafeWebsite.Controllers
 {
@@ -79,7 +78,6 @@ namespace CafeWebsite.Controllers
                 TempData["Success"] = "Menu item created successfully!";
                 return RedirectToAction(nameof(MenuItems));
             }
-            // Debug: show validation errors
             var errors = string.Join(", ", ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage));
             TempData["Error"] = string.IsNullOrEmpty(errors) ? "Validation failed" : errors;
             return View(menuItem);
@@ -100,14 +98,26 @@ namespace CafeWebsite.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditMenuItem(MenuItem menuItem)
         {
-            if (ModelState.IsValid)
+            var existingItem = await _context.MenuItems.FindAsync(menuItem.Id);
+            if (existingItem == null)
             {
-                _context.MenuItems.Update(menuItem);
-                await _context.SaveChangesAsync();
-                TempData["Success"] = "Menu item updated successfully!";
-                return RedirectToAction(nameof(MenuItems));
+                return NotFound();
             }
-            return View(menuItem);
+            
+            existingItem.Name = menuItem.Name;
+            existingItem.Description = menuItem.Description;
+            existingItem.Price = menuItem.Price;
+            existingItem.Category = menuItem.Category;
+            existingItem.ImageUrl = menuItem.ImageUrl;
+            existingItem.Rating = menuItem.Rating;
+            existingItem.ReviewCount = menuItem.ReviewCount;
+            existingItem.IsVegetarian = menuItem.IsVegetarian;
+            existingItem.IsVegan = menuItem.IsVegan;
+            existingItem.IsGlutenFree = menuItem.IsGlutenFree;
+            
+            await _context.SaveChangesAsync();
+            TempData["Success"] = "Menu item updated successfully!";
+            return RedirectToAction(nameof(MenuItems));
         }
 
         [HttpGet]
