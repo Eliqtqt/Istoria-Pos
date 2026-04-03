@@ -91,16 +91,11 @@
         @RenderBody()
     </main>
 
-    <footer class="footer" style="background-image: url('/Images/logo.jpg'); background-size: cover; background-position: center; position: relative;">
-        <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(0,0,0,0.7); z-index: 1;"></div>
-        <div class="container" style="position: relative; z-index: 2;">
-            <div class="row">
-                <div class="col-md-4 mb-4">
-                    <div class="footer-brand">ISTORIA COFFEE</div>
-                    <p style="color: rgba(255,255,255,0.6); font-size: 0.9rem;">Where every cup tells a story. Premium coffee crafted with passion.</p>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <h5>Quick Links</h5>
+    <footer class="footer">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <h5 class="footer-heading">Quick Links</h5>
                     <ul class="footer-links">
                         <li><a asp-controller="Home" asp-action="Index">Home</a></li>
                         <li><a asp-controller="Menu" asp-action="Index">Menu</a></li>
@@ -108,19 +103,22 @@
                         <li><a asp-controller="Home" asp-action="Events">Events</a></li>
                     </ul>
                 </div>
-                <div class="col-md-4 mb-4">
-                    <h5>Contact</h5>
-                    <ul class="footer-links">
-                        <li>Istoria Coffee Shop, Brgy. Maitim, Bay, Philippines, 4033</li>
-                        <li>National Hwy, Manila S Road</li>
-                        <li><a href="mailto:business.istoria@gmail.com">business.istoria@gmail.com</a></li>
-                        <li><a href="https://m.me/istoriacoffee" target="_blank">Istoria Coffee</a></li>
-                        <li>+63 912 345 6789</li>
+                <div class="col-md-4">
+                    <h5 class="footer-heading">Visit Us</h5>
+                    <ul class="footer-contact">
+                        <li><i class="fas fa-map-marker-alt"></i> Istoria Coffee Shop<br><span class="contact-detail">Brgy. Maitim, Bay, Philippines 4033</span></li>
+                        <li><i class="fas fa-road"></i> <span class="contact-detail">National Hwy, Manila S Road</span></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5 class="footer-heading">Contact Us</h5>
+                    <ul class="footer-contact">
+                        <li><i class="fas fa-phone-alt"></i> +63 912 345 6789</li>
                     </ul>
                 </div>
             </div>
-            <div class="copyright">
-                &copy; 2026 Cafe. All rights reserved.
+            <div class="footer-bottom">
+                <p>&copy; 2026 Istoria Coffee. All rights reserved.</p>
             </div>
         </div>
     </footer>

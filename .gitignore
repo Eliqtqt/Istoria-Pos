@@ -2,3 +2,8 @@ bin/
 obj/
 *.user
 *.vs
+.vs/
+*.suo
+*.cache
+.DS_Store
+appsettings.Development.json
