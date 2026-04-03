@@ -49,21 +49,16 @@
 </style>
 
 <div class="menu-page">
-<div class="container" style="margin-top: -3rem; position: relative; background: linear-gradient(180deg, #9e9e9e 0%, #bdbdbd 100%); padding: 2rem; border-radius: 8px 8px 0 0; box-shadow: 0 10px 40px rgba(0,0,0,0.3); border: 1px solid #888;">
-    <div class="category-filters" style="background: rgba(0,0,0,0.1); padding: 1rem; border-radius: 8px; margin-bottom: 2rem;">
-        <button class="category-btn active" data-category="all" style="background: #4a4a4a; color: #fff; border: 1px solid #333; padding: 0.5rem 1.2rem; margin: 0.2rem; border-radius: 4px; cursor: pointer;">All</button>
-        <button class="category-btn" data-category="coffee" style="background: #4a4a4a; color: #fff; border: 1px solid #333; padding: 0.5rem 1.2rem; margin: 0.2rem; border-radius: 4px; cursor: pointer;">Coffee</button>
-        <button class="category-btn" data-category="non-coffee" style="background: #4a4a4a; color: #fff; border: 1px solid #333; padding: 0.5rem 1.2rem; margin: 0.2rem; border-radius: 4px; cursor: pointer;">Non-Coffee</button>
-        <button class="category-btn" data-category="specials" style="background: #4a4a4a; color: #fff; border: 1px solid #333; padding: 0.5rem 1.2rem; margin: 0.2rem; border-radius: 4px; cursor: pointer;">Specials</button>
-        <button class="category-btn" data-category="latte" style="background: #4a4a4a; color: #fff; border: 1px solid #333; padding: 0.5rem 1.2rem; margin: 0.2rem; border-radius: 4px; cursor: pointer;">Latte</button>
-        <button class="category-btn" data-category="pasta" style="background: #4a4a4a; color: #fff; border: 1px solid #333; padding: 0.5rem 1.2rem; margin: 0.2rem; border-radius: 4px; cursor: pointer;">Pasta</button>
-        <button class="category-btn" data-category="potato" style="background: #4a4a4a; color: #fff; border: 1px solid #333; padding: 0.5rem 1.2rem; margin: 0.2rem; border-radius: 4px; cursor: pointer;">Potato</button>
-        <button class="category-btn" data-category="chkn poppers" style="background: #4a4a4a; color: #fff; border: 1px solid #333; padding: 0.5rem 1.2rem; margin: 0.2rem; border-radius: 4px; cursor: pointer;">Chkn Poppers</button>
-    </div>
-        <button class="category-btn" data-category="latte">Latte</button>
-        <button class="category-btn" data-category="pasta">Pasta</button>
-        <button class="category-btn" data-category="potato">Potato</button>
-        <button class="category-btn" data-category="chkn poppers">Chkn Poppers</button>
+<div class="container" style="margin-top: -3rem; position: relative; background: #fff; padding: 2rem; border-radius: 8px 8px 0 0; box-shadow: 0 10px 40px rgba(0,0,0,0.3); border: 1px solid #000;">
+    <div class="category-filters" style="background: #f5f5f5; padding: 1rem; border-radius: 8px; margin-bottom: 2rem; border: 1px solid #000;">
+        <button class="category-btn active" data-category="all" style="background: #000; color: #fff; border: 1px solid #000; padding: 0.5rem 1.2rem; margin: 0.2rem; border-radius: 4px; cursor: pointer;">All</button>
+        <button class="category-btn" data-category="coffee" style="background: #fff; color: #000; border: 1px solid #000; padding: 0.5rem 1.2rem; margin: 0.2rem; border-radius: 4px; cursor: pointer;">Coffee</button>
+        <button class="category-btn" data-category="non-coffee" style="background: #fff; color: #000; border: 1px solid #000; padding: 0.5rem 1.2rem; margin: 0.2rem; border-radius: 4px; cursor: pointer;">Non-Coffee</button>
+        <button class="category-btn" data-category="specials" style="background: #fff; color: #000; border: 1px solid #000; padding: 0.5rem 1.2rem; margin: 0.2rem; border-radius: 4px; cursor: pointer;">Specials</button>
+        <button class="category-btn" data-category="latte" style="background: #fff; color: #000; border: 1px solid #000; padding: 0.5rem 1.2rem; margin: 0.2rem; border-radius: 4px; cursor: pointer;">Latte</button>
+        <button class="category-btn" data-category="pasta" style="background: #fff; color: #000; border: 1px solid #000; padding: 0.5rem 1.2rem; margin: 0.2rem; border-radius: 4px; cursor: pointer;">Pasta</button>
+        <button class="category-btn" data-category="potato" style="background: #fff; color: #000; border: 1px solid #000; padding: 0.5rem 1.2rem; margin: 0.2rem; border-radius: 4px; cursor: pointer;">Potato</button>
+        <button class="category-btn" data-category="chkn poppers" style="background: #fff; color: #000; border: 1px solid #000; padding: 0.5rem 1.2rem; margin: 0.2rem; border-radius: 4px; cursor: pointer;">Chkn Poppers</button>
     </div>
 
     @if (TempData["Success"] != null)
@@ -152,7 +147,7 @@
         display: none;
     }
     
-    /* Cement Theme Background */
+    /* Cement Theme Background with B&W Aesthetic */
     .menu-page {
         background: linear-gradient(135deg, #8a8a8a 0%, #6b6b6b 50%, #5c5c5c 100%);
         min-height: 100vh;
@@ -160,22 +155,23 @@
     }
     
     .container[style*="margin-top: -3rem"] {
-        background: linear-gradient(180deg, #9e9e9e 0%, #bdbdbd 100%);
+        background: #fff;
         box-shadow: 0 10px 40px rgba(0,0,0,0.3);
-        border: 1px solid #888;
+        border: 1px solid #000;
     }
     
     .category-filters {
-        background: rgba(0,0,0,0.1);
+        background: #f5f5f5;
         padding: 1rem;
         border-radius: 8px;
         margin-bottom: 2rem;
+        border: 1px solid #000;
     }
     
     .category-btn {
-        background: #4a4a4a;
-        color: #fff;
-        border: 1px solid #333;
+        background: #fff;
+        color: #000;
+        border: 1px solid #000;
         padding: 0.5rem 1.2rem;
         margin: 0.2rem;
         border-radius: 4px;
@@ -184,8 +180,8 @@
     }
     
     .category-btn:hover, .category-btn.active {
-        background: #1a1a1a;
-        border-color: #000;
+        background: #000;
+        color: #fff;
     }
     
     .menu-grid {
@@ -195,27 +191,27 @@
     }
     
     .menu-item {
-        background: linear-gradient(145deg, #8c8c8c, #6e6e6e);
+        background: #fff;
         border-radius: 12px;
-        box-shadow: 5px 5px 15px rgba(0,0,0,0.3), -2px -2px 10px rgba(255,255,255,0.1);
-        border: 1px solid #666;
+        box-shadow: 5px 5px 15px rgba(0,0,0,0.2);
+        border: 1px solid #000;
     }
     
     .menu-card {
-        background: #757575;
+        background: #fff;
         border-radius: 10px;
         overflow: hidden;
     }
     
     .card-body {
-        background: #808080;
+        background: #fff;
         padding: 1.5rem;
-        color: #1a1a1a;
+        color: #000;
     }
     
     .card-body h5 {
-        color: #1a1a1a;
-        font-weight: 600;
+        color: #000;
+        font-weight: 700;
     }
     
     .card-body .description {
@@ -223,118 +219,119 @@
     }
     
     .price {
-        color: #1a1a1a;
+        color: #000;
         font-weight: 700;
         font-size: 1.3rem;
     }
     
     .btn-customize, .btn-outline {
-        background: #4a4a4a;
+        background: #000;
         color: #fff;
-        border: 1px solid #333;
+        border: 1px solid #000;
         border-radius: 4px;
     }
     
     .btn-customize:hover, .btn-outline:hover {
-        background: #1a1a1a;
+        background: #fff;
+        color: #000;
     }
     
     .category-tag {
-        background: #4a4a4a;
+        background: #000;
         color: #fff;
     }
     
     .rating {
-        color: #333;
+        color: #000;
     }
 </style>
 
 <!-- Customization Modal for Menu Page -->
 <div class="modal fade" id="customizeModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
-        <div class="modal-content" style="background: linear-gradient(180deg, #9e9e9e 0%, #bdbdbd 100%); border: 1px solid #666;">
-            <div class="modal-header" style="background: #4a4a4a; color: #fff; border-bottom: 1px solid #333;">
+        <div class="modal-content" style="background: #fff; border: 1px solid #000;">
+            <div class="modal-header" style="background: #000; color: #fff; border-bottom: 1px solid #000;">
                 <h5 class="modal-title"><i class="fas fa-coffee"></i> Craft Your Perfect Drink</h5>
                 <button type="button" class="close" onclick="$('#customizeModal').modal('hide')" style="color: #fff;">
                     <span>&times;</span>
                 </button>
             </div>
-            <div class="modal-body" style="background: #808080; color: #1a1a1a;">
+            <div class="modal-body" style="background: #fff; color: #000;">
                 <form id="customizationForm">
                     <input type="hidden" id="menuItemId" />
                     <input type="hidden" id="menuItemName" />
                     <input type="hidden" id="menuItemPrice" />
                     
-                    <div class="customize-item-header" style="background: #757575; padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
-                        <h4 id="modalItemName" style="color: #1a1a1a;"></h4>
+                    <div class="customize-item-header" style="background: #f5f5f5; padding: 1rem; border-radius: 8px; margin-bottom: 1rem; border: 1px solid #000;">
+                        <h4 id="modalItemName" style="color: #000;"></h4>
                         <p style="color: #333;">Base Price: ₱<span id="modalBasePrice"></span></p>
                     </div>
                     
                     <div class="option-group" style="margin-bottom: 1rem;">
-                        <label style="color: #1a1a1a; font-weight: 600;"><i class="fas fa-expand"></i> Size</label>
+                        <label style="color: #000; font-weight: 600;"><i class="fas fa-expand"></i> Size</label>
                         <div style="display: flex; gap: 1rem; margin-top: 0.5rem;">
-                            <label style="display: flex; align-items: center; gap: 0.5rem; color: #333;">
+                            <label style="display: flex; align-items: center; gap: 0.5rem; color: #000;">
                                 <input type="radio" name="size" value="Regular" checked> Regular
                             </label>
-                            <label style="display: flex; align-items: center; gap: 0.5rem; color: #333;">
+                            <label style="display: flex; align-items: center; gap: 0.5rem; color: #000;">
                                 <input type="radio" name="size" value="Large"> Large +₱20
                             </label>
-                            <label style="display: flex; align-items: center; gap: 0.5rem; color: #333;">
+                            <label style="display: flex; align-items: center; gap: 0.5rem; color: #000;">
                                 <input type="radio" name="size" value="Extra Large"> XL +₱35
                             </label>
                         </div>
                     </div>
                     
                     <div class="option-group" style="margin-bottom: 1rem;">
-                        <label style="color: #1a1a1a; font-weight: 600;"><i class="fas fa-tint"></i> Sweetness</label>
+                        <label style="color: #000; font-weight: 600;"><i class="fas fa-tint"></i> Sweetness</label>
                         <input type="range" id="menuSweetness" min="0" max="100" value="100" step="25" style="width: 100%;">
-                        <div style="text-align: center; color: #333;"><span id="sweetnessText">100%</span></div>
+                        <div style="text-align: center; color: #000;"><span id="sweetnessText">100%</span></div>
                     </div>
                     
                     <div class="option-group" style="margin-bottom: 1rem;">
-                        <label style="color: #1a1a1a; font-weight: 600;"><i class="fas fa-cubes"></i> Ice Level</label>
+                        <label style="color: #000; font-weight: 600;"><i class="fas fa-cubes"></i> Ice Level</label>
                         <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 0.5rem;">
-                            <label style="color: #333;"><input type="radio" name="iceLevel" value="Regular" checked> Regular</label>
-                            <label style="color: #333;"><input type="radio" name="iceLevel" value="Less Ice"> Less Ice</label>
-                            <label style="color: #333;"><input type="radio" name="iceLevel" value="No Ice"> No Ice</label>
-                            <label style="color: #333;"><input type="radio" name="iceLevel" value="Extra Ice"> Extra Ice</label>
+                            <label style="color: #000;"><input type="radio" name="iceLevel" value="Regular" checked> Regular</label>
+                            <label style="color: #000;"><input type="radio" name="iceLevel" value="Less Ice"> Less Ice</label>
+                            <label style="color: #000;"><input type="radio" name="iceLevel" value="No Ice"> No Ice</label>
+                            <label style="color: #000;"><input type="radio" name="iceLevel" value="Extra Ice"> Extra Ice</label>
                         </div>
                     </div>
                     
                     <div class="option-group" style="margin-bottom: 1rem;">
-                        <label style="color: #1a1a1a; font-weight: 600;"><i class="fas fa-plus-circle"></i> Toppings (+₱15 each)</label>
+                        <label style="color: #000; font-weight: 600;"><i class="fas fa-plus-circle"></i> Toppings (+₱15 each)</label>
                         <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 0.5rem;">
-                            <label style="color: #333;"><input type="checkbox" name="toppings" value="Pearl"> Pearl</label>
-                            <label style="color: #333;"><input type="checkbox" name="toppings" value="Coconut"> Coconut</label>
-                            <label style="color: #333;"><input type="checkbox" name="toppings" value="Grass Jelly"> Grass Jelly</label>
-                            <label style="color: #333;"><input type="checkbox" name="toppings" value="Pudding"> Pudding</label>
-                            <label style="color: #333;"><input type="checkbox" name="toppings" value="Nata"> Nata</label>
-                            <label style="color: #333;"><input type="checkbox" name="toppings" value="Cheese Foam"> Cheese Foam</label>
+                            <label style="color: #000;"><input type="checkbox" name="toppings" value="Pearl"> Pearl</label>
+                            <label style="color: #000;"><input type="checkbox" name="toppings" value="Coconut"> Coconut</label>
+                            <label style="color: #000;"><input type="checkbox" name="toppings" value="Grass Jelly"> Grass Jelly</label>
+                            <label style="color: #000;"><input type="checkbox" name="toppings" value="Pudding"> Pudding</label>
+                            <label style="color: #000;"><input type="checkbox" name="toppings" value="Nata"> Nata</label>
+                            <label style="color: #000;"><input type="checkbox" name="toppings" value="Cheese Foam"> Cheese Foam</label>
                         </div>
                     </div>
                     
                     <div class="option-group" style="margin-bottom: 1rem;">
-                        <label style="color: #1a1a1a; font-weight: 600;"><i class="fas fa-sticky-note"></i> Special Instructions</label>
-                        <textarea id="menuInstructions" placeholder="Any special requests..." style="width: 100%; padding: 0.5rem; border: 1px solid #666; border-radius: 4px;"></textarea>
+                        <label style="color: #000; font-weight: 600;"><i class="fas fa-sticky-note"></i> Special Instructions</label>
+                        <textarea id="menuInstructions" placeholder="Any special requests..." style="width: 100%; padding: 0.5rem; border: 1px solid #000; border-radius: 4px;"></textarea>
                     </div>
                     
                     <div style="margin-bottom: 1rem;">
-                        <label style="color: #1a1a1a; font-weight: 600;">Quantity</label>
+                        <label style="color: #000; font-weight: 600;">Quantity</label>
                         <div style="display: flex; align-items: center; gap: 1rem; margin-top: 0.5rem;">
-                            <button type="button" onclick="menuDecreaseQty()" style="padding: 0.5rem 1rem; background: #4a4a4a; color: #fff; border: 1px solid #333; border-radius: 4px;">-</button>
-                            <input type="number" id="menuQty" value="1" min="1" style="width: 60px; padding: 0.5rem; border: 1px solid #666; border-radius: 4px;">
-                            <button type="button" onclick="menuIncreaseQty()" style="padding: 0.5rem 1rem; background: #4a4a4a; color: #fff; border: 1px solid #333; border-radius: 4px;">+</button>
+                            <button type="button" onclick="menuDecreaseQty()" style="padding: 0.5rem 1rem; background: #000; color: #fff; border: 1px solid #000; border-radius: 4px;">-</button>
+                            <input type="number" id="menuQty" value="1" min="1" style="width: 60px; padding: 0.5rem; border: 1px solid #000; border-radius: 4px;">
+                            <button type="button" onclick="menuIncreaseQty()" style="padding: 0.5rem 1rem; background: #000; color: #fff; border: 1px solid #000; border-radius: 4px;">+</button>
                         </div>
                     </div>
                     
-                    <div style="background: #4a4a4a; padding: 1rem; border-radius: 8px; text-align: center;">
+                    <div style="background: #000; padding: 1rem; border-radius: 8px; text-align: center;">
                         <span style="color: #fff; font-size: 1.2rem;">Total: ₱<span id="menuTotal" style="font-weight: 700; color: #fff;"></span></span>
                     </div>
                 </form>
             </div>
-            <div class="modal-footer" style="background: #4a4a4a; border-top: 1px solid #333;">
-                <button type="button" onclick="$('#customizeModal').modal('hide')" style="padding: 0.75rem 1.5rem; background: #666; color: #fff; border: 1px solid #555; border-radius: 4px; cursor: pointer;">Cancel</button>
-                <button type="button" onclick="addMenuToCart()" style="padding: 0.75rem 1.5rem; background: #1a1a1a; color: #fff; border: 1px solid #000; border-radius: 4px; cursor: pointer;">
+            <div class="modal-footer" style="background: #f5f5f5; border-top: 1px solid #000;">
+                <button type="button" onclick="$('#customizeModal').modal('hide')" style="padding: 0.75rem 1.5rem; background: #fff; color: #000; border: 1px solid #000; border-radius: 4px; cursor: pointer;">Cancel</button>
+                <button type="button" onclick="addMenuToCart()" style="padding: 0.75rem 1.5rem; background: #000; color: #fff; border: 1px solid #000; border-radius: 4px; cursor: pointer;">
                     <i class="fas fa-shopping-cart"></i> Add to Cart
                 </button>
             </div>
