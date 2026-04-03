@@ -104,3 +104,8 @@ C:\Users\Admin\Desktop\cafewebsite\obj\Debug\net8.0\CafeWebsite.pdb
 C:\Users\Admin\Desktop\cafewebsite\obj\Debug\net8.0\CafeWebsite.genruntimeconfig.cache
 C:\Users\Admin\Desktop\cafewebsite\obj\Debug\net8.0\ref\CafeWebsite.dll
 C:\Users\Admin\Desktop\cafewebsite\obj\Debug\net8.0\CafeWebsite.sourcelink.json
+C:\Users\Admin\Desktop\cafewebsite\bin\Debug\net8.0\out\web.config
+C:\Users\Admin\Desktop\cafewebsite\bin\Debug\net8.0\out\appsettings.Development.json
+C:\Users\Admin\Desktop\cafewebsite\bin\Debug\net8.0\out\appsettings.json
+C:\Users\Admin\Desktop\cafewebsite\bin\Debug\net8.0\out\CafeWebsite.deps.json
+C:\Users\Admin\Desktop\cafewebsite\bin\Debug\net8.0\out\CafeWebsite.runtimeconfig.json
