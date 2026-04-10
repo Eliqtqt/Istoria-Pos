@@ -27,17 +27,13 @@ public class HomeController : Controller
         return View();
     }
 
-    public async Task<IActionResult> Events()
+    public IActionResult Events()
     {
-        try
-        {
-            var events = await _context.Events.Where(e => e.IsActive).ToListAsync();
-            return View(events);
-        }
-        catch
-        {
-            return View(new List<Event>());
-        }
+        List<Event> events = new List<Event>();
+        try {
+            events = _context.Events.Where(e => e.IsActive).ToList();
+        } catch { }
+        return View(events);
     }
 
     public IActionResult Privacy()
