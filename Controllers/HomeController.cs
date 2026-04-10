@@ -31,7 +31,8 @@ public class HomeController : Controller
     {
         try
         {
-            var events = _context.Events.Where(e => e.IsActive).OrderBy(e => e.CreatedAt).ToList();
+            IQueryable<Event> query = _context.Events;
+            var events = query.Where(e => e.IsActive).OrderBy(e => e.CreatedAt).ToList();
             return View(events);
         }
         catch (Exception ex)
