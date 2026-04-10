@@ -2,7 +2,7 @@
     ViewData["Title"] = "About";
 }
 
-<section class="hero-section" style="background: url('/Images/coffee-bg.jpg') center center / cover no-repeat;">
+<section class="hero-section">
     <div class="hero-overlay"></div>
     <div class="hero-content">
         <h1 class="animate-fade-in">Istoria <span>Coffee</span></h1>
@@ -10,7 +10,7 @@
     </div>
 </section>
 
-<div class="about-section" style="background: url('/Images/interior.jpg') center center / cover no-repeat;">
+<div class="about-section">
     <div class="about-overlay"></div>
     <div class="container">
         <div class="about-content">
@@ -73,9 +73,13 @@
 
 <style>
     .about-section {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        background: url('/Images/logo.jpg') center center / cover no-repeat;
+        background-attachment: fixed;
         position: relative;
         padding: 5rem 0;
-        min-height: auto;
     }
 
     .about-overlay {
@@ -84,7 +88,7 @@
         left: 0;
         right: 0;
         bottom: 0;
-        background: rgba(0, 0, 0, 0.4);
+        background: rgba(0, 0, 0, 0.6);
         z-index: 1;
     }
 
@@ -101,47 +105,45 @@
         font-size: 2.5rem;
         margin-bottom: 1.5rem;
         color: #fff;
-        text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
     }
 
     .about-content p {
-        color: #fff;
+        color: rgba(255, 255, 255, 0.9);
         line-height: 1.9;
         margin-bottom: 1rem;
         font-size: 1.1rem;
-        text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
     }
 
     .features-grid {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
         gap: 1.5rem;
-        margin-top: 2rem;
+        margin-top: 3rem;
     }
 
     .feature-box {
-        background: rgba(255, 255, 255, 0.15);
+        background: rgba(255, 255, 255, 0.1);
         backdrop-filter: blur(10px);
-        padding: 2rem 1.5rem;
+        padding: 2.5rem 1.5rem;
         text-align: center;
-        border: 1px solid rgba(255,255,255,0.3);
+        border: 1px solid rgba(255,255,255,0.2);
     }
 
     .feature-box i {
-        font-size: 2rem;
+        font-size: 2.5rem;
         color: #fff;
         margin-bottom: 1rem;
     }
 
     .feature-box h4 {
-        font-size: 1.1rem;
+        font-size: 1.2rem;
         margin-bottom: 0.5rem;
         color: #fff;
     }
 
     .feature-box p {
-        color: rgba(255,255,255,0.8);
-        font-size: 0.9rem;
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 0.95rem;
         margin: 0;
     }
 
