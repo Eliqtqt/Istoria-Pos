@@ -222,19 +222,20 @@ $(document).ready(function() {
     $('input[name="size"]').on('change', updateDetailTotal);
     $('input[name="toppings"]').on('change', updateDetailTotal);
     
-    // Category filter buttons
-    $('.category-btn').on('click', function() {
+    // Category filter buttons - using event delegation for dynamically rendered elements
+    $(document).on('click', '.tab-btn', function(e) {
+        e.preventDefault();
         var category = $(this).data('category');
         
         // Update active button
-        $('.category-btn').removeClass('active');
+        $('.tab-btn').removeClass('active');
         $(this).addClass('active');
         
-        // Filter menu items
-        $('.menu-item').each(function() {
-            var itemCategory = $(this).data('category');
+        // Filter menu cards
+        $('.menu-card').each(function() {
+            var cardCategory = $(this).data('category');
             
-            if (category === 'all' || itemCategory === category) {
+            if (category === 'all' || cardCategory === category) {
                 $(this).fadeIn(300);
             } else {
                 $(this).fadeOut(300);

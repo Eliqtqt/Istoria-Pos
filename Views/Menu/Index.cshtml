@@ -704,26 +704,6 @@
 <script>
 var menuBasePrice = 0;
 
-// Category filter functionality - using event delegation for reliability
-$(document).on('click', '.tab-btn', function(e) {
-    e.preventDefault();
-    console.log('Tab clicked:', $(this).data('category'));
-    var category = $(this).data('category');
-    
-    $('.tab-btn').removeClass('active');
-    $(this).addClass('active');
-    
-    $('.menu-card').each(function() {
-        var cardCategory = $(this).data('category');
-        console.log('Card category:', cardCategory, 'Filter:', category);
-        if (category === 'all' || cardCategory === category) {
-            $(this).show();
-        } else {
-            $(this).hide();
-        }
-    });
-});
-
 function openCustomizeModal(id, name, price, isCustomizable) {
     if (!isCustomizable) return;
     id = parseInt(id);
