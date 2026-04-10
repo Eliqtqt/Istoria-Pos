@@ -27,17 +27,15 @@ public class HomeController : Controller
         return View();
     }
 
-    public IActionResult Events()
+    public async Task<IActionResult> Events()
     {
         try
         {
-            IQueryable<Event> query = _context.Events;
-            var events = query.Where(e => e.IsActive).OrderBy(e => e.CreatedAt).ToList();
+            var events = await _context.Events.Where(e => e.IsActive).ToListAsync();
             return View(events);
         }
-        catch (Exception ex)
+        catch
         {
-            ViewBag.Error = ex.Message;
             return View(new List<Event>());
         }
     }

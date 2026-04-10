@@ -15,7 +15,14 @@ namespace CafeWebsite.Data
 
         public static void Initialize(CafeDbContext context)
         {
-            context.Database.EnsureCreated();
+            try
+            {
+                context.Database.EnsureCreated();
+            }
+            catch
+            {
+                // Database already exists, ignore error
+            }
 
             // Create admin user if not exists
             if (!context.Users.Any(u => u.Username == "admin"))
