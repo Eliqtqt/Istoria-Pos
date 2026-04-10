@@ -2,6 +2,7 @@ services:
   - type: web
     name: cafewebsite
     env: dotnet
-    region: Oregon
+    region: oregon
+    rootDirectory: .
     buildCommand: dotnet build
-    startCommand: dotnet run
+    startCommand: dotnet run --project ./CafeWebsite.csproj
