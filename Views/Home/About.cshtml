@@ -2,7 +2,7 @@
     ViewData["Title"] = "About";
 }
 
-<section class="hero-section">
+<section class="hero-section" style="background: url('/Images/coffee-bg.jpg') center center / cover no-repeat;">
     <div class="hero-overlay"></div>
     <div class="hero-content">
         <h1 class="animate-fade-in">Istoria <span>Coffee</span></h1>
@@ -10,57 +10,41 @@
     </div>
 </section>
 
-<div class="about-section">
+<div class="about-section" style="background: url('/Images/interior.jpg') center center / cover no-repeat;">
+    <div class="about-overlay"></div>
     <div class="container">
-        <div class="about-grid">
-            <div class="about-content">
-                <h2 class="animate-fade-in">Our Story</h2>
-                <p class="animate-fade-in animate-delay-1">
-                    Founded with a passion for exceptional coffee, Istoria Coffee has been serving the community 
-                    with carefully curated beverages and artisanal treats. We believe in quality ingredients, 
-                    sustainable practices, and creating memorable moments for every guest.
-                </p>
-                <p class="animate-fade-in animate-delay-2">
-                    Our skilled baristas bring craftsmanship to every cup, ensuring precision and care in each brew. 
-                    From our signature espresso to freshly baked goods, we strive to make your visit unforgettable.
-                </p>
+        <div class="about-content">
+            <h2>Our Story</h2>
+            <p>Founded with a passion for exceptional coffee, Istoria Coffee has been serving the community with carefully curated beverages and artisanal treats. We believe in quality ingredients, sustainable practices, and creating memorable moments for every guest.</p>
+            <p>Our skilled baristas bring craftsmanship to every cup, ensuring precision and care in each brew. From our signature espresso to freshly baked goods, we strive to make your visit unforgettable.</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-col">
+                <div class="feature-box">
+                    <i class="fas fa-mug-hot"></i>
+                    <h4>Premium Beans</h4>
+                    <p>Sustainably sourced</p>
+                </div>
             </div>
-            <div class="about-features">
-                <div class="feature-card animate-fade-in">
-                    <div class="feature-icon">
-                        <i class="fas fa-mug-hot"></i>
-                    </div>
-                    <div class="feature-text">
-                        <h4>Premium Beans</h4>
-                        <p>Sustainably sourced</p>
-                    </div>
+            <div class="feature-col">
+                <div class="feature-box">
+                    <i class="fas fa-bread-slice"></i>
+                    <h4>Fresh Baked</h4>
+                    <p>Made daily</p>
                 </div>
-                <div class="feature-card animate-fade-in animate-delay-1">
-                    <div class="feature-icon">
-                        <i class="fas fa-bread-slice"></i>
-                    </div>
-                    <div class="feature-text">
-                        <h4>Fresh Baked</h4>
-                        <p>Made daily</p>
-                    </div>
+            </div>
+            <div class="feature-col">
+                <div class="feature-box">
+                    <i class="fas fa-user-tie"></i>
+                    <h4>Expert Baristas</h4>
+                    <p>Passionate craft</p>
                 </div>
-                <div class="feature-card animate-fade-in animate-delay-2">
-                    <div class="feature-icon">
-                        <i class="fas fa-user-tie"></i>
-                    </div>
-                    <div class="feature-text">
-                        <h4>Expert Baristas</h4>
-                        <p>Passionate craft</p>
-                    </div>
-                </div>
-                <div class="feature-card animate-fade-in animate-delay-3">
-                    <div class="feature-icon">
-                        <i class="fas fa-leaf"></i>
-                    </div>
-                    <div class="feature-text">
-                        <h4>Sustainable</h4>
-                        <p>Eco-conscious</p>
-                    </div>
+            </div>
+            <div class="feature-col">
+                <div class="feature-box">
+                    <i class="fas fa-leaf"></i>
+                    <h4>Sustainable</h4>
+                    <p>Eco-conscious</p>
                 </div>
             </div>
         </div>
@@ -69,24 +53,24 @@
 
 <div class="visit-section">
     <div class="container">
-        <h2 class="animate-fade-in">Visit Us</h2>
+        <h2>Visit Us</h2>
         <div class="visit-grid">
-            <div class="visit-card animate-fade-in animate-delay-1">
+            <div class="visit-card">
                 <i class="fas fa-map-marker-alt"></i>
                 <h4>Location</h4>
                 <p>Istoria Coffee Shop<br>Brgy. Maitim, Bay, Philippines 4033<br>National Hwy, Manila S Road</p>
             </div>
-            <div class="visit-card animate-fade-in animate-delay-2">
+            <div class="visit-card">
                 <i class="fas fa-clock"></i>
                 <h4>Hours</h4>
                 <p>Mon-Fri: 6AM - 9PM<br>Sat-Sun: 7AM - 10PM</p>
             </div>
-            <div class="visit-card animate-fade-in animate-delay-3">
+            <div class="visit-card">
                 <i class="fas fa-envelope"></i>
                 <h4>Email</h4>
                 <p><a href="mailto:business.istoria@gmail.com">business.istoria@gmail.com</a></p>
             </div>
-            <div class="visit-card animate-fade-in animate-delay-4">
+            <div class="visit-card">
                 <i class="fab fa-facebook-messenger"></i>
                 <h4>Messenger</h4>
                 <p><a href="https://m.me/istoriacoffee" target="_blank">Message Us</a></p>
@@ -97,67 +81,78 @@
 
 <style>
     .about-section {
-        background: var(--bw-white);
-        padding: 6rem 0;
+        position: relative;
+        padding: 5rem 0;
+        min-height: auto;
     }
 
-    .about-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 4rem;
-        align-items: start;
+    .about-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(255, 255, 255, 0.85);
+        z-index: 1;
+    }
+
+    .about-section .container {
+        position: relative;
+        z-index: 2;
+    }
+
+    .about-content {
+        background: rgba(255, 255, 255, 0.9);
+        padding: 2.5rem;
+        margin-bottom: 2rem;
+        border-left: 3px solid var(--bw-black);
     }
 
     .about-content h2 {
-        font-size: 2.5rem;
+        font-size: 2rem;
         margin-bottom: 1.5rem;
         color: var(--bw-black);
     }
 
     .about-content p {
-        color: var(--bw-medium-gray);
-        line-height: 1.8;
-        margin-bottom: 1.5rem;
+        color: #333;
+        line-height: 1.9;
+        margin-bottom: 1rem;
+        font-size: 1.05rem;
     }
 
-    .about-features {
+    .features-grid {
         display: grid;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: repeat(4, 1fr);
         gap: 1.5rem;
     }
 
-    .feature-card {
-        background: var(--bw-gray);
-        padding: 1.5rem;
+    .feature-col {
         display: flex;
-        align-items: center;
-        gap: 1rem;
     }
 
-    .feature-icon {
-        width: 50px;
-        height: 50px;
-        background: var(--bw-black);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-shrink: 0;
+    .feature-box {
+        background: rgba(255, 255, 255, 0.95);
+        padding: 2rem 1.5rem;
+        text-align: center;
+        border: 1px solid rgba(0,0,0,0.1);
     }
 
-    .feature-icon i {
-        color: var(--bw-white);
-        font-size: 1.2rem;
+    .feature-box i {
+        font-size: 2rem;
+        color: var(--bw-black);
+        margin-bottom: 1rem;
     }
 
-    .feature-text h4 {
-        font-size: 1rem;
-        margin-bottom: 0.25rem;
+    .feature-box h4 {
+        font-size: 1.1rem;
+        margin-bottom: 0.5rem;
         color: var(--bw-black);
     }
 
-    .feature-text p {
-        color: var(--bw-medium-gray);
-        font-size: 0.85rem;
+    .feature-box p {
+        color: #555;
+        font-size: 0.9rem;
         margin: 0;
     }
 
@@ -216,15 +211,12 @@
         color: var(--bw-white);
     }
 
-    .animate-delay-1 { animation-delay: 0.1s; }
-    .animate-delay-2 { animation-delay: 0.2s; }
-    .animate-delay-3 { animation-delay: 0.3s; }
-    .animate-delay-4 { animation-delay: 0.4s; }
-
     .animate-fade-in {
         opacity: 0;
         animation: fadeInUp 0.6s ease forwards;
     }
+
+    .animate-delay-1 { animation-delay: 0.1s; }
 
     @@keyframes fadeInUp {
         from {
@@ -238,9 +230,8 @@
     }
 
     @@media (max-width: 992px) {
-        .about-grid {
-            grid-template-columns: 1fr;
-            gap: 3rem;
+        .features-grid {
+            grid-template-columns: repeat(2, 1fr);
         }
 
         .visit-grid {
@@ -249,12 +240,16 @@
     }
 
     @@media (max-width: 576px) {
-        .about-features {
+        .features-grid {
             grid-template-columns: 1fr;
         }
 
         .visit-grid {
             grid-template-columns: 1fr;
+        }
+
+        .about-content {
+            padding: 1.5rem;
         }
     }
 </style>
