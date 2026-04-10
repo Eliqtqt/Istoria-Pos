@@ -19,33 +19,25 @@
             <p>Our skilled baristas bring craftsmanship to every cup, ensuring precision and care in each brew. From our signature espresso to freshly baked goods, we strive to make your visit unforgettable.</p>
         </div>
         <div class="features-grid">
-            <div class="feature-col">
-                <div class="feature-box">
-                    <i class="fas fa-mug-hot"></i>
-                    <h4>Premium Beans</h4>
-                    <p>Sustainably sourced</p>
-                </div>
+            <div class="feature-box">
+                <i class="fas fa-mug-hot"></i>
+                <h4>Premium Beans</h4>
+                <p>Sustainably sourced</p>
             </div>
-            <div class="feature-col">
-                <div class="feature-box">
-                    <i class="fas fa-bread-slice"></i>
-                    <h4>Fresh Baked</h4>
-                    <p>Made daily</p>
-                </div>
+            <div class="feature-box">
+                <i class="fas fa-bread-slice"></i>
+                <h4>Fresh Baked</h4>
+                <p>Made daily</p>
             </div>
-            <div class="feature-col">
-                <div class="feature-box">
-                    <i class="fas fa-user-tie"></i>
-                    <h4>Expert Baristas</h4>
-                    <p>Passionate craft</p>
-                </div>
+            <div class="feature-box">
+                <i class="fas fa-user-tie"></i>
+                <h4>Expert Baristas</h4>
+                <p>Passionate craft</p>
             </div>
-            <div class="feature-col">
-                <div class="feature-box">
-                    <i class="fas fa-leaf"></i>
-                    <h4>Sustainable</h4>
-                    <p>Eco-conscious</p>
-                </div>
+            <div class="feature-box">
+                <i class="fas fa-leaf"></i>
+                <h4>Sustainable</h4>
+                <p>Eco-conscious</p>
             </div>
         </div>
     </div>
@@ -92,7 +84,7 @@
         left: 0;
         right: 0;
         bottom: 0;
-        background: rgba(255, 255, 255, 0.85);
+        background: rgba(0, 0, 0, 0.4);
         z-index: 1;
     }
 
@@ -102,56 +94,53 @@
     }
 
     .about-content {
-        background: rgba(255, 255, 255, 0.9);
-        padding: 2.5rem;
-        margin-bottom: 2rem;
-        border-left: 3px solid var(--bw-black);
+        padding: 2rem 0;
     }
 
     .about-content h2 {
-        font-size: 2rem;
+        font-size: 2.5rem;
         margin-bottom: 1.5rem;
-        color: var(--bw-black);
+        color: #fff;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
     }
 
     .about-content p {
-        color: #333;
+        color: #fff;
         line-height: 1.9;
         margin-bottom: 1rem;
-        font-size: 1.05rem;
+        font-size: 1.1rem;
+        text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
     }
 
     .features-grid {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
         gap: 1.5rem;
-    }
-
-    .feature-col {
-        display: flex;
+        margin-top: 2rem;
     }
 
     .feature-box {
-        background: rgba(255, 255, 255, 0.95);
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(10px);
         padding: 2rem 1.5rem;
         text-align: center;
-        border: 1px solid rgba(0,0,0,0.1);
+        border: 1px solid rgba(255,255,255,0.3);
     }
 
     .feature-box i {
         font-size: 2rem;
-        color: var(--bw-black);
+        color: #fff;
         margin-bottom: 1rem;
     }
 
     .feature-box h4 {
         font-size: 1.1rem;
         margin-bottom: 0.5rem;
-        color: var(--bw-black);
+        color: #fff;
     }
 
     .feature-box p {
-        color: #555;
+        color: rgba(255,255,255,0.8);
         font-size: 0.9rem;
         margin: 0;
     }
@@ -248,8 +237,12 @@
             grid-template-columns: 1fr;
         }
 
-        .about-content {
-            padding: 1.5rem;
+        .about-content h2 {
+            font-size: 2rem;
+        }
+
+        .about-content p {
+            font-size: 1rem;
         }
     }
 </style>
