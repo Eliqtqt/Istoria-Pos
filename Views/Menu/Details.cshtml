@@ -80,6 +80,22 @@
                 <div class="add-to-cart-section">
                     @if (isDrink)
                     {
+                        <form asp-controller="Cart" asp-action="AddWithCustomization" method="post" class="add-form">
+                            <input type="hidden" name="id" value="@Model.Id" />
+                            <input type="hidden" name="name" value="@Model.Name" />
+                            <input type="hidden" name="price" value="@Model.Price" />
+                            <input type="hidden" name="quantity" value="1" />
+                            <input type="hidden" name="size" value="Regular" />
+                            <input type="hidden" name="sweetness" value="100" />
+                            <input type="hidden" name="iceLevel" value="Regular" />
+                            <input type="hidden" name="toppings" value="" />
+                            <input type="hidden" name="specialInstructions" value="" />
+                            <input type="hidden" name="isCustomizable" value="true" />
+                            <button type="submit" class="btn-add-cart">
+                                <i class="fas fa-shopping-bag"></i>
+                                <span>Add to Cart - ₱@Model.Price.ToString("F2")</span>
+                            </button>
+                        </form>
                         <button class="btn-customize-main" onclick="openCustomizeModal(@Model.Id, '@Model.Name', @Model.Price, true)">
                             <i class="fas fa-sliders-h"></i>
                             <span>Customize Your Drink</span>
