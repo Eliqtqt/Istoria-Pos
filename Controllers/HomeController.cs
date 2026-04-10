@@ -1,16 +1,20 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using CafeWebsite.Models;
+using CafeWebsite.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace CafeWebsite.Controllers;
 
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
+    private readonly CafeDbContext _context;
 
-    public HomeController(ILogger<HomeController> logger)
+    public HomeController(ILogger<HomeController> logger, CafeDbContext context)
     {
         _logger = logger;
+        _context = context;
     }
 
     public IActionResult Index()
@@ -25,7 +29,8 @@ public class HomeController : Controller
 
     public IActionResult Events()
     {
-        return View();
+        var events = _context.Events.Where(e => e.IsActive).OrderBy(e => e.CreatedAt).ToList();
+        return View(events);
     }
 
     public IActionResult Privacy()

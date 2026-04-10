@@ -1,161 +1,128 @@
+@model IEnumerable<CafeWebsite.Models.Event>
 @{
     ViewData["Title"] = "Events";
 }
 
-<div class="page-header" style="background: var(--bw-gray);">
-    <h1>Events</h1>
-    <div class="divider"></div>
-    <p style="color: var(--bw-medium-gray);">Join us for special events and activities</p>
-</div>
-
-<div class="container py-5">
-    <div class="row">
-        <div class="col-12 mb-5 text-center">
-            <h2 style="font-size: 2.5rem; margin-bottom: 1rem;">Upcoming Events</h2>
-            <p style="color: var(--bw-medium-gray); font-size: 1.1rem; max-width: 600px; margin: 0 auto;">
-                Experience the finest coffee culture through our exclusive events
-            </p>
-        </div>
+<section class="hero-section" style="background: url('/Images/coffee-bg.jpg') center center / cover no-repeat; background-attachment: fixed;">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+        <h1 class="animate-fade-in">Events</h1>
+        <p class="lead animate-fade-in animate-delay-1">Join us for special events and activities</p>
     </div>
+</section>
 
-    <div class="row">
-        <!-- Event 1 -->
-        <div class="col-lg-4 col-md-6 mb-4">
-            <div class="event-card">
-                <div class="event-icon">
-                    <i class="fas fa-coffee"></i>
-                </div>
-                <div class="event-content">
-                    <div class="event-date">
-                        <i class="fas fa-calendar-alt"></i> Every Saturday
-                    </div>
-                    <h3>Coffee Tasting Workshop</h3>
-                    <p>Join our expert baristas for an interactive coffee tasting experience. Learn about different coffee beans, brewing methods, and flavor profiles.</p>
-                    <div class="event-time">
-                        <i class="fas fa-clock"></i> 10:00 AM - 12:00 PM
-                    </div>
-                </div>
+<div class="events-section">
+    <div class="container">
+        @if (TempData["Success"] != null)
+        {
+            <div class="alert-box">@TempData["Success"]</div>
+        }
+
+        @if (!Model.Any())
+        {
+            <div class="no-events">
+                <i class="fas fa-calendar-plus"></i>
+                <h3>No Upcoming Events</h3>
+                <p>Check back soon for upcoming events at Istoria Coffee!</p>
             </div>
-        </div>
-
-        <!-- Event 2 -->
-        <div class="col-lg-4 col-md-6 mb-4">
-            <div class="event-card">
-                <div class="event-icon">
-                    <i class="fas fa-music"></i>
-                </div>
-                <div class="event-content">
-                    <div class="event-date">
-                        <i class="fas fa-calendar-alt"></i> Every Friday
+        }
+        else
+        {
+            <div class="events-grid">
+                @foreach (var item in Model)
+                {
+                    <div class="event-card">
+                        <div class="event-icon">
+                            @if (!string.IsNullOrEmpty(item.ImagePath))
+                            {
+                                <img src="@item.ImagePath" alt="@item.Title" class="event-image" />
+                            }
+                            else
+                            {
+                                <i class="fas @item.Icon"></i>
+                            }
+                        </div>
+                        <div class="event-content">
+                            <div class="event-date">
+                                <i class="fas fa-calendar-alt"></i> @item.Schedule
+                            </div>
+                            <h3>@item.Title</h3>
+                            <p>@item.Description</p>
+                            @if (!string.IsNullOrEmpty(item.Time))
+                            {
+                                <div class="event-time">
+                                    <i class="fas fa-clock"></i> @item.Time
+                                </div>
+                            }
+                        </div>
                     </div>
-                    <h3>Live Acoustic Night</h3>
-                    <p>Enjoy soulful acoustic performances from local artists while sipping on your favorite coffee drinks. Open mic sign-ups available!</p>
-                    <div class="event-time">
-                        <i class="fas fa-clock"></i> 7:00 PM - 10:00 PM
-                    </div>
-                </div>
+                }
             </div>
-        </div>
+        }
 
-        <!-- Event 3 -->
-        <div class="col-lg-4 col-md-6 mb-4">
-            <div class="event-card">
-                <div class="event-icon">
-                    <i class="fas fa-leaf"></i>
-                </div>
-                <div class="event-content">
-                    <div class="event-date">
-                        <i class="fas fa-calendar-alt"></i> First Sunday of Month
-                    </div>
-                    <h3>Sustainable Coffee Day</h3>
-                    <p>Learn about sustainable coffee farming practices and our commitment to ethical sourcing. Plant a tree with us!</p>
-                    <div class="event-time">
-                        <i class="fas fa-clock"></i> 9:00 AM - 1:00 PM
-                    </div>
-                </div>
-            </div>
+        <div class="event-cta">
+            <h2>Want to Host an Event?</h2>
+            <p>Our space is perfect for private events, corporate gatherings, and special celebrations. 
+               Contact us to learn more about hosting your event at Istoria Coffee.</p>
+            <a asp-controller="Home" asp-action="About" class="btn-elegant">Contact Us</a>
         </div>
-
-        <!-- Event 4 -->
-        <div class="col-lg-4 col-md-6 mb-4">
-            <div class="event-card">
-                <div class="event-icon">
-                    <i class="fas fa-birthday-cake"></i>
-                </div>
-                <div class="event-content">
-                    <div class="event-date">
-                        <i class="fas fa-calendar-alt"></i> Monthly
-                    </div>
-                    <h3>Birthday Special</h3>
-                    <p>Celebrate your birthday month with us! Get a free drink and pastry when you visit during your birthday week.</p>
-                    <div class="event-time">
-                        <i class="fas fa-clock"></i> All Day
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Event 5 -->
-        <div class="col-lg-4 col-md-6 mb-4">
-            <div class="event-card">
-                <div class="event-icon">
-                    <i class="fas fa-laptop"></i>
-                </div>
-                <div class="event-content">
-                    <div class="event-date">
-                        <i class="fas fa-calendar-alt"></i> Every Wednesday
-                    </div>
-                    <h3>Remote Work Wednesday</h3>
-                    <p>Bring your laptop and work from our cozy cafe. Special discounts on coffee and snacks for remote workers all day.</p>
-                    <div class="event-time">
-                        <i class="fas fa-clock"></i> 8:00 AM - 8:00 PM
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Event 6 -->
-        <div class="col-lg-4 col-md-6 mb-4">
-            <div class="event-card">
-                <div class="event-icon">
-                    <i class="fas fa-palette"></i>
-                </div>
-                <div class="event-content">
-                    <div class="event-date">
-                        <i class="fas fa-calendar-alt"></i> Last Sunday of Month
-                    </div>
-                    <h3>Art & Coffee Exhibition</h3>
-                    <p>Showcase of local artists' work. Enjoy art viewing while enjoying your favorite coffee creations.</p>
-                    <div class="event-time">
-                        <i class="fas fa-clock"></i> 2:00 PM - 6:00 PM
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="event-cta">
-        <h2>Want to Host an Event?</h2>
-        <p>Our space is perfect for private events, corporate gatherings, and special celebrations. 
-           Contact us to learn more about hosting your event at Istoria Coffee.</p>
-        <a asp-controller="Home" asp-action="About" class="btn-elegant">Contact Us</a>
     </div>
 </div>
 
 <style>
-    /* Event Card Styles */
+    .events-section {
+        background: var(--bw-gray);
+        padding: 5rem 0;
+        min-height: 60vh;
+    }
+
+    .alert-box {
+        background: var(--bw-black);
+        color: var(--bw-white);
+        padding: 1rem;
+        margin-bottom: 2rem;
+        max-width: 1200px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .no-events {
+        text-align: center;
+        padding: 4rem 2rem;
+    }
+
+    .no-events i {
+        font-size: 4rem;
+        color: var(--bw-medium-gray);
+        margin-bottom: 1.5rem;
+    }
+
+    .no-events h3 {
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+        color: var(--bw-black);
+    }
+
+    .no-events p {
+        color: var(--bw-medium-gray);
+    }
+
+    .events-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;
+    }
+
     .event-card {
         background: var(--bw-white);
-        border: 1px solid #eee;
-        height: 100%;
-        display: flex;
-        flex-direction: column;
+        border: none;
+        overflow: hidden;
         transition: all 0.4s ease;
     }
 
     .event-card:hover {
         transform: translateY(-8px);
-        box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.1);
     }
 
     .event-icon {
@@ -164,18 +131,22 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        min-height: 180px;
     }
 
     .event-icon i {
-        font-size: 2.5rem;
+        font-size: 3rem;
         color: var(--bw-white);
+    }
+
+    .event-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
     }
 
     .event-content {
         padding: 2rem;
-        flex: 1;
-        display: flex;
-        flex-direction: column;
     }
 
     .event-date {
@@ -188,7 +159,6 @@
         letter-spacing: 1px;
         text-transform: uppercase;
         margin-bottom: 1.25rem;
-        align-self: flex-start;
     }
 
     .event-content h3 {
@@ -201,8 +171,6 @@
         color: var(--bw-medium-gray);
         line-height: 1.7;
         margin-bottom: 1.5rem;
-        flex: 1;
-        font-size: 0.95rem;
     }
 
     .event-time {
@@ -217,7 +185,6 @@
         margin-right: 0.5rem;
     }
 
-    /* Event CTA Section */
     .event-cta {
         background: var(--bw-black);
         padding: 4rem 3rem;
@@ -258,11 +225,33 @@
         color: var(--bw-white);
     }
 
-    /* Divider */
-    .divider {
-        width: 60px;
-        height: 1px;
-        background: var(--bw-black);
-        margin: 1.5rem auto;
+    .animate-fade-in {
+        opacity: 0;
+        animation: fadeInUp 0.6s ease forwards;
+    }
+
+    .animate-delay-1 { animation-delay: 0.1s; }
+
+    @@keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @@media (max-width: 992px) {
+        .events-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @@media (max-width: 576px) {
+        .events-grid {
+            grid-template-columns: 1fr;
+        }
     }
 </style>
