@@ -13,6 +13,11 @@
 
 <div class="events-section">
     <div class="container">
+        @if (ViewBag.Error != null)
+        {
+            <div class="alert-box" style="background: #dc3545;">Error: @ViewBag.Error</div>
+        }
+
         @if (TempData["Success"] != null)
         {
             <div class="alert-box">@TempData["Success"]</div>

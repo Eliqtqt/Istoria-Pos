@@ -29,8 +29,16 @@ public class HomeController : Controller
 
     public IActionResult Events()
     {
-        var events = _context.Events.Where(e => e.IsActive).OrderBy(e => e.CreatedAt).ToList();
-        return View(events);
+        try
+        {
+            var events = _context.Events.Where(e => e.IsActive).OrderBy(e => e.CreatedAt).ToList();
+            return View(events);
+        }
+        catch (Exception ex)
+        {
+            ViewBag.Error = ex.Message;
+            return View(new List<Event>());
+        }
     }
 
     public IActionResult Privacy()
