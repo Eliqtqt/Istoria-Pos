@@ -1,8 +1,9 @@
 services:
   - type: web
     name: cafewebsite
-    env: dotnet
+    env: docker
     region: oregon
     rootDirectory: .
-    buildCommand: dotnet build
-    startCommand: dotnet run --project ./CafeWebsite.csproj
+    dockerfilePath: Dockerfile
+    buildCommand: docker build -t cafewebsite .
+    startCommand: docker run -p 8080:8080 cafewebsite
