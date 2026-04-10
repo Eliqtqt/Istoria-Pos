@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: cafewebsite
+    env: dotnet
+    region: Oregon
+    buildCommand: dotnet build
+    startCommand: dotnet run
