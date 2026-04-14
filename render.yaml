@@ -5,5 +5,3 @@ services:
     region: oregon
     rootDirectory: .
     dockerfilePath: Dockerfile
-    buildCommand: docker build -t cafewebsite .
-    startCommand: docker run -p 8080:8080 cafewebsite

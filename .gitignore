@@ -7,3 +7,4 @@ obj/
 *.cache
 .DS_Store
 appsettings.Development.json
+.kilo/
