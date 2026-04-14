@@ -8,3 +8,5 @@ obj/
 .DS_Store
 appsettings.Development.json
 .kilo/
+out/
+cafe.db
