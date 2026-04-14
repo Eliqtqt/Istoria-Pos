@@ -1,6 +1,7 @@
 using CafeWebsite.Data;
 using CafeWebsite.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,10 +11,12 @@ namespace CafeWebsite.Controllers
     public class AdminController : Controller
     {
         private readonly CafeDbContext _context;
+        private readonly IWebHostEnvironment _env;
 
-        public AdminController(CafeDbContext context)
+        public AdminController(CafeDbContext context, IWebHostEnvironment env)
         {
             _context = context;
+            _env = env;
         }
 
         // Dashboard
@@ -253,10 +256,11 @@ namespace CafeWebsite.Controllers
                 if (ImageFile != null && ImageFile.Length > 0)
                 {
                     var fileName = Guid.NewGuid().ToString() + Path.GetExtension(ImageFile.FileName);
-                    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Images", "events", fileName);
+                    var webRoot = _env.WebRootPath ?? Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
+                    var filePath = Path.Combine(webRoot, "Images", "events", fileName);
                     
                     var directory = Path.GetDirectoryName(filePath);
-                    if (!Directory.Exists(directory))
+                    if (!string.IsNullOrEmpty(directory) && !Directory.Exists(directory))
                     {
                         Directory.CreateDirectory(directory);
                     }
@@ -311,7 +315,8 @@ namespace CafeWebsite.Controllers
                     // Delete old image if exists
                     if (!string.IsNullOrEmpty(existingEvent.ImagePath))
                     {
-                        var oldFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", existingEvent.ImagePath.TrimStart('/'));
+                        var webRoot = _env.WebRootPath ?? Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
+                        var oldFilePath = Path.Combine(webRoot, existingEvent.ImagePath.TrimStart('/'));
                         if (System.IO.File.Exists(oldFilePath))
                         {
                             System.IO.File.Delete(oldFilePath);
@@ -319,10 +324,11 @@ namespace CafeWebsite.Controllers
                     }
 
                     var fileName = Guid.NewGuid().ToString() + Path.GetExtension(ImageFile.FileName);
-                    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Images", "events", fileName);
+                    var webRoot2 = _env.WebRootPath ?? Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
+                    var filePath = Path.Combine(webRoot2, "Images", "events", fileName);
                     
                     var directory = Path.GetDirectoryName(filePath);
-                    if (!Directory.Exists(directory))
+                    if (!string.IsNullOrEmpty(directory) && !Directory.Exists(directory))
                     {
                         Directory.CreateDirectory(directory);
                     }
@@ -342,7 +348,8 @@ namespace CafeWebsite.Controllers
                     // Remove image if checkbox is unchecked
                     if (!string.IsNullOrEmpty(existingEvent.ImagePath))
                     {
-                        var oldFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", existingEvent.ImagePath.TrimStart('/'));
+                        var webRoot = _env.WebRootPath ?? Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
+                        var oldFilePath = Path.Combine(webRoot, existingEvent.ImagePath.TrimStart('/'));
                         if (System.IO.File.Exists(oldFilePath))
                         {
                             System.IO.File.Delete(oldFilePath);
