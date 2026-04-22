@@ -8,13 +8,11 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-if (string.IsNullOrEmpty(connectionString) || connectionString.StartsWith("${"))
+if (string.IsNullOrEmpty(connectionString) || connectionString.StartsWith("${") || connectionString.StartsWith("{"))
 {
-    connectionString = Environment.GetEnvironmentVariable("DATABASE_URL");
-}
-if (string.IsNullOrEmpty(connectionString) || connectionString.StartsWith("${"))
-{
-    throw new InvalidOperationException("Database connection string is not configured. Please set DATABASE_URL environment variable.");
+    connectionString = Environment.GetEnvironmentVariable("DATABASE_URL") 
+        ?? Environment.GetEnvironmentVariable("DefaultConnection")
+        ?? connectionString;
 }
 
 builder.Services.AddDbContext<CafeWebsite.Data.CafeDbContext>(options =>
