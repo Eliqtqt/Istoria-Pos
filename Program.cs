@@ -7,8 +7,18 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+if (string.IsNullOrEmpty(connectionString) || connectionString.StartsWith("${"))
+{
+    connectionString = Environment.GetConnectionString("DefaultConnection");
+}
+if (string.IsNullOrEmpty(connectionString) || connectionString.StartsWith("${"))
+{
+    throw new InvalidOperationException("Database connection string is not configured. Please set DATABASE_URL environment variable.");
+}
+
 builder.Services.AddDbContext<CafeWebsite.Data.CafeDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseNpgsql(connectionString));
 
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
