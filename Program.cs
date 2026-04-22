@@ -17,27 +17,45 @@ Console.WriteLine($"[DEBUG] Has DATABASE_URL: {hasEnvVar}");
 
 if (hasEnvVar)
 {
-    // Parse Render's postgresql:// URL and build proper connection string
+    // Parse Render's URL: postgresql://user:pass@host:port/db
     var url = envConnection;
-    if (url.StartsWith("postgresql://"))
-    {
-        url = "postgres://" + url.Substring(11);
-    }
-    // Npgsql needs specific format
+    
+    // Convert postgresql:// to postgres://
+    url = url.Replace("postgresql://", "postgres://");
+    
     try 
     {
-        var uri = new Uri(url);
-        var userInfo = uri.UserInfo.Split(':');
-        var user = userInfo[0];
-        var pass = userInfo.Length > 1 ? userInfo[1] : "";
-        var host = uri.Host;
-        var port = uri.Port > 0 ? uri.Port : 5432;
-        var db = uri.AbsolutePath.TrimStart('/');
-        connectionString = $"Host={host};Port={port};Database={db};Username={user};Password={pass}";
+        // Manually parse URL
+        var withoutProto = url.Substring("postgres://".Length);
+        var atIndex = withoutProto.IndexOf('@');
+        if (atIndex > 0)
+        {
+            var userInfo = withoutProto.Substring(0, atIndex);
+            var afterAt = withoutProto.Substring(atIndex + 1);
+            
+            var userParts = userInfo.Split(':');
+            var user = userParts[0];
+            var pass = userParts.Length > 1 ? userParts[1] : "";
+            
+            var slashIndex = afterAt.IndexOf('/');
+            var hostPort = slashIndex > 0 ? afterAt.Substring(0, slashIndex) : afterAt;
+            var db = slashIndex > 0 ? afterAt.Substring(slashIndex + 1) : "db";
+            
+            var colonIndex = hostPort.IndexOf(':');
+            var host = colonIndex > 0 ? hostPort.Substring(0, colonIndex) : hostPort;
+            var portStr = colonIndex > 0 ? hostPort.Substring(colonIndex + 1) : "5432";
+            
+            connectionString = $"Host={host};Port={portStr};Database={db};Username={user};Password={pass}";
+            Console.WriteLine($"[DEBUG] Parsed: Host={host}, Port={portStr}, DB={db}, User={user}");
+        }
+        else
+        {
+            connectionString = url;
+        }
     }
-    catch
+    catch (Exception ex)
     {
-        // Fallback: just replace protocol
+        Console.WriteLine($"[DEBUG] Parse error: {ex.Message}");
         connectionString = url;
     }
 }
