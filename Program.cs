@@ -17,8 +17,29 @@ Console.WriteLine($"[DEBUG] Has DATABASE_URL: {hasEnvVar}");
 
 if (hasEnvVar)
 {
-    // Convert postgresql:// to postgres:// for Npgsql
-    connectionString = envConnection.Replace("postgresql://", "postgres://");
+    // Parse Render's postgresql:// URL and build proper connection string
+    var url = envConnection;
+    if (url.StartsWith("postgresql://"))
+    {
+        url = "postgres://" + url.Substring(11);
+    }
+    // Npgsql needs specific format
+    try 
+    {
+        var uri = new Uri(url);
+        var userInfo = uri.UserInfo.Split(':');
+        var user = userInfo[0];
+        var pass = userInfo.Length > 1 ? userInfo[1] : "";
+        var host = uri.Host;
+        var port = uri.Port > 0 ? uri.Port : 5432;
+        var db = uri.AbsolutePath.TrimStart('/');
+        connectionString = $"Host={host};Port={port};Database={db};Username={user};Password={pass}";
+    }
+    catch
+    {
+        // Fallback: just replace protocol
+        connectionString = url;
+    }
 }
 else if (string.IsNullOrEmpty(connectionString) || connectionString.StartsWith("${") || connectionString.StartsWith("{"))
 {
