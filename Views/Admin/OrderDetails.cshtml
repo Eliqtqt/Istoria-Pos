@@ -6,7 +6,7 @@
 
 <style>
     .admin-header {
-        background: linear-gradient(135deg, #2c1810 0%, #1a0f0a 50%, #0d0705 100%);
+        background: linear-gradient(135deg, #000 0%, #1a0f0a 50%, #0d0705 100%);
         padding: 2rem;
         margin-bottom: 2rem;
         border-radius: 16px;
@@ -22,7 +22,7 @@
     
     .back-btn {
         background: #fff;
-        color: #2c1810;
+        color: #000;
         padding: 0.6rem 1.25rem;
         border-radius: 25px;
         text-decoration: none;
@@ -32,7 +32,7 @@
     
     .back-btn:hover {
         background: #f5f0eb;
-        color: #2c1810;
+        color: #000;
     }
     
     .info-card {
@@ -45,7 +45,7 @@
     }
     
     .info-card .card-header {
-        background: linear-gradient(135deg, #2c1810 0%, #4a2c20 100%);
+        background: linear-gradient(135deg, #000 0%, #333 100%);
         color: #fff;
         padding: 1.25rem 1.5rem;
         border: none;
@@ -58,12 +58,12 @@
     }
     
     .info-card.status-card .card-header {
-        background: linear-gradient(135deg, #4a2c20 0%, #6d4c41 100%);
+        background: linear-gradient(135deg, #333 0%, #6d4c41 100%);
     }
     
     .info-card.total-card .card-header {
-        background: linear-gradient(135deg, #d4af87 0%, #c9a277 100%);
-        color: #2c1810;
+        background: linear-gradient(135deg, #ccc 0%, #c9a277 100%);
+        color: #000;
     }
     
     .info-item {
@@ -78,12 +78,12 @@
     }
     
     .info-item dt {
-        color: #8d6e63;
+        color: #666;
         font-weight: 500;
     }
     
     .info-item dd {
-        color: #2c1810;
+        color: #000;
         font-weight: 600;
         margin: 0;
     }
@@ -108,17 +108,17 @@
         border: 1px solid #e8e0d8;
         border-radius: 12px;
         background: #faf8f5;
-        color: #2c1810;
+        color: #000;
         font-size: 0.95rem;
     }
     
     .form-select-custom:focus {
         outline: none;
-        border-color: #2c1810;
+        border-color: #000;
     }
     
     .btn-primary {
-        background: linear-gradient(135deg, #2c1810 0%, #4a2c20 100%);
+        background: linear-gradient(135deg, #000 0%, #333 100%);
         color: #fff;
         padding: 0.75rem 1.5rem;
         border: none;
@@ -129,18 +129,18 @@
     }
     
     .btn-primary:hover {
-        background: linear-gradient(135deg, #4a2c20 0%, #2c1810 100%);
+        background: linear-gradient(135deg, #333 0%, #000 100%);
         color: #fff;
     }
     
     .order-total {
         font-size: 2.5rem;
         font-weight: 700;
-        color: #2c1810;
+        color: #000;
     }
     
     .order-items-count {
-        color: #8d6e63;
+        color: #666;
         font-size: 0.9rem;
     }
     
@@ -151,11 +151,11 @@
     
     .items-table th {
         background: #faf8f5;
-        color: #2c1810;
+        color: #000;
         font-weight: 700;
         padding: 1rem;
         text-align: left;
-        border-bottom: 2px solid #2c1810;
+        border-bottom: 2px solid #000;
         font-size: 0.75rem;
         text-transform: uppercase;
     }
@@ -172,7 +172,7 @@
     
     .item-name {
         font-weight: 600;
-        color: #2c1810;
+        color: #000;
     }
     
     .item-price {
@@ -181,7 +181,7 @@
     
     .subtotal {
         font-weight: 700;
-        color: #2c1810;
+        color: #000;
     }
     
     .table-footer {
@@ -190,11 +190,11 @@
     
     .table-footer td {
         font-weight: 700;
-        color: #2c1810;
+        color: #000;
     }
     
     .alert-success {
-        background: linear-gradient(135deg, #2c1810 0%, #4a2c20 100%);
+        background: linear-gradient(135deg, #000 0%, #333 100%);
         color: #fff;
         border: none;
         border-radius: 12px;
@@ -208,7 +208,7 @@
     .empty-state {
         padding: 3rem;
         text-align: center;
-        color: #8d6e63;
+        color: #666;
     }
 </style>
 
@@ -216,7 +216,7 @@
     <!-- Header -->
     <div class="admin-header">
         <div class="d-flex justify-content-between align-items-center">
-            <h1><i class="fas fa-shopping-bag" style="margin-right: 0.75rem; color: #d4af87;"></i> Order #@Model.Id</h1>
+            <h1><i class="fas fa-shopping-bag" style="margin-right: 0.75rem; color: #ccc;"></i> Order #@Model.Id</h1>
             <a asp-action="Orders" class="back-btn">
                 <i class="fas fa-arrow-left" style="margin-right: 0.5rem;"></i> Back to Orders
             </a>
@@ -274,7 +274,7 @@
                     <form asp-action="UpdateOrderStatus" method="post">
                         <input type="hidden" name="id" value="@Model.Id" />
                         <div class="mb-3">
-                            <label for="status" class="form-label" style="color: #2c1810; font-weight: 500;">New Status</label>
+                            <label for="status" class="form-label" style="color: #000; font-weight: 500;">New Status</label>
                             <select name="status" id="status" class="form-select-custom">
                                 @foreach (var status in statuses)
                                 {
@@ -345,7 +345,7 @@
             else
             {
                 <div class="empty-state">
-                    <i class="fas fa-coffee" style="font-size: 2.5rem; margin-bottom: 1rem; color: #d4af87;"></i>
+                    <i class="fas fa-coffee" style="font-size: 2.5rem; margin-bottom: 1rem; color: #ccc;"></i>
                     <p>No items in this order.</p>
                 </div>
             }

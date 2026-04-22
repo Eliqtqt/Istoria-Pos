@@ -5,7 +5,7 @@
 
 <style>
     .admin-header {
-        background: linear-gradient(135deg, #2c1810 0%, #1a0f0a 50%, #0d0705 100%);
+        background: linear-gradient(135deg, #000 0%, #1a0f0a 50%, #0d0705 100%);
         padding: 2.5rem;
         margin-bottom: 2rem;
         border-radius: 16px;
@@ -37,7 +37,7 @@
     }
     
     .btn-primary {
-        background: linear-gradient(135deg, #2c1810 0%, #4a2c20 100%);
+        background: linear-gradient(135deg, #000 0%, #333 100%);
         color: #fff;
         padding: 0.75rem 1.5rem;
         border-radius: 25px;
@@ -47,7 +47,7 @@
     }
     
     .btn-primary:hover {
-        background: linear-gradient(135deg, #4a2c20 0%, #2c1810 100%);
+        background: linear-gradient(135deg, #333 0%, #000 100%);
         color: #fff;
         transform: translateY(-2px);
         box-shadow: 0 6px 20px rgba(44, 24, 16, 0.3);
@@ -62,7 +62,7 @@
     }
     
     .section-card .card-header {
-        background: linear-gradient(135deg, #2c1810 0%, #4a2c20 100%);
+        background: linear-gradient(135deg, #000 0%, #333 100%);
         color: #fff;
         border: none;
         padding: 1.25rem 1.5rem;
@@ -78,11 +78,11 @@
     
     .data-table th {
         background: #faf8f5;
-        color: #2c1810;
+        color: #000;
         font-weight: 700;
         padding: 1rem 1.25rem;
         text-align: left;
-        border-bottom: 2px solid #2c1810;
+        border-bottom: 2px solid #000;
         font-size: 0.75rem;
         text-transform: uppercase;
         letter-spacing: 1px;
@@ -114,7 +114,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        color: #d4af87;
+        color: #ccc;
     }
     
     .badge-status {
@@ -137,7 +137,7 @@
     }
     
     .action-btn {
-        background: #2c1810;
+        background: #000;
         color: #fff;
         padding: 0.5rem 0.85rem;
         border-radius: 20px;
@@ -148,18 +148,18 @@
     }
     
     .action-btn:hover {
-        background: #4a2c20;
+        background: #333;
         color: #fff;
     }
     
     .action-btn.edit {
         background: transparent;
-        color: #2c1810;
-        border: 1px solid #2c1810;
+        color: #000;
+        border: 1px solid #000;
     }
     
     .action-btn.edit:hover {
-        background: #2c1810;
+        background: #000;
         color: #fff;
     }
     
@@ -179,7 +179,7 @@
     }
     
     .alert-success {
-        background: linear-gradient(135deg, #2c1810 0%, #4a2c20 100%);
+        background: linear-gradient(135deg, #000 0%, #333 100%);
         color: #fff;
         border: none;
         border-radius: 12px;
@@ -197,11 +197,11 @@
     <div class="admin-header">
         <div class="d-flex justify-content-between align-items-center">
             <div>
-                <h1><i class="fas fa-calendar-star" style="margin-right: 0.75rem; color: #d4af87;"></i> Events</h1>
-                <p style="margin: 0.5rem 0 0 0; opacity: 0.85; color: #d4af87; font-size: 0.95rem;">Manage your cafe events</p>
+                <h1><i class="fas fa-calendar-star" style="margin-right: 0.75rem; color: #ccc;"></i> Events</h1>
+                <p style="margin: 0.5rem 0 0 0; opacity: 0.85; color: #ccc; font-size: 0.95rem;">Manage your cafe events</p>
             </div>
             <div style="text-align: right;">
-                <p style="margin: 0; color: #d4af87;">@DateTime.Now.ToString("dddd, MMMM dd, yyyy")</p>
+                <p style="margin: 0; color: #ccc;">@DateTime.Now.ToString("dddd, MMMM dd, yyyy")</p>
             </div>
         </div>
     </div>
@@ -243,7 +243,7 @@
                     @foreach (var item in Model)
                     {
                         <tr>
-                            <td><span style="color: #8d6e63; font-weight: 600;">#</span>@item.Id</td>
+                            <td><span style="color: #666; font-weight: 600;">#</span>@item.Id</td>
                             <td>
                                 @if (!string.IsNullOrEmpty(item.ImagePath))
                                 {
@@ -256,7 +256,7 @@
                                     </div>
                                 }
                             </td>
-                            <td><strong style="color: #2c1810;">@item.Title</strong></td>
+                            <td><strong style="color: #000;">@item.Title</strong></td>
                             <td>@item.Schedule</td>
                             <td>@item.Time</td>
                             <td>

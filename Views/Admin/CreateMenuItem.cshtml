@@ -5,7 +5,7 @@
 
 <style>
     .admin-header {
-        background: linear-gradient(135deg, #2c1810 0%, #1a0f0a 50%, #0d0705 100%);
+        background: linear-gradient(135deg, #000 0%, #1a0f0a 50%, #0d0705 100%);
         padding: 2rem;
         margin-bottom: 2rem;
         border-radius: 16px;
@@ -21,7 +21,7 @@
     
     .back-btn {
         background: #fff;
-        color: #2c1810;
+        color: #000;
         padding: 0.6rem 1.25rem;
         border-radius: 25px;
         text-decoration: none;
@@ -31,7 +31,7 @@
     
     .back-btn:hover {
         background: #f5f0eb;
-        color: #2c1810;
+        color: #000;
     }
     
     .form-card {
@@ -43,7 +43,7 @@
     }
     
     .form-card .card-header {
-        background: linear-gradient(135deg, #2c1810 0%, #4a2c20 100%);
+        background: linear-gradient(135deg, #000 0%, #333 100%);
         color: #fff;
         padding: 1.25rem 1.5rem;
         font-size: 0.9rem;
@@ -58,7 +58,7 @@
         text-transform: uppercase;
         letter-spacing: 1px;
         font-size: 0.75rem;
-        color: #2c1810;
+        color: #000;
         margin-bottom: 0.5rem;
         display: block;
     }
@@ -69,14 +69,14 @@
         border: 1px solid #e8e0d8;
         border-radius: 12px;
         background: #faf8f5;
-        color: #2c1810;
+        color: #000;
         font-size: 0.95rem;
         transition: all 0.3s ease;
     }
     
     .form-control-custom:focus {
         outline: none;
-        border-color: #2c1810;
+        border-color: #000;
         box-shadow: 0 0 0 3px rgba(44, 24, 16, 0.1);
     }
     
@@ -91,7 +91,7 @@
         background: #faf8f5;
         padding: 0.75rem 1rem;
         border: none;
-        color: #2c1810;
+        color: #000;
         font-weight: 600;
     }
     
@@ -115,16 +115,16 @@
     .form-check-custom input {
         width: 18px;
         height: 18px;
-        accent-color: #2c1810;
+        accent-color: #000;
     }
     
     .form-check-custom label {
-        color: #2c1810;
+        color: #000;
         font-weight: 500;
     }
     
     .btn-primary {
-        background: linear-gradient(135deg, #2c1810 0%, #4a2c20 100%);
+        background: linear-gradient(135deg, #000 0%, #333 100%);
         color: #fff;
         padding: 0.85rem 2.5rem;
         border: none;
@@ -135,7 +135,7 @@
     }
     
     .btn-primary:hover {
-        background: linear-gradient(135deg, #4a2c20 0%, #2c1810 100%);
+        background: linear-gradient(135deg, #333 0%, #000 100%);
         color: #fff;
         transform: translateY(-2px);
         box-shadow: 0 6px 20px rgba(44, 24, 16, 0.3);
@@ -143,9 +143,9 @@
     
     .btn-outline {
         background: transparent;
-        color: #2c1810;
+        color: #000;
         padding: 0.85rem 2rem;
-        border: 1px solid #2c1810;
+        border: 1px solid #000;
         border-radius: 25px;
         text-decoration: none;
         transition: all 0.3s ease;
@@ -153,7 +153,7 @@
     }
     
     .btn-outline:hover {
-        background: #2c1810;
+        background: #000;
         color: #fff;
     }
     
@@ -167,7 +167,7 @@
     }
     
     .alert-success {
-        background: linear-gradient(135deg, #2c1810 0%, #4a2c20 100%);
+        background: linear-gradient(135deg, #000 0%, #333 100%);
         color: #fff;
         border: none;
         border-radius: 12px;
@@ -176,7 +176,7 @@
     }
     
     .help-text {
-        color: #8d6e63;
+        color: #666;
         font-size: 0.75rem;
         margin-top: 0.25rem;
     }
@@ -186,7 +186,7 @@
     <!-- Header -->
     <div class="admin-header">
         <div class="d-flex justify-content-between align-items-center">
-            <h1><i class="fas fa-plus-circle" style="margin-right: 0.75rem; color: #d4af87;"></i> Create Menu Item</h1>
+            <h1><i class="fas fa-plus-circle" style="margin-right: 0.75rem; color: #ccc;"></i> Create Menu Item</h1>
             <a asp-action="MenuItems" class="back-btn">
                 <i class="fas fa-arrow-left" style="margin-right: 0.5rem;"></i> Back to Menu
             </a>

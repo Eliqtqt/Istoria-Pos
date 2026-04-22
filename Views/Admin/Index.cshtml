@@ -5,83 +5,81 @@
 
 <style>
     .admin-header {
-        background: linear-gradient(135deg, #2c1810 0%, #1a0f0a 50%, #0d0705 100%);
+        background: #000;
         padding: 2.5rem;
         margin-bottom: 2rem;
         border-radius: 16px;
         color: #fff;
-        box-shadow: 0 8px 32px rgba(44, 24, 16, 0.4);
-        border: 1px solid rgba(212, 175, 135, 0.2);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
     }
     
     .admin-header h1 {
-        font-family: 'Playfair Display', Georgia, serif;
+        font-family: 'Helvetica Neue', sans-serif;
         font-size: 2rem;
-        font-weight: 400;
-        letter-spacing: 1px;
+        font-weight: 300;
+        letter-spacing: 2px;
     }
     
     .admin-header p {
-        opacity: 0.85;
-        color: #d4af87;
+        opacity: 0.7;
+        color: #ccc;
         font-size: 0.95rem;
-        letter-spacing: 0.5px;
     }
     
     .stat-card {
         background: #fff;
-        border: 1px solid #e8e0d8;
+        border: 1px solid #000;
         border-radius: 16px;
         padding: 1.75rem;
         transition: all 0.3s ease;
         height: 100%;
-        box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+        box-shadow: 0 4px 16px rgba(0,0,0,0.1);
     }
     
     .stat-card:hover {
         transform: translateY(-5px);
-        box-shadow: 0 12px 32px rgba(44, 24, 16, 0.15);
+        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
     }
     
     .stat-card.dark {
-        background: linear-gradient(135deg, #2c1810 0%, #4a2c20 100%);
+        background: #000;
         color: #fff;
-        border: none;
+        border: 1px solid #000;
     }
     
     .stat-card.dark .stat-icon {
-        color: #d4af87;
-        opacity: 0.9;
+        color: #fff;
+        opacity: 0.3;
     }
     
     .stat-icon {
         font-size: 2.5rem;
-        color: #2c1810;
+        color: #000;
         opacity: 0.15;
     }
     
     .section-card {
         background: #fff;
-        border: 1px solid #e8e0d8;
+        border: 1px solid #000;
         border-radius: 16px;
         overflow: hidden;
-        box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+        box-shadow: 0 4px 16px rgba(0,0,0,0.1);
     }
     
     .section-card .card-header {
-        background: linear-gradient(135deg, #2c1810 0%, #4a2c20 100%);
+        background: #000;
         color: #fff;
         border: none;
         padding: 1.25rem 1.5rem;
         font-family: 'Helvetica Neue', sans-serif;
-        letter-spacing: 1px;
+        letter-spacing: 2px;
         font-size: 0.85rem;
     }
     
     .section-card.dark .card-header {
-        background: #faf8f5;
-        color: #2c1810;
-        border-bottom: 1px solid #e8e0d8;
+        background: #fff;
+        color: #000;
+        border-bottom: 1px solid #000;
     }
     
     .section-card .card-body {
@@ -89,9 +87,9 @@
     }
     
     .action-btn {
-        background: linear-gradient(135deg, #2c1810 0%, #4a2c20 100%);
+        background: #000;
         color: #fff;
-        border: none;
+        border: 1px solid #000;
         padding: 0.75rem 1.5rem;
         border-radius: 25px;
         transition: all 0.3s ease;
@@ -102,32 +100,31 @@
     }
     
     .action-btn:hover {
-        background: linear-gradient(135deg, #4a2c20 0%, #2c1810 100%);
+        background: #333;
         color: #fff;
         transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(44, 24, 16, 0.3);
     }
     
     .action-btn.outline {
         background: transparent;
-        border: 1px solid #2c1810;
-        color: #2c1810;
+        border: 1px solid #000;
+        color: #000;
     }
     
     .action-btn.outline:hover {
-        background: #2c1810;
+        background: #000;
         color: #fff;
     }
     
     .action-btn.white {
         background: #fff;
-        color: #2c1810;
+        color: #000;
         border: 1px solid #fff;
     }
     
     .action-btn.white:hover {
-        background: #f5f0eb;
-        color: #2c1810;
+        background: #f0f0f0;
+        color: #000;
     }
     
     .data-table {
@@ -136,12 +133,12 @@
     }
     
     .data-table th {
-        background: #faf8f5;
-        color: #2c1810;
+        background: #f5f5f5;
+        color: #000;
         font-weight: 700;
         padding: 1rem 1.25rem;
         text-align: left;
-        border-bottom: 2px solid #2c1810;
+        border-bottom: 2px solid #000;
         font-size: 0.75rem;
         text-transform: uppercase;
         letter-spacing: 1px;
@@ -149,12 +146,12 @@
     
     .data-table td {
         padding: 1rem 1.25rem;
-        border-bottom: 1px solid #f0ebe5;
-        color: #4a4a4a;
+        border-bottom: 1px solid #e0e0e0;
+        color: #333;
     }
     
     .data-table tr:hover {
-        background: #faf8f5;
+        background: #f5f5f5;
     }
     
     .badge-custom {
@@ -163,47 +160,42 @@
         font-size: 0.7rem;
         font-weight: 600;
         text-transform: uppercase;
-        letter-spacing: 0.5px;
     }
     
     .badge-pending {
-        background: #fff3e0;
-        color: #e65100;
-        border: 1px solid #ffcc80;
+        background: #f5f5f5;
+        color: #333;
+        border: 1px solid #ccc;
     }
     
     .badge-confirmed {
-        background: #e3f2fd;
-        color: #1565c0;
-        border: 1px solid #90caf9;
+        background: #e0e0e0;
+        color: #000;
     }
     
     .badge-preparing {
-        background: #f3e5f5;
-        color: #7b1fa2;
-        border: 1px solid #ce93d8;
+        background: #000;
+        color: #fff;
     }
     
     .badge-ready {
-        background: #e8f5e9;
-        color: #2e7d32;
-        border: 1px solid #a5d6a7;
+        background: #333;
+        color: #fff;
     }
     
     .badge-completed {
-        background: #f5f5f5;
-        color: #424242;
-        border: 1px solid #e0e0e0;
+        background: #000;
+        color: #fff;
     }
     
     .badge-cancelled {
-        background: #ffebee;
-        color: #c62828;
-        border: 1px solid #ef9a9a;
+        background: #fff;
+        color: #000;
+        border: 1px solid #000;
     }
     
     .view-btn {
-        background: linear-gradient(135deg, #2c1810 0%, #4a2c20 100%);
+        background: #000;
         color: #fff;
         padding: 0.5rem 1rem;
         border-radius: 20px;
@@ -211,23 +203,22 @@
         transition: all 0.3s ease;
         font-size: 0.75rem;
         font-weight: 500;
-        letter-spacing: 0.5px;
     }
     
     .view-btn:hover {
-        background: linear-gradient(135deg, #4a2c20 0%, #2c1810 100%);
+        background: #333;
         color: #fff;
     }
     
     .stat-number {
         font-size: 2.25rem;
         font-weight: 700;
-        color: #2c1810;
+        color: #000;
         line-height: 1;
     }
     
     .stat-label {
-        color: #8d6e63;
+        color: #666;
         font-size: 0.8rem;
         text-transform: uppercase;
         letter-spacing: 1px;
@@ -235,15 +226,15 @@
     }
     
     .stat-card.dark .stat-number {
-        color: #d4af87;
+        color: #fff;
     }
     
     .stat-card.dark .stat-label {
-        color: #a89080;
+        color: #999;
     }
     
     .alert-custom {
-        background: linear-gradient(135deg, #2c1810 0%, #4a2c20 100%);
+        background: #000;
         color: #fff;
         border: none;
         border-radius: 12px;
@@ -265,11 +256,11 @@
         border-radius: 16px;
         transition: all 0.3s ease;
         text-decoration: none;
-        color: #2c1810;
+        color: #000;
     }
     
     .quick-action-btn:hover {
-        background: linear-gradient(135deg, #2c1810 0%, #4a2c20 100%);
+        background: linear-gradient(135deg, #000 0%, #333 100%);
         color: #fff;
         transform: translateY(-3px);
         box-shadow: 0 8px 24px rgba(44, 24, 16, 0.2);
@@ -292,11 +283,11 @@
     <div class="admin-header">
         <div class="d-flex justify-content-between align-items-center">
             <div>
-                <h1><i class="fas fa-mug-hot" style="margin-right: 0.75rem; color: #d4af87;"></i> Admin Dashboard</h1>
+                <h1><i class="fas fa-mug-hot" style="margin-right: 0.75rem; color: #ccc;"></i> Admin Dashboard</h1>
                 <p>Welcome back! Here's what's brewing today.</p>
             </div>
             <div style="text-align: right;">
-                <p style="margin: 0; color: #d4af87;">@DateTime.Now.ToString("dddd, MMMM dd, yyyy")</p>
+                <p style="margin: 0; color: #ccc;">@DateTime.Now.ToString("dddd, MMMM dd, yyyy")</p>
             </div>
         </div>
     </div>

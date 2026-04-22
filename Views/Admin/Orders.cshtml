@@ -6,43 +6,42 @@
 
 <style>
     .admin-header {
-        background: linear-gradient(135deg, #2c1810 0%, #1a0f0a 50%, #0d0705 100%);
+        background: #000;
         padding: 2.5rem;
         margin-bottom: 2rem;
         border-radius: 16px;
         color: #fff;
-        box-shadow: 0 8px 32px rgba(44, 24, 16, 0.4);
-        border: 1px solid rgba(212, 175, 135, 0.2);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
     }
     
     .admin-header h1 {
-        font-family: 'Playfair Display', Georgia, serif;
+        font-family: 'Helvetica Neue', sans-serif;
         font-size: 2rem;
-        font-weight: 400;
-        letter-spacing: 1px;
+        font-weight: 300;
+        letter-spacing: 2px;
     }
     
     .admin-header p {
         font-size: 0.95rem;
-        opacity: 0.85;
-        color: #d4af87;
+        opacity: 0.7;
+        color: #ccc;
     }
     
     .section-card {
         background: #fff;
-        border: 1px solid #e8e0d8;
+        border: 1px solid #000;
         border-radius: 16px;
-        box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+        box-shadow: 0 4px 16px rgba(0,0,0,0.1);
         overflow: hidden;
     }
     
     .section-card .card-header {
-        background: linear-gradient(135deg, #2c1810 0%, #4a2c20 100%);
+        background: #000;
         color: #fff;
         padding: 1.25rem 1.5rem;
         border: none;
         font-family: 'Helvetica Neue', sans-serif;
-        letter-spacing: 1px;
+        letter-spacing: 2px;
         font-size: 0.85rem;
     }
     
@@ -55,13 +54,13 @@
         padding: 1.5rem;
         margin-bottom: 1.5rem;
         border-radius: 16px;
-        box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+        box-shadow: 0 4px 16px rgba(0,0,0,0.1);
     }
     
     .filter-btn {
         background: #fff;
-        color: #2c1810;
-        border: 1px solid #e8e0d8;
+        color: #000;
+        border: 1px solid #000;
         padding: 0.6rem 1.25rem;
         transition: all 0.3s ease;
         font-size: 0.8rem;
@@ -71,15 +70,14 @@
     }
     
     .filter-btn:hover {
-        background: #2c1810;
+        background: #000;
         color: #fff;
-        border-color: #2c1810;
     }
     
     .filter-btn.active {
-        background: linear-gradient(135deg, #2c1810 0%, #4a2c20 100%);
+        background: #000;
         color: #fff;
-        border-color: #2c1810;
+        border-color: #000;
     }
     
     .data-table {
@@ -88,12 +86,12 @@
     }
     
     .data-table th {
-        background: #faf8f5;
-        color: #2c1810;
+        background: #f5f5f5;
+        color: #000;
         font-weight: 700;
         padding: 1rem 1.25rem;
         text-align: left;
-        border-bottom: 2px solid #2c1810;
+        border-bottom: 2px solid #000;
         font-size: 0.75rem;
         text-transform: uppercase;
         letter-spacing: 1px;
@@ -101,8 +99,8 @@
     
     .data-table td {
         padding: 1.25rem 1.25rem;
-        border-bottom: 1px solid #f0ebe5;
-        color: #4a4a4a;
+        border-bottom: 1px solid #e0e0e0;
+        color: #333;
         font-size: 0.9rem;
     }
     
@@ -111,7 +109,7 @@
     }
     
     .data-table tr:hover {
-        background: #faf8f5;
+        background: #f5f5f5;
     }
     
     .badge-custom {
@@ -123,52 +121,48 @@
     }
     
     .badge-pending {
-        background: #fff3e0;
-        color: #e65100;
-        border: 1px solid #ffcc80;
+        background: #f5f5f5;
+        color: #333;
+        border: 1px solid #ccc;
     }
     
     .badge-confirmed {
-        background: #e3f2fd;
-        color: #1565c0;
-        border: 1px solid #90caf9;
+        background: #e0e0e0;
+        color: #000;
     }
     
     .badge-preparing {
-        background: #f3e5f5;
-        color: #7b1fa2;
-        border: 1px solid #ce93d8;
+        background: #000;
+        color: #fff;
     }
     
     .badge-ready {
-        background: #e8f5e9;
-        color: #2e7d32;
-        border: 1px solid #a5d6a7;
+        background: #333;
+        color: #fff;
     }
     
     .badge-completed {
-        background: #f5f5f5;
-        color: #424242;
-        border: 1px solid #e0e0e0;
+        background: #000;
+        color: #fff;
     }
     
     .badge-cancelled {
-        background: #ffebee;
-        color: #c62828;
-        border: 1px solid #ef9a9a;
+        background: #fff;
+        color: #000;
+        border: 1px solid #000;
     }
     
     .badge-items {
         background: transparent;
-        color: #8d6e63;
-        border: 1px solid #e8e0d8;
+        color: #666;
+        border: 1px solid #ccc;
         padding: 0.3rem 0.6rem;
         font-size: 0.7rem;
         border-radius: 20px;
     }
     
     .view-btn {
-        background: linear-gradient(135deg, #2c1810 0%, #4a2c20 100%);
+        background: #000;
         color: #fff;
         padding: 0.5rem 1rem;
         border-radius: 20px;
@@ -179,12 +173,12 @@
     }
     
     .view-btn:hover {
-        background: linear-gradient(135deg, #4a2c20 0%, #2c1810 100%);
+        background: #333;
         color: #fff;
     }
     
     .alert-custom {
-        background: linear-gradient(135deg, #2c1810 0%, #4a2c20 100%);
+        background: #000;
         color: #fff;
         border: none;
         border-radius: 12px;
@@ -202,24 +196,24 @@
     }
     
     .empty-state i {
-        color: #d4af87;
+        color: #999;
         font-size: 4rem;
         margin-bottom: 1rem;
     }
     
     .empty-state p {
-        color: #8d6e63;
+        color: #666;
         font-size: 1rem;
     }
     
     .order-id {
         font-weight: 600;
-        color: #2c1810;
+        color: #000;
     }
     
     .order-total {
         font-weight: 700;
-        color: #2c1810;
+        color: #000;
     }
 </style>
 
@@ -228,11 +222,11 @@
     <div class="admin-header">
         <div class="d-flex justify-content-between align-items-center">
             <div>
-                <h1><i class="fas fa-shopping-bag" style="margin-right: 0.75rem; color: #d4af87;"></i> Orders</h1>
+                <h1><i class="fas fa-shopping-bag" style="margin-right: 0.75rem;"></i> Orders</h1>
                 <p>Manage and track all customer orders</p>
             </div>
             <div style="text-align: right;">
-                <p style="margin: 0; color: #d4af87;">@DateTime.Now.ToString("dddd, MMMM dd, yyyy")</p>
+                <p style="margin: 0; color: #ccc;">@DateTime.Now.ToString("dddd, MMMM dd, yyyy")</p>
             </div>
         </div>
     </div>
@@ -294,7 +288,7 @@
                             <tr>
                                 <td><span class="order-id">#@order.Id</span></td>
                                 <td>@order.User?.Username ?? "Guest"</td>
-                                <td style="color: #8d6e63;">@order.OrderDate.ToString("MMM dd, yyyy HH:mm")</td>
+                                <td style="color: #666;">@order.OrderDate.ToString("MMM dd, yyyy HH:mm")</td>
                                 <td><span class="order-total">@order.TotalAmount.ToString("C")</span></td>
                                 <td>
                                     <span class="badge-custom @GetStatusBadgeClass(order.Status)">@order.Status</span>
