@@ -10,7 +10,7 @@ builder.Services.AddControllersWithViews();
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 if (string.IsNullOrEmpty(connectionString) || connectionString.StartsWith("${"))
 {
-    connectionString = Environment.GetConnectionString("DefaultConnection");
+    connectionString = Environment.GetEnvironmentVariable("DATABASE_URL");
 }
 if (string.IsNullOrEmpty(connectionString) || connectionString.StartsWith("${"))
 {
