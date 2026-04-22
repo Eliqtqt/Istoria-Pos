@@ -8,12 +8,23 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-if (string.IsNullOrEmpty(connectionString) || connectionString.StartsWith("${") || connectionString.StartsWith("{"))
+var envConnection = Environment.GetEnvironmentVariable("DATABASE_URL");
+var hasEnvVar = !string.IsNullOrEmpty(envConnection);
+
+Console.WriteLine($"[DEBUG] appsettings connection: '{connectionString}'");
+Console.WriteLine($"[DEBUG] DATABASE_URL env: '{envConnection}'");
+Console.WriteLine($"[DEBUG] Has DATABASE_URL: {hasEnvVar}");
+
+if (hasEnvVar)
 {
-    connectionString = Environment.GetEnvironmentVariable("DATABASE_URL") 
-        ?? Environment.GetEnvironmentVariable("DefaultConnection")
-        ?? connectionString;
+    connectionString = envConnection;
 }
+else if (string.IsNullOrEmpty(connectionString) || connectionString.StartsWith("${") || connectionString.StartsWith("{"))
+{
+    throw new InvalidOperationException("Database connection string is not configured. Please set DATABASE_URL environment variable.");
+}
+
+Console.WriteLine($"[DEBUG] Final connection string: '{connectionString.Substring(0, Math.Min(20, connectionString.Length))}...'");
 
 builder.Services.AddDbContext<CafeWebsite.Data.CafeDbContext>(options =>
     options.UseNpgsql(connectionString));
