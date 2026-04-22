@@ -3,41 +3,180 @@
     ViewData["Title"] = "Delete Menu Item";
 }
 
-<div class="container-fluid">
-    <h1 class="mb-4"><i class="fas fa-trash-alt text-danger"></i> Delete Menu Item</h1>
+<style>
+    .admin-header {
+        background: linear-gradient(135deg, #2c1810 0%, #1a0f0a 50%, #0d0705 100%);
+        padding: 2rem;
+        margin-bottom: 2rem;
+        border-radius: 16px;
+        color: #fff;
+        box-shadow: 0 8px 32px rgba(44, 24, 16, 0.4);
+    }
+    
+    .admin-header h1 {
+        font-family: 'Playfair Display', Georgia, serif;
+        font-size: 1.75rem;
+        margin: 0;
+    }
+    
+    .back-btn {
+        background: #fff;
+        color: #2c1810;
+        padding: 0.6rem 1.25rem;
+        border-radius: 25px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        font-weight: 500;
+    }
+    
+    .back-btn:hover {
+        background: #f5f0eb;
+        color: #2c1810;
+    }
+    
+    .warning-card {
+        background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+        border: 1px solid #ffcc80;
+        border-radius: 16px;
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+    }
+    
+    .warning-card h4 {
+        color: #e65100;
+        font-weight: 600;
+    }
+    
+    .warning-card p {
+        color: #5d4037;
+        margin: 0;
+    }
+    
+    .info-card {
+        background: #fff;
+        border: 1px solid #e8e0d8;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+    }
+    
+    .info-card .card-header {
+        background: linear-gradient(135deg, #c62828 0%, #b71c1c 100%);
+        color: #fff;
+        padding: 1.25rem 1.5rem;
+        font-size: 0.9rem;
+    }
+    
+    .info-card .card-body {
+        padding: 1.5rem;
+    }
+    
+    .info-card .card-footer {
+        background: #faf8f5;
+        padding: 1rem 1.5rem;
+        border-top: 1px solid #e8e0d8;
+    }
+    
+    .info-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 0.75rem 0;
+        border-bottom: 1px solid #f0ebe5;
+    }
+    
+    .info-item:last-child {
+        border-bottom: none;
+    }
+    
+    .info-item dt {
+        color: #8d6e63;
+        font-weight: 500;
+    }
+    
+    .info-item dd {
+        color: #2c1810;
+        font-weight: 600;
+        margin: 0;
+    }
+    
+    .btn-danger {
+        background: linear-gradient(135deg, #c62828 0%, #b71c1c 100%);
+        color: #fff;
+        padding: 0.75rem 1.5rem;
+        border: none;
+        border-radius: 25px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+    
+    .btn-danger:hover {
+        background: linear-gradient(135deg, #b71c1c 0%, #c62828 100%);
+        color: #fff;
+    }
+    
+    .btn-secondary {
+        background: #8d6e63;
+        color: #fff;
+        padding: 0.75rem 1.5rem;
+        border: none;
+        border-radius: 25px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        font-weight: 500;
+    }
+    
+    .btn-secondary:hover {
+        background: #6d4c41;
+        color: #fff;
+    }
+</style>
 
-    <div class="alert alert-warning">
-        <h4 class="alert-heading">Are you sure?</h4>
+<div class="container-fluid" style="padding: 2rem;">
+    <!-- Header -->
+    <div class="admin-header">
+        <div class="d-flex justify-content-between align-items-center">
+            <h1><i class="fas fa-trash-alt" style="margin-right: 0.75rem; color: #ef5350;"></i> Delete Menu Item</h1>
+            <a asp-action="MenuItems" class="back-btn">
+                <i class="fas fa-arrow-left" style="margin-right: 0.5rem;"></i> Back to Menu
+            </a>
+        </div>
+    </div>
+
+    <div class="warning-card">
+        <h4><i class="fas fa-exclamation-triangle" style="margin-right: 0.5rem;"></i> Are you sure?</h4>
         <p>You are about to delete the menu item "<strong>@Model.Name</strong>". This action cannot be undone.</p>
     </div>
 
-    <div class="card">
-        <div class="card-header bg-danger text-white">
-            <h5 class="mb-0">Item Details</h5>
+    <div class="info-card">
+        <div class="card-header">
+            <i class="fas fa-info-circle" style="margin-right: 0.5rem;"></i> Item Details
         </div>
         <div class="card-body">
-            <dl class="row">
-                <dt class="col-sm-3">Name</dt>
-                <dd class="col-sm-9">@Model.Name</dd>
-
-                <dt class="col-sm-3">Category</dt>
-                <dd class="col-sm-9">@Model.Category</dd>
-
-                <dt class="col-sm-3">Price</dt>
-                <dd class="col-sm-9">@Model.Price.ToString("C")</dd>
+            <dl class="info-item">
+                <dt>Name</dt>
+                <dd>@Model.Name</dd>
+            </dl>
+            <dl class="info-item">
+                <dt>Category</dt>
+                <dd>@Model.Category</dd>
+            </dl>
+            <dl class="info-item">
+                <dt>Price</dt>
+                <dd>₱@Model.Price.ToString("F2")</dd>
             </dl>
         </div>
         <div class="card-footer">
-            <form asp-action="DeleteMenuItem" method="post">
+            <form asp-action="DeleteMenuItem" method="post" style="display: inline;">
                 <input type="hidden" asp-for="Id" />
                 @Html.AntiForgeryToken()
-                <button type="submit" class="btn btn-danger">
-                    <i class="fas fa-trash"></i> Confirm Delete
+                <button type="submit" class="btn-danger">
+                    <i class="fas fa-trash" style="margin-right: 0.5rem;"></i> Confirm Delete
                 </button>
-                <a asp-action="MenuItems" class="btn btn-secondary">
-                    <i class="fas fa-arrow-left"></i> Cancel
-                </a>
             </form>
+            <a asp-action="MenuItems" class="btn-secondary" style="margin-left: 0.75rem;">
+                <i class="fas fa-arrow-left" style="margin-right: 0.5rem;"></i> Cancel
+            </a>
         </div>
     </div>
 </div>

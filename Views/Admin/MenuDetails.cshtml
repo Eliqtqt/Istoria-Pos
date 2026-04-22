@@ -3,60 +3,232 @@
     ViewData["Title"] = "Menu Item Details";
 }
 
-<div class="container-fluid">
-    <h1 class="mb-4"><i class="fas fa-info-circle"></i> Menu Item Details</h1>
+<style>
+    .admin-header {
+        background: linear-gradient(135deg, #2c1810 0%, #1a0f0a 50%, #0d0705 100%);
+        padding: 2rem;
+        margin-bottom: 2rem;
+        border-radius: 16px;
+        color: #fff;
+        box-shadow: 0 8px 32px rgba(44, 24, 16, 0.4);
+    }
+    
+    .admin-header h1 {
+        font-family: 'Playfair Display', Georgia, serif;
+        font-size: 1.75rem;
+        margin: 0;
+    }
+    
+    .back-btn {
+        background: #fff;
+        color: #2c1810;
+        padding: 0.6rem 1.25rem;
+        border-radius: 25px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        font-weight: 500;
+    }
+    
+    .back-btn:hover {
+        background: #f5f0eb;
+        color: #2c1810;
+    }
+    
+    .info-card {
+        background: #fff;
+        border: 1px solid #e8e0d8;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+    }
+    
+    .info-card .card-header {
+        background: linear-gradient(135deg, #2c1810 0%, #4a2c20 100%);
+        color: #fff;
+        padding: 1.25rem 1.5rem;
+        border: none;
+        font-size: 0.9rem;
+    }
+    
+    .info-card .card-body {
+        padding: 1.5rem;
+    }
+    
+    .info-card .card-footer {
+        background: #faf8f5;
+        padding: 1rem 1.5rem;
+        border-top: 1px solid #e8e0d8;
+    }
+    
+    .info-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 0.85rem 0;
+        border-bottom: 1px solid #f0ebe5;
+    }
+    
+    .info-item:last-child {
+        border-bottom: none;
+    }
+    
+    .info-item dt {
+        color: #8d6e63;
+        font-weight: 500;
+    }
+    
+    .info-item dd {
+        color: #2c1810;
+        font-weight: 600;
+        margin: 0;
+        text-align: right;
+    }
+    
+    .badge-category {
+        background: linear-gradient(135deg, #2c1810 0%, #4a2c20 100%);
+        color: #fff;
+        padding: 0.4rem 0.85rem;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 600;
+    }
+    
+    .badge-dietary {
+        background: #e8f5e9;
+        color: #2e7d32;
+        padding: 0.4rem 0.85rem;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        margin-right: 0.5rem;
+    }
+    
+    .badge-rating {
+        color: #d4af87;
+        font-weight: 600;
+    }
+    
+    .badge-rating i {
+        color: #d4af87;
+    }
+    
+    .no-rating {
+        color: #999;
+        font-style: italic;
+    }
+    
+    .action-btn {
+        background: linear-gradient(135deg, #2c1810 0%, #4a2c20 100%);
+        color: #fff;
+        padding: 0.6rem 1.25rem;
+        border-radius: 25px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        font-weight: 500;
+        font-size: 0.85rem;
+    }
+    
+    .action-btn:hover {
+        background: linear-gradient(135deg, #4a2c20 0%, #2c1810 100%);
+        color: #fff;
+    }
+    
+    .action-btn.danger {
+        background: #c62828;
+    }
+    
+    .action-btn.danger:hover {
+        background: #b71c1c;
+    }
+    
+    .action-btn.secondary {
+        background: #8d6e63;
+    }
+    
+    .action-btn.secondary:hover {
+        background: #6d4c41;
+    }
+    
+    .item-price {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #2c1810;
+    }
+</style>
 
-    <div class="card">
-        <div class="card-header bg-primary text-white">
-            <h5 class="mb-0">@Model.Name</h5>
+<div class="container-fluid" style="padding: 2rem;">
+    <!-- Header -->
+    <div class="admin-header">
+        <div class="d-flex justify-content-between align-items-center">
+            <h1><i class="fas fa-coffee" style="margin-right: 0.75rem; color: #d4af87;"></i> Menu Item Details</h1>
+            <a asp-action="MenuItems" class="back-btn">
+                <i class="fas fa-arrow-left" style="margin-right: 0.5rem;"></i> Back to Menu
+            </a>
         </div>
-        <div class="card-body">
-            <dl class="row">
-                <dt class="col-sm-3">ID</dt>
-                <dd class="col-sm-9">@Model.Id</dd>
+    </div>
 
-                <dt class="col-sm-3">Name</dt>
-                <dd class="col-sm-9">@Model.Name</dd>
-
-                <dt class="col-sm-3">Category</dt>
-                <dd class="col-sm-9"><span class="badge bg-secondary">@Model.Category</span></dd>
-
-                <dt class="col-sm-3">Description</dt>
-                <dd class="col-sm-9">@Model.Description</dd>
-
-                <dt class="col-sm-3">Price</dt>
-                <dd class="col-sm-9">₱@Model.Price.ToString("F2")</dd>
-
-                <dt class="col-sm-3">Rating</dt>
-                <dd class="col-sm-9">
-                    @if (Model.Rating > 0)
-                    {
-                        <span><i class="fas fa-star text-warning"></i> @Model.Rating.ToString("F1") (@Model.ReviewCount reviews)</span>
-                    }
-                    else
-                    {
-                        <span class="text-muted">No ratings yet</span>
-                    }
-                </dd>
-
-                <dt class="col-sm-3">Dietary Info</dt>
-                <dd class="col-sm-9">
-                    @if (Model.IsVegetarian) { <span class="badge bg-success me-1">Vegetarian</span> }
-                    @if (Model.IsVegan) { <span class="badge bg-success me-1">Vegan</span> }
-                    @if (Model.IsGlutenFree) { <span class="badge bg-success">Gluten Free</span> }
-                </dd>
-            </dl>
-        </div>
-        <div class="card-footer">
-            <a asp-action="EditMenuItem" asp-route-id="@Model.Id" class="btn btn-primary">
-                <i class="fas fa-edit"></i> Edit
-            </a>
-            <a asp-action="DeleteMenuItem" asp-route-id="@Model.Id" class="btn btn-danger">
-                <i class="fas fa-trash"></i> Delete
-            </a>
-            <a asp-action="MenuItems" class="btn btn-secondary">
-                <i class="fas fa-arrow-left"></i> Back to List
-            </a>
+    <div class="row">
+        <!-- Item Details -->
+        <div class="col-md-8 mb-4">
+            <div class="info-card">
+                <div class="card-header">
+                    <i class="fas fa-mug-hot" style="margin-right: 0.5rem;"></i> @Model.Name
+                </div>
+                <div class="card-body">
+                    <dl class="info-item">
+                        <dt>ID</dt>
+                        <dd>#@Model.Id</dd>
+                    </dl>
+                    <dl class="info-item">
+                        <dt>Name</dt>
+                        <dd>@Model.Name</dd>
+                    </dl>
+                    <dl class="info-item">
+                        <dt>Category</dt>
+                        <dd><span class="badge-category">@Model.Category</span></dd>
+                    </dl>
+                    <dl class="info-item">
+                        <dt>Description</dt>
+                        <dd>@Model.Description</dd>
+                    </dl>
+                    <dl class="info-item">
+                        <dt>Price</dt>
+                        <dd><span class="item-price">₱@Model.Price.ToString("F2")</span></dd>
+                    </dl>
+                    <dl class="info-item">
+                        <dt>Rating</dt>
+                        <dd>
+                            @if (Model.Rating > 0)
+                            {
+                                <span class="badge-rating"><i class="fas fa-star"></i> @Model.Rating.ToString("F1") (@Model.ReviewCount reviews)</span>
+                            }
+                            else
+                            {
+                                <span class="no-rating">No ratings yet</span>
+                            }
+                        </dd>
+                    </dl>
+                    <dl class="info-item">
+                        <dt>Dietary Info</dt>
+                        <dd>
+                            @if (Model.IsVegetarian) { <span class="badge-dietary">Vegetarian</span> }
+                            @if (Model.IsVegan) { <span class="badge-dietary">Vegan</span> }
+                            @if (Model.IsGlutenFree) { <span class="badge-dietary">Gluten Free</span> }
+                            @if (!Model.IsVegetarian && !Model.IsVegan && !Model.IsGlutenFree)
+                            {
+                                <span class="no-rating">None</span>
+                            }
+                        </dd>
+                    </dl>
+                </div>
+                <div class="card-footer">
+                    <a asp-action="EditMenuItem" asp-route-id="@Model.Id" class="action-btn">
+                        <i class="fas fa-edit" style="margin-right: 0.5rem;"></i> Edit
+                    </a>
+                    <a asp-action="DeleteMenuItem" asp-route-id="@Model.Id" class="action-btn danger" style="margin-left: 0.5rem;">
+                        <i class="fas fa-trash" style="margin-right: 0.5rem;"></i> Delete
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 </div>

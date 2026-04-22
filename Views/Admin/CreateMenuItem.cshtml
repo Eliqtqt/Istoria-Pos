@@ -3,108 +3,301 @@
     ViewData["Title"] = "Create Menu Item";
 }
 
-<div style="background: #f8f8f8; padding: 1.5rem 0; text-align: center; border-bottom: 1px solid #ddd; margin-bottom: 2rem;">
-    <div style="max-width: 600px; margin: 0 auto;">
-        <h1 style="font-size: 1.75rem; margin-bottom: 0.5rem; font-weight: 600;">Create Menu Item</h1>
-        <p style="font-size: 0.8rem; color: #555; margin: 0; font-family: Georgia, serif; font-style: italic;">[is-tor-yuh] • noun</p>
-        <p style="font-size: 0.75rem; color: #777; margin: 0.25rem 0 0 0;">a place of laughter, comfort and acceptance; where memories are made over a cup of coffee and friends.</p>
-        <div style="width: 50px; height: 1px; background: #0a0a0a; margin: 0.75rem auto 0;"></div>
-    </div>
-</div>
+<style>
+    .admin-header {
+        background: linear-gradient(135deg, #2c1810 0%, #1a0f0a 50%, #0d0705 100%);
+        padding: 2rem;
+        margin-bottom: 2rem;
+        border-radius: 16px;
+        color: #fff;
+        box-shadow: 0 8px 32px rgba(44, 24, 16, 0.4);
+    }
+    
+    .admin-header h1 {
+        font-family: 'Playfair Display', Georgia, serif;
+        font-size: 1.75rem;
+        margin: 0;
+    }
+    
+    .back-btn {
+        background: #fff;
+        color: #2c1810;
+        padding: 0.6rem 1.25rem;
+        border-radius: 25px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        font-weight: 500;
+    }
+    
+    .back-btn:hover {
+        background: #f5f0eb;
+        color: #2c1810;
+    }
+    
+    .form-card {
+        background: #fff;
+        border: 1px solid #e8e0d8;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+    }
+    
+    .form-card .card-header {
+        background: linear-gradient(135deg, #2c1810 0%, #4a2c20 100%);
+        color: #fff;
+        padding: 1.25rem 1.5rem;
+        font-size: 0.9rem;
+    }
+    
+    .form-card .card-body {
+        padding: 1.5rem;
+    }
+    
+    .form-label-custom {
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-size: 0.75rem;
+        color: #2c1810;
+        margin-bottom: 0.5rem;
+        display: block;
+    }
+    
+    .form-control-custom {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        border: 1px solid #e8e0d8;
+        border-radius: 12px;
+        background: #faf8f5;
+        color: #2c1810;
+        font-size: 0.95rem;
+        transition: all 0.3s ease;
+    }
+    
+    .form-control-custom:focus {
+        outline: none;
+        border-color: #2c1810;
+        box-shadow: 0 0 0 3px rgba(44, 24, 16, 0.1);
+    }
+    
+    .input-group-custom {
+        border: 1px solid #e8e0d8;
+        border-radius: 12px;
+        overflow: hidden;
+        display: flex;
+    }
+    
+    .input-group-custom span {
+        background: #faf8f5;
+        padding: 0.75rem 1rem;
+        border: none;
+        color: #2c1810;
+        font-weight: 600;
+    }
+    
+    .input-group-custom input {
+        border: none;
+        padding: 0.75rem 1rem;
+        flex: 1;
+        background: #faf8f5;
+    }
+    
+    .input-group-custom input:focus {
+        outline: none;
+    }
+    
+    .form-check-custom {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    
+    .form-check-custom input {
+        width: 18px;
+        height: 18px;
+        accent-color: #2c1810;
+    }
+    
+    .form-check-custom label {
+        color: #2c1810;
+        font-weight: 500;
+    }
+    
+    .btn-primary {
+        background: linear-gradient(135deg, #2c1810 0%, #4a2c20 100%);
+        color: #fff;
+        padding: 0.85rem 2.5rem;
+        border: none;
+        border-radius: 25px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+    
+    .btn-primary:hover {
+        background: linear-gradient(135deg, #4a2c20 0%, #2c1810 100%);
+        color: #fff;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(44, 24, 16, 0.3);
+    }
+    
+    .btn-outline {
+        background: transparent;
+        color: #2c1810;
+        padding: 0.85rem 2rem;
+        border: 1px solid #2c1810;
+        border-radius: 25px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        font-weight: 500;
+    }
+    
+    .btn-outline:hover {
+        background: #2c1810;
+        color: #fff;
+    }
+    
+    .alert-error {
+        background: linear-gradient(135deg, #c62828 0%, #b71c1c 100%);
+        color: #fff;
+        border: none;
+        border-radius: 12px;
+        padding: 1rem 1.5rem;
+        margin-bottom: 2rem;
+    }
+    
+    .alert-success {
+        background: linear-gradient(135deg, #2c1810 0%, #4a2c20 100%);
+        color: #fff;
+        border: none;
+        border-radius: 12px;
+        padding: 1rem 1.5rem;
+        margin-bottom: 2rem;
+    }
+    
+    .help-text {
+        color: #8d6e63;
+        font-size: 0.75rem;
+        margin-top: 0.25rem;
+    }
+</style>
 
-<div class="container">
+<div class="container-fluid" style="padding: 2rem;">
+    <!-- Header -->
+    <div class="admin-header">
+        <div class="d-flex justify-content-between align-items-center">
+            <h1><i class="fas fa-plus-circle" style="margin-right: 0.75rem; color: #d4af87;"></i> Create Menu Item</h1>
+            <a asp-action="MenuItems" class="back-btn">
+                <i class="fas fa-arrow-left" style="margin-right: 0.5rem;"></i> Back to Menu
+            </a>
+        </div>
+    </div>
+
     @if (TempData["Error"] != null)
     {
-        <div class="alert-danger" style="padding: 1rem; margin-bottom: 2rem;">@TempData["Error"]</div>
+        <div class="alert-error">
+            <i class="fas fa-exclamation-circle" style="margin-right: 0.5rem;"></i>
+            @TempData["Error"]
+        </div>
     }
     @if (TempData["Success"] != null)
     {
-        <div class="alert-success" style="padding: 1rem; margin-bottom: 2rem;">@TempData["Success"]</div>
+        <div class="alert-success">
+            <i class="fas fa-check-circle" style="margin-right: 0.5rem;"></i>
+            @TempData["Success"]
+        </div>
     }
 
-    <div class="admin-card">
-        <form asp-action="CreateMenuItem" method="post">
-            @Html.AntiForgeryToken()
-            <div class="row">
-                <div class="col-md-6 mb-4">
-                    <label for="Name" class="form-label" style="font-weight: 500; text-transform: uppercase; letter-spacing: 1px; font-size: 0.8rem;">Name *</label>
-                    <input type="text" id="Name" name="Name" class="form-control" required style="border: none; border-bottom: 1px solid #ddd; border-radius: 0; padding: 0.8rem 0;" />
-                </div>
-                <div class="col-md-6 mb-4">
-                    <label for="Category" class="form-label" style="font-weight: 500; text-transform: uppercase; letter-spacing: 1px; font-size: 0.8rem;">Category</label>
-                    <select id="Category" name="Category" class="form-select" style="border: none; border-bottom: 1px solid #ddd; border-radius: 0;">
-                        <option value="">Select Category</option>
-                        <option value="All">All</option>
-                        <option value="Coffee">Coffee</option>
-                        <option value="Non-Coffee">Non-Coffee</option>
-                        <option value="Specials">Specials</option>
-                        <option value="Latte">Latte</option>
-                        <option value="Pasta">Pasta</option>
-                        <option value="Pastry">Pastry</option>
-                        <option value="Potato">Potato</option>
-                        <option value="Chicken Poppers">Chicken Poppers</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="mb-4">
-                <label for="Description" class="form-label" style="font-weight: 500; text-transform: uppercase; letter-spacing: 1px; font-size: 0.8rem;">Description</label>
-                <textarea id="Description" name="Description" class="form-control" rows="3" style="border: none; border-bottom: 1px solid #ddd; border-radius: 0;"></textarea>
-            </div>
-
-            <div class="row">
-                <div class="col-md-4 mb-4">
-                    <label for="Price" class="form-label" style="font-weight: 500; text-transform: uppercase; letter-spacing: 1px; font-size: 0.8rem;">Price *</label>
-                    <div class="input-group" style="border-bottom: 1px solid #ddd;">
-                        <span style="background: transparent; border: none; padding: 0.8rem 0; color: #0a0a0a; font-weight: 600;">₱</span>
-                        <input type="number" id="Price" name="Price" class="form-control" step="0.01" min="0.01" required style="border: none; border-radius: 0; padding: 0.8rem 0;" />
+    <div class="form-card">
+        <div class="card-header">
+            <i class="fas fa-coffee" style="margin-right: 0.5rem;"></i> New Menu Item
+        </div>
+        <div class="card-body">
+            <form asp-action="CreateMenuItem" method="post">
+                @Html.AntiForgeryToken()
+                <div class="row">
+                    <div class="col-md-6 mb-4">
+                        <label for="Name" class="form-label-custom">Name *</label>
+                        <input type="text" id="Name" name="Name" class="form-control-custom" required placeholder="Enter item name" />
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <label for="Category" class="form-label-custom">Category</label>
+                        <select id="Category" name="Category" class="form-control-custom">
+                            <option value="">Select Category</option>
+                            <option value="All">All</option>
+                            <option value="Coffee">Coffee</option>
+                            <option value="Non-Coffee">Non-Coffee</option>
+                            <option value="Specials">Specials</option>
+                            <option value="Latte">Latte</option>
+                            <option value="Pasta">Pasta</option>
+                            <option value="Pastry">Pastry</option>
+                            <option value="Potato">Potato</option>
+                            <option value="Chicken Poppers">Chicken Poppers</option>
+                        </select>
                     </div>
                 </div>
-                <div class="col-md-4 mb-4">
-                    <label for="ImageUrl" class="form-label" style="font-weight: 500; text-transform: uppercase; letter-spacing: 1px; font-size: 0.8rem;">Image URL</label>
-                    <input type="text" id="ImageUrl" name="ImageUrl" class="form-control" placeholder="Paste image URL here..." style="border: none; border-bottom: 1px solid #ddd; border-radius: 0; padding: 0.8rem 0;" />
-                    <small style="color: #888; font-size: 0.7rem;">Right-click an image online → Copy image address → Paste here</small>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <label for="Rating" class="form-label" style="font-weight: 500; text-transform: uppercase; letter-spacing: 1px; font-size: 0.8rem;">Rating</label>
-                    <input type="number" id="Rating" name="Rating" class="form-control" step="0.1" min="0" max="5" value="0" style="border: none; border-bottom: 1px solid #ddd; border-radius: 0; padding: 0.8rem 0;" />
-                </div>
-            </div>
 
-            <div class="row">
-                <div class="col-md-4 mb-4">
-                    <label for="ReviewCount" class="form-label" style="font-weight: 500; text-transform: uppercase; letter-spacing: 1px; font-size: 0.8rem;">Review Count</label>
-                    <input type="number" id="ReviewCount" name="ReviewCount" class="form-control" min="0" value="0" style="border: none; border-bottom: 1px solid #ddd; border-radius: 0; padding: 0.8rem 0;" />
+                <div class="mb-4">
+                    <label for="Description" class="form-label-custom">Description</label>
+                    <textarea id="Description" name="Description" class="form-control-custom" rows="3" placeholder="Enter item description"></textarea>
                 </div>
-            </div>
 
-            <div class="row mb-4">
-                <div class="col-md-4">
-                    <div class="form-check">
-                        <input type="checkbox" id="IsVegetarian" name="IsVegetarian" class="form-check-input" value="true" style="accent-color: #0a0a0a;" />
-                        <label for="IsVegetarian" class="form-check-label" style="margin-left: 0.5rem;">Vegetarian</label>
+                <div class="row">
+                    <div class="col-md-4 mb-4">
+                        <label for="Price" class="form-label-custom">Price *</label>
+                        <div class="input-group-custom">
+                            <span>₱</span>
+                            <input type="number" id="Price" name="Price" class="form-control-custom" step="0.01" min="0.01" required style="border-radius: 0;" />
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <label for="ImageUrl" class="form-label-custom">Image URL</label>
+                        <input type="text" id="ImageUrl" name="ImageUrl" class="form-control-custom" placeholder="Paste image URL here..." />
+                        <div class="help-text">Right-click an image online → Copy image address → Paste here</div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <label for="Rating" class="form-label-custom">Rating</label>
+                        <input type="number" id="Rating" name="Rating" class="form-control-custom" step="0.1" min="0" max="5" value="0" />
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="form-check">
-                        <input type="checkbox" id="IsVegan" name="IsVegan" class="form-check-input" value="true" style="accent-color: #0a0a0a;" />
-                        <label for="IsVegan" class="form-check-label" style="margin-left: 0.5rem;">Vegan</label>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-check">
-                        <input type="checkbox" id="IsGlutenFree" name="IsGlutenFree" class="form-check-input" value="true" style="accent-color: #0a0a0a;" />
-                        <label for="IsGlutenFree" class="form-check-label" style="margin-left: 0.5rem;">Gluten Free</label>
-                    </div>
-                </div>
-            </div>
 
-            <div style="display: flex; gap: 1rem; margin-top: 2rem;">
-                <button type="submit" class="btn-primary" style="padding: 1rem 3rem;">Create Item</button>
-                <a asp-action="MenuItems" class="btn-outline" style="text-decoration: none; padding: 1rem 2rem;">
-                    ← Back to List
-                </a>
-            </div>
-        </form>
+                <div class="row">
+                    <div class="col-md-4 mb-4">
+                        <label for="ReviewCount" class="form-label-custom">Review Count</label>
+                        <input type="number" id="ReviewCount" name="ReviewCount" class="form-control-custom" min="0" value="0" />
+                    </div>
+                </div>
+
+                <div class="row mb-4">
+                    <div class="col-md-4">
+                        <div class="form-check-custom">
+                            <input type="checkbox" id="IsVegetarian" name="IsVegetarian" value="true" />
+                            <label for="IsVegetarian">Vegetarian</label>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-check-custom">
+                            <input type="checkbox" id="IsVegan" name="IsVegan" value="true" />
+                            <label for="IsVegan">Vegan</label>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-check-custom">
+                            <input type="checkbox" id="IsGlutenFree" name="IsGlutenFree" value="true" />
+                            <label for="IsGlutenFree">Gluten Free</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                    <button type="submit" class="btn-primary">
+                        <i class="fas fa-plus" style="margin-right: 0.5rem;"></i> Create Item
+                    </button>
+                    <a asp-action="MenuItems" class="btn-outline">
+                        <i class="fas fa-arrow-left" style="margin-right: 0.5rem;"></i> Back to List
+                    </a>
+                </div>
+            </form>
+        </div>
     </div>
 </div>

@@ -6,44 +6,43 @@
 
 <style>
     .admin-header {
-        background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #000 100%);
+        background: linear-gradient(135deg, #2c1810 0%, #1a0f0a 50%, #0d0705 100%);
         padding: 2.5rem;
         margin-bottom: 2rem;
-        border-radius: 0;
+        border-radius: 16px;
         color: #fff;
-        border-left: 4px solid #fff;
+        box-shadow: 0 8px 32px rgba(44, 24, 16, 0.4);
+        border: 1px solid rgba(212, 175, 135, 0.2);
     }
     
     .admin-header h1 {
         font-family: 'Playfair Display', Georgia, serif;
-        font-size: 2.2rem;
+        font-size: 2rem;
         font-weight: 400;
-        letter-spacing: 2px;
-        text-transform: uppercase;
+        letter-spacing: 1px;
     }
     
     .admin-header p {
-        font-size: 0.9rem;
-        letter-spacing: 1px;
-        opacity: 0.6;
+        font-size: 0.95rem;
+        opacity: 0.85;
+        color: #d4af87;
     }
     
     .section-card {
         background: #fff;
-        border: none;
-        border-radius: 0;
-        box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+        border: 1px solid #e8e0d8;
+        border-radius: 16px;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.06);
         overflow: hidden;
     }
     
     .section-card .card-header {
-        background: #0a0a0a;
+        background: linear-gradient(135deg, #2c1810 0%, #4a2c20 100%);
         color: #fff;
         padding: 1.25rem 1.5rem;
         border: none;
         font-family: 'Helvetica Neue', sans-serif;
         letter-spacing: 1px;
-        text-transform: uppercase;
         font-size: 0.85rem;
     }
     
@@ -55,31 +54,32 @@
         background: #fff;
         padding: 1.5rem;
         margin-bottom: 1.5rem;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        border-radius: 16px;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.06);
     }
     
     .filter-btn {
         background: #fff;
-        color: #0a0a0a;
-        border: 1px solid #ddd;
+        color: #2c1810;
+        border: 1px solid #e8e0d8;
         padding: 0.6rem 1.25rem;
         transition: all 0.3s ease;
         font-size: 0.8rem;
         text-transform: uppercase;
         letter-spacing: 1px;
-        border-radius: 0;
+        border-radius: 25px;
     }
     
     .filter-btn:hover {
-        background: #0a0a0a;
+        background: #2c1810;
         color: #fff;
-        border-color: #0a0a0a;
+        border-color: #2c1810;
     }
     
     .filter-btn.active {
-        background: #0a0a0a;
+        background: linear-gradient(135deg, #2c1810 0%, #4a2c20 100%);
         color: #fff;
-        border-color: #0a0a0a;
+        border-color: #2c1810;
     }
     
     .data-table {
@@ -88,22 +88,22 @@
     }
     
     .data-table th {
-        background: #fafafa;
-        color: #0a0a0a;
-        font-weight: 600;
-        padding: 1rem 1.5rem;
+        background: #faf8f5;
+        color: #2c1810;
+        font-weight: 700;
+        padding: 1rem 1.25rem;
         text-align: left;
-        border-bottom: 1px solid #0a0a0a;
-        font-size: 0.8rem;
+        border-bottom: 2px solid #2c1810;
+        font-size: 0.75rem;
         text-transform: uppercase;
-        letter-spacing: 1.5px;
+        letter-spacing: 1px;
     }
     
     .data-table td {
-        padding: 1.25rem 1.5rem;
-        border-bottom: 1px solid #f0f0f0;
-        color: #333;
-        font-size: 0.95rem;
+        padding: 1.25rem 1.25rem;
+        border-bottom: 1px solid #f0ebe5;
+        color: #4a4a4a;
+        font-size: 0.9rem;
     }
     
     .data-table tr:last-child td {
@@ -111,86 +111,85 @@
     }
     
     .data-table tr:hover {
-        background: #fafafa;
+        background: #faf8f5;
     }
     
     .badge-custom {
-        padding: 0.4rem 0.8rem;
-        border-radius: 0;
-        font-size: 0.75rem;
+        padding: 0.4rem 0.85rem;
+        border-radius: 20px;
+        font-size: 0.7rem;
         font-weight: 600;
         text-transform: uppercase;
-        letter-spacing: 1px;
     }
     
     .badge-pending {
-        background: #f5f5f5;
-        color: #333;
-        border: 1px solid #ddd;
+        background: #fff3e0;
+        color: #e65100;
+        border: 1px solid #ffcc80;
     }
     
     .badge-confirmed {
-        background: #e8e8e8;
-        color: #0a0a0a;
+        background: #e3f2fd;
+        color: #1565c0;
+        border: 1px solid #90caf9;
     }
     
     .badge-preparing {
-        background: #0a0a0a;
-        color: #fff;
+        background: #f3e5f5;
+        color: #7b1fa2;
+        border: 1px solid #ce93d8;
     }
     
     .badge-ready {
-        background: #333;
-        color: #fff;
+        background: #e8f5e9;
+        color: #2e7d32;
+        border: 1px solid #a5d6a7;
     }
     
     .badge-completed {
-        background: #000;
-        color: #fff;
+        background: #f5f5f5;
+        color: #424242;
+        border: 1px solid #e0e0e0;
     }
     
     .badge-cancelled {
-        background: #fff;
-        color: #000;
-        border: 1px solid #000;
+        background: #ffebee;
+        color: #c62828;
+        border: 1px solid #ef9a9a;
     }
     
     .badge-items {
         background: transparent;
-        color: #666;
-        border: 1px solid #ddd;
+        color: #8d6e63;
+        border: 1px solid #e8e0d8;
         padding: 0.3rem 0.6rem;
         font-size: 0.7rem;
+        border-radius: 20px;
     }
     
     .view-btn {
-        background: #0a0a0a;
+        background: linear-gradient(135deg, #2c1810 0%, #4a2c20 100%);
         color: #fff;
-        padding: 0.5rem 1.25rem;
-        border-radius: 0;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
         text-decoration: none;
         transition: all 0.3s ease;
-        font-size: 0.8rem;
-        text-transform: uppercase;
-        letter-spacing: 1px;
+        font-size: 0.75rem;
         font-weight: 500;
     }
     
     .view-btn:hover {
-        background: #333;
+        background: linear-gradient(135deg, #4a2c20 0%, #2c1810 100%);
         color: #fff;
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
     }
     
     .alert-custom {
-        background: #0a0a0a;
+        background: linear-gradient(135deg, #2c1810 0%, #4a2c20 100%);
         color: #fff;
         border: none;
-        border-radius: 0;
+        border-radius: 12px;
         padding: 1rem 1.5rem;
         font-size: 0.9rem;
-        letter-spacing: 0.5px;
     }
     
     .alert-custom .btn-close {
@@ -203,25 +202,24 @@
     }
     
     .empty-state i {
-        color: #ddd;
+        color: #d4af87;
         font-size: 4rem;
         margin-bottom: 1rem;
     }
     
     .empty-state p {
-        color: #999;
+        color: #8d6e63;
         font-size: 1rem;
-        letter-spacing: 1px;
     }
     
     .order-id {
         font-weight: 600;
-        color: #0a0a0a;
+        color: #2c1810;
     }
     
     .order-total {
         font-weight: 700;
-        color: #0a0a0a;
+        color: #2c1810;
     }
 </style>
 
@@ -230,11 +228,11 @@
     <div class="admin-header">
         <div class="d-flex justify-content-between align-items-center">
             <div>
-                <h1><i class="fas fa-shopping-bag" style="margin-right: 1rem;"></i> Orders</h1>
+                <h1><i class="fas fa-shopping-bag" style="margin-right: 0.75rem; color: #d4af87;"></i> Orders</h1>
                 <p>Manage and track all customer orders</p>
             </div>
             <div style="text-align: right;">
-                <p style="margin: 0;">@DateTime.Now.ToString("dddd, MMMM dd, yyyy")</p>
+                <p style="margin: 0; color: #d4af87;">@DateTime.Now.ToString("dddd, MMMM dd, yyyy")</p>
             </div>
         </div>
     </div>
@@ -242,6 +240,7 @@
     @if (TempData["Success"] != null)
     {
         <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="fas fa-check-circle" style="margin-right: 0.5rem;"></i>
             @TempData["Success"]
             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         </div>
@@ -249,7 +248,7 @@
 
     <!-- Status Filter -->
     <div class="filter-container">
-        <div class="btn-group" role="group" style="flex-wrap: wrap; gap: 0;">
+        <div class="d-flex flex-wrap gap-2">
             <a asp-action="Orders" class="btn filter-btn @(string.IsNullOrEmpty(currentStatus) ? "active" : "")">
                 All Orders
             </a>
@@ -295,7 +294,7 @@
                             <tr>
                                 <td><span class="order-id">#@order.Id</span></td>
                                 <td>@order.User?.Username ?? "Guest"</td>
-                                <td style="color: #666;">@order.OrderDate.ToString("MMM dd, yyyy HH:mm")</td>
+                                <td style="color: #8d6e63;">@order.OrderDate.ToString("MMM dd, yyyy HH:mm")</td>
                                 <td><span class="order-total">@order.TotalAmount.ToString("C")</span></td>
                                 <td>
                                     <span class="badge-custom @GetStatusBadgeClass(order.Status)">@order.Status</span>
@@ -305,7 +304,7 @@
                                 </td>
                                 <td>
                                     <a asp-action="OrderDetails" asp-route-id="@order.Id" class="view-btn">
-                                        <i class="fas fa-eye" style="margin-right: 0.5rem;"></i> View
+                                        <i class="fas fa-eye"></i> View
                                     </a>
                                 </td>
                             </tr>

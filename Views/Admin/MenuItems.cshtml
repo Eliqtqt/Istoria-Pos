@@ -3,68 +3,263 @@
     ViewData["Title"] = "Menu Items";
 }
 
-<div class="page-header">
-    <h1>Menu Items</h1>
-    <div class="divider"></div>
-    <a asp-action="CreateMenuItem" class="btn-primary" style="text-decoration: none; display: inline-block; margin-top: 1rem;">
-        + Add New Item
-    </a>
-</div>
+<style>
+    .admin-header {
+        background: linear-gradient(135deg, #2c1810 0%, #1a0f0a 50%, #0d0705 100%);
+        padding: 2.5rem;
+        margin-bottom: 2rem;
+        border-radius: 16px;
+        color: #fff;
+        box-shadow: 0 8px 32px rgba(44, 24, 16, 0.4);
+        border: 1px solid rgba(212, 175, 135, 0.2);
+    }
+    
+    .admin-header h1 {
+        font-family: 'Playfair Display', Georgia, serif;
+        font-size: 2rem;
+        font-weight: 400;
+        letter-spacing: 1px;
+    }
+    
+    .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+    
+    .page-header h1 {
+        font-family: 'Playfair Display', Georgia, serif;
+        font-size: 1.75rem;
+        margin: 0;
+    }
+    
+    .btn-primary {
+        background: linear-gradient(135deg, #2c1810 0%, #4a2c20 100%);
+        color: #fff;
+        padding: 0.75rem 1.5rem;
+        border-radius: 25px;
+        border: none;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+    
+    .btn-primary:hover {
+        background: linear-gradient(135deg, #4a2c20 0%, #2c1810 100%);
+        color: #fff;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(44, 24, 16, 0.3);
+    }
+    
+    .section-card {
+        background: #fff;
+        border: 1px solid #e8e0d8;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+    }
+    
+    .section-card .card-header {
+        background: linear-gradient(135deg, #2c1810 0%, #4a2c20 100%);
+        color: #fff;
+        border: none;
+        padding: 1.25rem 1.5rem;
+        font-family: 'Helvetica Neue', sans-serif;
+        letter-spacing: 1px;
+        font-size: 0.85rem;
+    }
+    
+    .data-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    
+    .data-table th {
+        background: #faf8f5;
+        color: #2c1810;
+        font-weight: 700;
+        padding: 1rem 1.25rem;
+        text-align: left;
+        border-bottom: 2px solid #2c1810;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+    
+    .data-table td {
+        padding: 1rem 1.25rem;
+        border-bottom: 1px solid #f0ebe5;
+        color: #4a4a4a;
+        vertical-align: middle;
+    }
+    
+    .data-table tr:hover {
+        background: #faf8f5;
+    }
+    
+    .badge-category {
+        background: linear-gradient(135deg, #2c1810 0%, #4a2c20 100%);
+        color: #fff;
+        padding: 0.4rem 0.85rem;
+        border-radius: 20px;
+        font-size: 0.7rem;
+        font-weight: 600;
+        text-transform: uppercase;
+    }
+    
+    .badge-rating {
+        color: #d4af87;
+        font-weight: 600;
+    }
+    
+    .badge-rating i {
+        color: #d4af87;
+    }
+    
+    .no-rating {
+        color: #999;
+        font-style: italic;
+    }
+    
+    .action-btn {
+        background: #2c1810;
+        color: #fff;
+        padding: 0.5rem 0.85rem;
+        border-radius: 20px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        font-size: 0.75rem;
+        font-weight: 500;
+    }
+    
+    .action-btn:hover {
+        background: #4a2c20;
+        color: #fff;
+    }
+    
+    .action-btn.edit {
+        background: transparent;
+        color: #2c1810;
+        border: 1px solid #2c1810;
+    }
+    
+    .action-btn.edit:hover {
+        background: #2c1810;
+        color: #fff;
+    }
+    
+    .action-btn.delete {
+        background: #c62828;
+        color: #fff;
+        border: 1px solid #c62828;
+    }
+    
+    .action-btn.delete:hover {
+        background: #b71c1c;
+    }
+    
+    .action-buttons {
+        display: flex;
+        gap: 0.5rem;
+    }
+    
+    .alert-success {
+        background: linear-gradient(135deg, #2c1810 0%, #4a2c20 100%);
+        color: #fff;
+        border: none;
+        border-radius: 12px;
+        padding: 1rem 1.5rem;
+        margin-bottom: 2rem;
+    }
+    
+    .alert-success .btn-close {
+        filter: invert(1);
+    }
+</style>
 
-<div class="container">
+<div class="container-fluid" style="padding: 2rem;">
+    <!-- Admin Header -->
+    <div class="admin-header">
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <h1><i class="fas fa-coffee" style="margin-right: 0.75rem; color: #d4af87;"></i> Menu Items</h1>
+                <p style="margin: 0.5rem 0 0 0; opacity: 0.85; color: #d4af87; font-size: 0.95rem;">Manage your cafe offerings</p>
+            </div>
+            <div style="text-align: right;">
+                <p style="margin: 0; color: #d4af87;">@DateTime.Now.ToString("dddd, MMMM dd, yyyy")</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="page-header">
+        <h1><i class="fas fa-list" style="margin-right: 0.5rem; opacity: 0.7;"></i> Menu Items</h1>
+        <a asp-action="CreateMenuItem" class="btn-primary">
+            <i class="fas fa-plus" style="margin-right: 0.5rem;"></i> Add New Item
+        </a>
+    </div>
+
     @if (TempData["Success"] != null)
     {
-        <div class="alert-success" style="padding: 1rem; margin-bottom: 2rem;">
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="fas fa-check-circle" style="margin-right: 0.5rem;"></i>
             @TempData["Success"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         </div>
     }
 
-    <div class="admin-card" style="padding: 0; overflow: hidden;">
-        <table class="table table-hover mb-0">
-            <thead>
-                <tr>
-                    <th style="width: 60px;">ID</th>
-                    <th>Name</th>
-                    <th>Category</th>
-                    <th>Price</th>
-                    <th>Rating</th>
-                    <th style="width: 100px;">Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
+    <div class="section-card">
+        <div class="card-header">
+            <i class="fas fa-mug-hot" style="margin-right: 0.5rem;"></i> Available Items
+        </div>
+        <div class="table-responsive">
+            <table class="data-table">
+                <thead>
                     <tr>
-                        <td>#@item.Id</td>
-                        <td><strong>@item.Name</strong></td>
-                        <td><span style="background: #0a0a0a; color: white; padding: 0.3em 0.8em; font-size: 0.75rem;">@item.Category</span></td>
-                        <td>₱@item.Price.ToString("F2")</td>
-                        <td>
-                            @if (item.Rating > 0)
-                            {
-                                <span><i class="fas fa-star" style="color: #0a0a0a;"></i> @item.Rating.ToString("F1")</span>
-                            }
-                            else
-                            {
-                                <span style="color: #888;">N/A</span>
-                            }
-                        </td>
-                        <td>
-                            <div style="display: flex; gap: 0.5rem;">
-                                <a asp-action="EditMenuItem" asp-route-id="@item.Id" style="color: #0a0a0a; padding: 0.4rem 0.8rem; border: 1px solid #ddd; font-size: 0.8rem;" title="Edit">
-                                    <i class="fas fa-edit"></i>
-                                </a>
-                                <a asp-action="MenuDetails" asp-route-id="@item.Id" style="color: #0a0a0a; padding: 0.4rem 0.8rem; border: 1px solid #ddd; font-size: 0.8rem;" title="Details">
-                                    <i class="fas fa-eye"></i>
-                                </a>
-                                <a asp-action="DeleteMenuItem" asp-route-id="@item.Id" style="color: #fff; background: #0a0a0a; padding: 0.4rem 0.8rem; border: 1px solid #0a0a0a; font-size: 0.8rem;" title="Delete">
-                                    <i class="fas fa-trash"></i>
-                                </a>
-                            </div>
-                        </td>
+                        <th style="width: 60px;">ID</th>
+                        <th>Name</th>
+                        <th>Category</th>
+                        <th>Price</th>
+                        <th>Rating</th>
+                        <th style="width: 140px;">Actions</th>
                     </tr>
-                }
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td><span style="color: #8d6e63; font-weight: 600;">#</span>@item.Id</td>
+                            <td><strong style="color: #2c1810;">@item.Name</strong></td>
+                            <td><span class="badge-category">@item.Category</span></td>
+                            <td><strong style="color: #2c1810;">₱@item.Price.ToString("F2")</strong></td>
+                            <td>
+                                @if (item.Rating > 0)
+                                {
+                                    <span class="badge-rating"><i class="fas fa-star"></i> @item.Rating.ToString("F1")</span>
+                                }
+                                else
+                                {
+                                    <span class="no-rating">No ratings</span>
+                                }
+                            </td>
+                            <td>
+                                <div class="action-buttons">
+                                    <a asp-action="EditMenuItem" asp-route-id="@item.Id" class="action-btn edit" title="Edit">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <a asp-action="MenuDetails" asp-route-id="@item.Id" class="action-btn" title="Details">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                    <a asp-action="DeleteMenuItem" asp-route-id="@item.Id" class="action-btn delete" title="Delete">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>

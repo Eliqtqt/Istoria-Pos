@@ -5,62 +5,83 @@
 
 <style>
     .admin-header {
-        background: linear-gradient(135deg, #1a1a1a 0%, #000 100%);
-        padding: 2rem;
+        background: linear-gradient(135deg, #2c1810 0%, #1a0f0a 50%, #0d0705 100%);
+        padding: 2.5rem;
         margin-bottom: 2rem;
-        border-radius: 8px;
+        border-radius: 16px;
         color: #fff;
+        box-shadow: 0 8px 32px rgba(44, 24, 16, 0.4);
+        border: 1px solid rgba(212, 175, 135, 0.2);
+    }
+    
+    .admin-header h1 {
+        font-family: 'Playfair Display', Georgia, serif;
+        font-size: 2rem;
+        font-weight: 400;
+        letter-spacing: 1px;
+    }
+    
+    .admin-header p {
+        opacity: 0.85;
+        color: #d4af87;
+        font-size: 0.95rem;
+        letter-spacing: 0.5px;
     }
     
     .stat-card {
         background: #fff;
-        border: 1px solid #e0e0e0;
-        border-radius: 8px;
-        padding: 1.5rem;
+        border: 1px solid #e8e0d8;
+        border-radius: 16px;
+        padding: 1.75rem;
         transition: all 0.3s ease;
         height: 100%;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.06);
     }
     
     .stat-card:hover {
         transform: translateY(-5px);
-        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        box-shadow: 0 12px 32px rgba(44, 24, 16, 0.15);
     }
     
     .stat-card.dark {
-        background: #1a1a1a;
+        background: linear-gradient(135deg, #2c1810 0%, #4a2c20 100%);
         color: #fff;
         border: none;
     }
     
     .stat-card.dark .stat-icon {
-        color: #fff;
-        opacity: 0.3;
+        color: #d4af87;
+        opacity: 0.9;
     }
     
     .stat-icon {
-        font-size: 3rem;
-        color: #1a1a1a;
-        opacity: 0.2;
+        font-size: 2.5rem;
+        color: #2c1810;
+        opacity: 0.15;
     }
     
     .section-card {
         background: #fff;
-        border: 1px solid #e0e0e0;
-        border-radius: 8px;
+        border: 1px solid #e8e0d8;
+        border-radius: 16px;
         overflow: hidden;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.06);
     }
     
     .section-card .card-header {
-        background: #1a1a1a;
+        background: linear-gradient(135deg, #2c1810 0%, #4a2c20 100%);
         color: #fff;
         border: none;
-        padding: 1rem 1.5rem;
+        padding: 1.25rem 1.5rem;
+        font-family: 'Helvetica Neue', sans-serif;
+        letter-spacing: 1px;
+        font-size: 0.85rem;
     }
     
     .section-card.dark .card-header {
-        background: #fff;
-        color: #1a1a1a;
-        border-bottom: 1px solid #e0e0e0;
+        background: #faf8f5;
+        color: #2c1810;
+        border-bottom: 1px solid #e8e0d8;
     }
     
     .section-card .card-body {
@@ -68,42 +89,45 @@
     }
     
     .action-btn {
-        background: #1a1a1a;
+        background: linear-gradient(135deg, #2c1810 0%, #4a2c20 100%);
         color: #fff;
         border: none;
         padding: 0.75rem 1.5rem;
-        border-radius: 4px;
+        border-radius: 25px;
         transition: all 0.3s ease;
         text-decoration: none;
         display: inline-block;
+        font-weight: 500;
+        letter-spacing: 0.5px;
     }
     
     .action-btn:hover {
-        background: #333;
+        background: linear-gradient(135deg, #4a2c20 0%, #2c1810 100%);
         color: #fff;
         transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(44, 24, 16, 0.3);
     }
     
     .action-btn.outline {
         background: transparent;
-        border: 1px solid #1a1a1a;
-        color: #1a1a1a;
+        border: 1px solid #2c1810;
+        color: #2c1810;
     }
     
     .action-btn.outline:hover {
-        background: #1a1a1a;
+        background: #2c1810;
         color: #fff;
     }
     
     .action-btn.white {
         background: #fff;
-        color: #1a1a1a;
+        color: #2c1810;
         border: 1px solid #fff;
     }
     
     .action-btn.white:hover {
-        background: #f0f0f0;
-        color: #1a1a1a;
+        background: #f5f0eb;
+        color: #2c1810;
     }
     
     .data-table {
@@ -112,121 +136,177 @@
     }
     
     .data-table th {
-        background: #f8f8f8;
-        color: #1a1a1a;
-        font-weight: 600;
-        padding: 1rem;
+        background: #faf8f5;
+        color: #2c1810;
+        font-weight: 700;
+        padding: 1rem 1.25rem;
         text-align: left;
-        border-bottom: 2px solid #1a1a1a;
+        border-bottom: 2px solid #2c1810;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
     }
     
     .data-table td {
-        padding: 1rem;
-        border-bottom: 1px solid #e0e0e0;
-        color: #333;
+        padding: 1rem 1.25rem;
+        border-bottom: 1px solid #f0ebe5;
+        color: #4a4a4a;
     }
     
     .data-table tr:hover {
-        background: #f8f8f8;
+        background: #faf8f5;
     }
     
     .badge-custom {
-        padding: 0.5rem 1rem;
-        border-radius: 4px;
-        font-size: 0.85rem;
-        font-weight: 500;
+        padding: 0.4rem 0.85rem;
+        border-radius: 20px;
+        font-size: 0.7rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
     }
     
     .badge-pending {
-        background: #f0f0f0;
-        color: #333;
+        background: #fff3e0;
+        color: #e65100;
+        border: 1px solid #ffcc80;
     }
     
     .badge-confirmed {
-        background: #e0e0e0;
-        color: #1a1a1a;
+        background: #e3f2fd;
+        color: #1565c0;
+        border: 1px solid #90caf9;
     }
     
     .badge-preparing {
-        background: #1a1a1a;
-        color: #fff;
+        background: #f3e5f5;
+        color: #7b1fa2;
+        border: 1px solid #ce93d8;
     }
     
     .badge-ready {
-        background: #333;
-        color: #fff;
+        background: #e8f5e9;
+        color: #2e7d32;
+        border: 1px solid #a5d6a7;
     }
     
     .badge-completed {
-        background: #000;
-        color: #fff;
+        background: #f5f5f5;
+        color: #424242;
+        border: 1px solid #e0e0e0;
     }
     
     .badge-cancelled {
-        background: #fff;
-        color: #000;
-        border: 1px solid #000;
+        background: #ffebee;
+        color: #c62828;
+        border: 1px solid #ef9a9a;
     }
     
     .view-btn {
-        background: #1a1a1a;
+        background: linear-gradient(135deg, #2c1810 0%, #4a2c20 100%);
         color: #fff;
         padding: 0.5rem 1rem;
-        border-radius: 4px;
+        border-radius: 20px;
         text-decoration: none;
         transition: all 0.3s ease;
+        font-size: 0.75rem;
+        font-weight: 500;
+        letter-spacing: 0.5px;
     }
     
     .view-btn:hover {
-        background: #333;
+        background: linear-gradient(135deg, #4a2c20 0%, #2c1810 100%);
         color: #fff;
     }
     
     .stat-number {
-        font-size: 2.5rem;
+        font-size: 2.25rem;
         font-weight: 700;
-        color: #1a1a1a;
+        color: #2c1810;
         line-height: 1;
     }
     
     .stat-label {
-        color: #666;
-        font-size: 0.9rem;
+        color: #8d6e63;
+        font-size: 0.8rem;
         text-transform: uppercase;
         letter-spacing: 1px;
         margin-top: 0.5rem;
     }
     
     .stat-card.dark .stat-number {
-        color: #fff;
+        color: #d4af87;
     }
     
     .stat-card.dark .stat-label {
-        color: #999;
+        color: #a89080;
+    }
+    
+    .alert-custom {
+        background: linear-gradient(135deg, #2c1810 0%, #4a2c20 100%);
+        color: #fff;
+        border: none;
+        border-radius: 12px;
+        padding: 1rem 1.5rem;
+    }
+    
+    .alert-custom .btn-close {
+        filter: invert(1);
+    }
+    
+    .quick-action-btn {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 1.5rem 1rem;
+        background: #faf8f5;
+        border: 1px solid #e8e0d8;
+        border-radius: 16px;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        color: #2c1810;
+    }
+    
+    .quick-action-btn:hover {
+        background: linear-gradient(135deg, #2c1810 0%, #4a2c20 100%);
+        color: #fff;
+        transform: translateY(-3px);
+        box-shadow: 0 8px 24px rgba(44, 24, 16, 0.2);
+    }
+    
+    .quick-action-btn i {
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+        opacity: 0.7;
+    }
+    
+    .quick-action-btn span {
+        font-size: 0.8rem;
+        font-weight: 500;
     }
 </style>
 
-<div class="container-fluid">
+<div class="container-fluid" style="padding: 2rem;">
     <!-- Admin Header -->
     <div class="admin-header">
         <div class="d-flex justify-content-between align-items-center">
             <div>
-                <h1 style="font-size: 2rem; margin-bottom: 0.5rem; font-weight: 300;">
-                    <i class="fas fa-crown" style="margin-right: 0.5rem;"></i> Admin Dashboard
-                </h1>
-                <p style="margin: 0; opacity: 0.7;">Welcome back! Here's what's happening today.</p>
+                <h1><i class="fas fa-mug-hot" style="margin-right: 0.75rem; color: #d4af87;"></i> Admin Dashboard</h1>
+                <p>Welcome back! Here's what's brewing today.</p>
             </div>
             <div style="text-align: right;">
-                <p style="margin: 0; opacity: 0.7;">@DateTime.Now.ToString("dddd, MMMM dd, yyyy")</p>
+                <p style="margin: 0; color: #d4af87;">@DateTime.Now.ToString("dddd, MMMM dd, yyyy")</p>
             </div>
         </div>
     </div>
     
     @if (TempData["Success"] != null)
     {
-        <div class="alert alert-success alert-dismissible fade show" role="alert" style="border-radius: 4px; border: none; background: #1a1a1a; color: #fff;">
+        <div class="alert alert-success alert-dismissible fade show alert-custom" role="alert">
+            <i class="fas fa-check-circle" style="margin-right: 0.5rem;"></i>
             @TempData["Success"]
-            <button type="button" class="btn-close" data-bs-dismiss="alert" style="filter: invert(1);"></button>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         </div>
     }
 
@@ -250,7 +330,7 @@
                         <div class="stat-number">@Model.TotalRevenue.ToString("C")</div>
                         <div class="stat-label">Total Revenue</div>
                     </div>
-                    <i class="fas fa-wallet stat-icon"></i>
+                    <i class="fas fa-coins stat-icon"></i>
                 </div>
             </div>
         </div>
@@ -261,7 +341,7 @@
                         <div class="stat-number">@Model.TotalMenuItems</div>
                         <div class="stat-label">Menu Items</div>
                     </div>
-                    <i class="fas fa-mug-hot stat-icon"></i>
+                    <i class="fas fa-coffee stat-icon"></i>
                 </div>
             </div>
         </div>
@@ -305,23 +385,31 @@
                     <h5 class="mb-0"><i class="fas fa-bolt" style="margin-right: 0.5rem;"></i> Quick Actions</h5>
                 </div>
                 <div class="card-body">
-                    <div class="d-grid gap-2" style="grid-template-columns: repeat(3, 1fr);">
-                        <a asp-action="MenuItems" class="action-btn outline" style="text-align: center;">
-                            <i class="fas fa-plus" style="display: block; font-size: 1.5rem; margin-bottom: 0.5rem;"></i>
-                            Add Menu Item
-                        </a>
-                        <a asp-action="Orders" class="action-btn outline" style="text-align: center;">
-                            <i class="fas fa-list" style="display: block; font-size: 1.5rem; margin-bottom: 0.5rem;"></i>
-                            View Orders
-                        </a>
-                        <a asp-action="Users" class="action-btn outline" style="text-align: center;">
-                            <i class="fas fa-user-cog" style="display: block; font-size: 1.5rem; margin-bottom: 0.5rem;"></i>
-                            Manage Users
-                        </a>
-                        <a asp-action="Events" class="action-btn outline" style="text-align: center;">
-                            <i class="fas fa-calendar-star" style="display: block; font-size: 1.5rem; margin-bottom: 0.5rem;"></i>
-                            Event Manager
-                        </a>
+                    <div class="row g-3">
+                        <div class="col-6">
+                            <a asp-action="CreateMenuItem" class="quick-action-btn">
+                                <i class="fas fa-plus-circle"></i>
+                                <span>Add Menu Item</span>
+                            </a>
+                        </div>
+                        <div class="col-6">
+                            <a asp-action="Orders" class="quick-action-btn">
+                                <i class="fas fa-list-alt"></i>
+                                <span>View Orders</span>
+                            </a>
+                        </div>
+                        <div class="col-6">
+                            <a asp-action="Users" class="quick-action-btn">
+                                <i class="fas fa-user-cog"></i>
+                                <span>Manage Users</span>
+                            </a>
+                        </div>
+                        <div class="col-6">
+                            <a asp-action="Events" class="quick-action-btn">
+                                <i class="fas fa-calendar-star"></i>
+                                <span>Event Manager</span>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>

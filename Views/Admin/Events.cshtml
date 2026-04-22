@@ -3,78 +3,286 @@
     ViewData["Title"] = "Events";
 }
 
-<div class="page-header">
-    <h1>Events</h1>
-    <div class="divider"></div>
-    <a asp-action="CreateEvent" class="btn-primary" style="text-decoration: none; display: inline-block; margin-top: 1rem;">
-        + Add New Event
-    </a>
-</div>
+<style>
+    .admin-header {
+        background: linear-gradient(135deg, #2c1810 0%, #1a0f0a 50%, #0d0705 100%);
+        padding: 2.5rem;
+        margin-bottom: 2rem;
+        border-radius: 16px;
+        color: #fff;
+        box-shadow: 0 8px 32px rgba(44, 24, 16, 0.4);
+        border: 1px solid rgba(212, 175, 135, 0.2);
+    }
+    
+    .admin-header h1 {
+        font-family: 'Playfair Display', Georgia, serif;
+        font-size: 2rem;
+        font-weight: 400;
+        letter-spacing: 1px;
+    }
+    
+    .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+    
+    .page-header h1 {
+        font-family: 'Playfair Display', Georgia, serif;
+        font-size: 1.75rem;
+        margin: 0;
+    }
+    
+    .btn-primary {
+        background: linear-gradient(135deg, #2c1810 0%, #4a2c20 100%);
+        color: #fff;
+        padding: 0.75rem 1.5rem;
+        border-radius: 25px;
+        border: none;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+    
+    .btn-primary:hover {
+        background: linear-gradient(135deg, #4a2c20 0%, #2c1810 100%);
+        color: #fff;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(44, 24, 16, 0.3);
+    }
+    
+    .section-card {
+        background: #fff;
+        border: 1px solid #e8e0d8;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+    }
+    
+    .section-card .card-header {
+        background: linear-gradient(135deg, #2c1810 0%, #4a2c20 100%);
+        color: #fff;
+        border: none;
+        padding: 1.25rem 1.5rem;
+        font-family: 'Helvetica Neue', sans-serif;
+        letter-spacing: 1px;
+        font-size: 0.85rem;
+    }
+    
+    .data-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    
+    .data-table th {
+        background: #faf8f5;
+        color: #2c1810;
+        font-weight: 700;
+        padding: 1rem 1.25rem;
+        text-align: left;
+        border-bottom: 2px solid #2c1810;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+    
+    .data-table td {
+        padding: 1rem 1.25rem;
+        border-bottom: 1px solid #f0ebe5;
+        color: #4a4a4a;
+        vertical-align: middle;
+    }
+    
+    .data-table tr:hover {
+        background: #faf8f5;
+    }
+    
+    .event-image {
+        width: 60px;
+        height: 60px;
+        object-fit: cover;
+        border-radius: 8px;
+    }
+    
+    .event-image-placeholder {
+        width: 60px;
+        height: 60px;
+        background: #faf8f5;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #d4af87;
+    }
+    
+    .badge-status {
+        padding: 0.4rem 0.85rem;
+        border-radius: 20px;
+        font-size: 0.7rem;
+        font-weight: 600;
+    }
+    
+    .badge-active {
+        background: #e8f5e9;
+        color: #2e7d32;
+        border: 1px solid #a5d6a7;
+    }
+    
+    .badge-inactive {
+        background: #ffebee;
+        color: #c62828;
+        border: 1px solid #ef9a9a;
+    }
+    
+    .action-btn {
+        background: #2c1810;
+        color: #fff;
+        padding: 0.5rem 0.85rem;
+        border-radius: 20px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        font-size: 0.75rem;
+        font-weight: 500;
+    }
+    
+    .action-btn:hover {
+        background: #4a2c20;
+        color: #fff;
+    }
+    
+    .action-btn.edit {
+        background: transparent;
+        color: #2c1810;
+        border: 1px solid #2c1810;
+    }
+    
+    .action-btn.edit:hover {
+        background: #2c1810;
+        color: #fff;
+    }
+    
+    .action-btn.delete {
+        background: #c62828;
+        color: #fff;
+        border: 1px solid #c62828;
+    }
+    
+    .action-btn.delete:hover {
+        background: #b71c1c;
+    }
+    
+    .action-buttons {
+        display: flex;
+        gap: 0.5rem;
+    }
+    
+    .alert-success {
+        background: linear-gradient(135deg, #2c1810 0%, #4a2c20 100%);
+        color: #fff;
+        border: none;
+        border-radius: 12px;
+        padding: 1rem 1.5rem;
+        margin-bottom: 2rem;
+    }
+    
+    .alert-success .btn-close {
+        filter: invert(1);
+    }
+</style>
 
-<div class="container">
+<div class="container-fluid" style="padding: 2rem;">
+    <!-- Admin Header -->
+    <div class="admin-header">
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <h1><i class="fas fa-calendar-star" style="margin-right: 0.75rem; color: #d4af87;"></i> Events</h1>
+                <p style="margin: 0.5rem 0 0 0; opacity: 0.85; color: #d4af87; font-size: 0.95rem;">Manage your cafe events</p>
+            </div>
+            <div style="text-align: right;">
+                <p style="margin: 0; color: #d4af87;">@DateTime.Now.ToString("dddd, MMMM dd, yyyy")</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="page-header">
+        <h1><i class="fas fa-list" style="margin-right: 0.5rem; opacity: 0.7;"></i> Events</h1>
+        <a asp-action="CreateEvent" class="btn-primary">
+            <i class="fas fa-plus" style="margin-right: 0.5rem;"></i> Add New Event
+        </a>
+    </div>
+
     @if (TempData["Success"] != null)
     {
-        <div class="alert-success" style="padding: 1rem; margin-bottom: 2rem;">
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="fas fa-check-circle" style="margin-right: 0.5rem;"></i>
             @TempData["Success"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         </div>
     }
 
-    <div class="admin-card" style="padding: 0; overflow: hidden;">
-        <table class="table table-hover mb-0">
-            <thead>
-                <tr>
-                    <th style="width: 60px;">ID</th>
-                    <th>Image</th>
-                    <th>Title</th>
-                    <th>Schedule</th>
-                    <th>Time</th>
-                    <th>Status</th>
-                    <th style="width: 120px;">Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
+    <div class="section-card">
+        <div class="card-header">
+            <i class="fas fa-calendar" style="margin-right: 0.5rem;"></i> Upcoming Events
+        </div>
+        <div class="table-responsive">
+            <table class="data-table">
+                <thead>
                     <tr>
-                        <td>#@item.Id</td>
-                        <td>
-                            @if (!string.IsNullOrEmpty(item.ImagePath))
-                            {
-                                <img src="@item.ImagePath" alt="@item.Title" style="width: 60px; height: 60px; object-fit: cover; border-radius: 4px;" />
-                            }
-                            else
-                            {
-                                <div style="width: 60px; height: 60px; background: #f0f0f0; border-radius: 4px; display: flex; align-items: center; justify-content: center;">
-                                    <i class="fas fa-image" style="color: #ccc;"></i>
-                                </div>
-                            }
-                        </td>
-                        <td><strong>@item.Title</strong></td>
-                        <td>@item.Schedule</td>
-                        <td>@item.Time</td>
-                        <td>
-                            @if (item.IsActive)
-                            {
-                                <span style="background: #28a745; color: white; padding: 0.3em 0.8em; font-size: 0.75rem;">Active</span>
-                            }
-                            else
-                            {
-                                <span style="background: #dc3545; color: white; padding: 0.3em 0.8em; font-size: 0.75rem;">Inactive</span>
-                            }
-                        </td>
-                        <td>
-                            <div style="display: flex; gap: 0.5rem;">
-                                <a asp-action="EditEvent" asp-route-id="@item.Id" style="color: #0a0a0a; padding: 0.4rem 0.8rem; border: 1px solid #ddd; font-size: 0.8rem;" title="Edit">
-                                    <i class="fas fa-edit"></i>
-                                </a>
-                                <a asp-action="DeleteEvent" asp-route-id="@item.Id" style="color: #fff; background: #0a0a0a; padding: 0.4rem 0.8rem; border: 1px solid #0a0a0a; font-size: 0.8rem;" title="Delete">
-                                    <i class="fas fa-trash"></i>
-                                </a>
-                            </div>
-                        </td>
+                        <th style="width: 60px;">ID</th>
+                        <th>Image</th>
+                        <th>Title</th>
+                        <th>Schedule</th>
+                        <th>Time</th>
+                        <th>Status</th>
+                        <th style="width: 120px;">Actions</th>
                     </tr>
-                }
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td><span style="color: #8d6e63; font-weight: 600;">#</span>@item.Id</td>
+                            <td>
+                                @if (!string.IsNullOrEmpty(item.ImagePath))
+                                {
+                                    <img src="@item.ImagePath" alt="@item.Title" class="event-image" />
+                                }
+                                else
+                                {
+                                    <div class="event-image-placeholder">
+                                        <i class="fas fa-image"></i>
+                                    </div>
+                                }
+                            </td>
+                            <td><strong style="color: #2c1810;">@item.Title</strong></td>
+                            <td>@item.Schedule</td>
+                            <td>@item.Time</td>
+                            <td>
+                                @if (item.IsActive)
+                                {
+                                    <span class="badge-status badge-active">Active</span>
+                                }
+                                else
+                                {
+                                    <span class="badge-status badge-inactive">Inactive</span>
+                                }
+                            </td>
+                            <td>
+                                <div class="action-buttons">
+                                    <a asp-action="EditEvent" asp-route-id="@item.Id" class="action-btn edit" title="Edit">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <a asp-action="DeleteEvent" asp-route-id="@item.Id" class="action-btn delete" title="Delete">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
