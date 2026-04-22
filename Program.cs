@@ -5,6 +5,18 @@ using System.Text.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Disable file watching in production to avoid inotify limit
+if (!builder.Environment.IsDevelopment())
+{
+    builder.Host.ConfigureAppConfiguration((hostingContext, config) =>
+    {
+        config.Sources.Clear();
+        config.AddJsonFile("appsettings.json", optional: false, reloadOnChange: false)
+              .AddJsonFile($"appsettings.{hostingContext.HostingEnvironment.EnvironmentName}.json", optional: true, reloadOnChange: false)
+              .AddEnvironmentVariables();
+    });
+}
+
 builder.Services.AddControllersWithViews();
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
