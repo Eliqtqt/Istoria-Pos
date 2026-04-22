@@ -17,7 +17,8 @@ Console.WriteLine($"[DEBUG] Has DATABASE_URL: {hasEnvVar}");
 
 if (hasEnvVar)
 {
-    connectionString = envConnection;
+    // Convert postgresql:// to postgres:// for Npgsql
+    connectionString = envConnection.Replace("postgresql://", "postgres://");
 }
 else if (string.IsNullOrEmpty(connectionString) || connectionString.StartsWith("${") || connectionString.StartsWith("{"))
 {
