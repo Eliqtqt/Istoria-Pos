@@ -11,6 +11,7 @@ if (!builder.Environment.IsDevelopment())
     builder.Host.ConfigureAppConfiguration((hostingContext, config) =>
     {
         config.Sources.Clear();
+        config.AddCommandLine(args);
         config.AddJsonFile("appsettings.json", optional: false, reloadOnChange: false)
               .AddJsonFile($"appsettings.{hostingContext.HostingEnvironment.EnvironmentName}.json", optional: true, reloadOnChange: false)
               .AddEnvironmentVariables();
