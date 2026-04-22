@@ -1,4 +1,5 @@
 using CafeWebsite.Models;
+using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -13,19 +14,20 @@ namespace CafeWebsite.Data
             return Convert.ToBase64String(hashedBytes);
         }
 
-        public static void Initialize(CafeDbContext context)
+        public static async Task InitializeAsync(CafeDbContext context)
         {
             try
             {
-                context.Database.EnsureCreated();
+                await context.Database.EnsureCreatedAsync();
             }
-            catch
+            catch (Exception ex)
             {
-                // Database already exists, ignore error
+                Console.WriteLine($"[DB Init] Error creating DB: {ex.Message}");
             }
 
             // Create admin user if not exists
-            if (!context.Users.Any(u => u.Username == "admin"))
+            var adminExists = await context.Users.AnyAsync(u => u.Username == "admin");
+            if (!adminExists)
             {
                 var adminUser = new User
                 {
@@ -35,11 +37,14 @@ namespace CafeWebsite.Data
                     Role = "Admin"
                 };
                 context.Users.Add(adminUser);
+                await context.SaveChangesAsync();
+                Console.WriteLine("[DB Init] Admin user created");
             }
 
-            if (context.MenuItems.Any())
+            var hasMenuItems = await context.MenuItems.AnyAsync();
+            if (hasMenuItems)
             {
-                context.SaveChanges();
+                Console.WriteLine("[DB Init] Menu already seeded");
                 return; // DB has been seeded
             }
 
@@ -148,7 +153,8 @@ namespace CafeWebsite.Data
                 context.MenuItems.Add(item);
             }
 
-            context.SaveChanges();
+            await context.SaveChangesAsync();
+            Console.WriteLine("[DB Init] Menu items seeded");
         }
     }
 }

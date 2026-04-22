@@ -85,8 +85,9 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.AccessDeniedPath = "/Account/AccessDenied";
         options.Cookie.Name = "IstoriaApp";
         options.Cookie.HttpOnly = true;
-        options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
+        options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
         options.Cookie.SameSite = SameSiteMode.Lax;
+        options.SlidingExpiration = true;
     });
 
 var app = builder.Build();
@@ -94,7 +95,7 @@ var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
-    DbInitializer.Initialize(services.GetRequiredService<CafeDbContext>());
+    await DbInitializer.InitializeAsync(services.GetRequiredService<CafeDbContext>());
 }
 
 if (!app.Environment.IsDevelopment())
