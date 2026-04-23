@@ -166,8 +166,8 @@ p, a, span, div {
 .hero-section .hero-content {
     position: relative;
     z-index: 2;
-    padding: 6rem 3rem 3rem;
-    max-width: 800px;
+    padding: 4.5rem 2.25rem 2.25rem;
+    max-width: 600px;
 }
 
 .hero-section h1 {
