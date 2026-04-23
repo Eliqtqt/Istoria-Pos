@@ -47,7 +47,7 @@
                           item.Category.ToLower() == "specials" || item.Category.ToLower() == "latte" ||
                           item.Category.ToLower() == "tea" || item.Category.ToLower() == "frappe" || 
                           item.Category.ToLower() == "milk tea";
-            
+             
             <div class="menu-card" data-category="@item.Category.ToLower()">
                 <!-- Card Image -->
                 <div class="card-image">
@@ -72,20 +72,20 @@
                         </div>
                     }
                     <span class="category-badge">@item.Category</span>
-                    
+                     
                     <!-- Overlay Content -->
                     <div class="card-overlay">
                         <div class="overlay-content">
                             <h3 class="product-name">@item.Name</h3>
                             <p class="product-description">@item.Description</p>
-                            
+                             
                             @if (item.Rating > 0)
                             {
                                 <div class="rating-wrapper">
                                     <div class="stars">
                                         @for (int i = 1; i <= 5; i++)
                                         {
-                                            <i class="fas fa-star" style="color: @(i <= item.Rating ? "#fff" : "#rgba(255,255,255,0.4)")"></i>
+                                            <i class="fas fa-star" style="color: @(i <= item.Rating ? "#fff" : "rgba(255,255,255,0.4)")"></i>
                                         }
                                     </div>
                                     <span class="rating-value">@item.Rating.ToString("F1")</span>
@@ -279,31 +279,44 @@
 /* Menu Container */
 .menu-container {
     background: #f7f4ef;
-    padding: 3rem 2rem 4rem;
+    padding: 4rem 2rem;
     min-height: 100vh;
+    position: relative;
 }
 
-/* Category Tabs */
+/* Add subtle pattern or texture for café feel */
+.menu-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,%3Csvg width=%2220%22 height=%2220%22 viewBox=%220 0 20 20%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cg fill=%22%239C9C9C%22 fill-opacity=%220.05%22 fill-rule=%22evenodd%22%3E%3Ccircle cx=%220%22 cy=%220%22 r=%221%22/%3E%3C/g%3E%3C/svg%3E');
+}
+
+/* Category Tabs - Enhanced for Café */
 .category-tabs {
     display: flex;
     justify-content: center;
     gap: 0.5rem;
-    padding: 1.25rem 2rem;
+    padding: 1.5rem 2rem;
     background: #fff;
-    border-bottom: 2px solid #e5e0d8;
-    margin-bottom: 2.5rem;
+    border-bottom: 1px solid #e5e0d8;
+    margin-bottom: 3rem;
     max-width: 100%;
     margin-left: auto;
     margin-right: auto;
     overflow-x: auto;
+    flex-wrap: wrap;
 }
 
 .tab-btn {
     background: transparent;
-    border: none;
+    border: 2px solid transparent;
     color: #666;
-    padding: 0.5rem 0.8rem;
-    font-size: 0.75rem;
+    padding: 0.75rem 1.5rem;
+    font-size: 0.85rem;
     font-weight: 500;
     letter-spacing: 0.5px;
     text-transform: uppercase;
@@ -311,12 +324,13 @@
     transition: all 0.3s ease;
     position: relative;
     white-space: nowrap;
+    border-radius: 50px;
 }
 
 .tab-btn::after {
     content: '';
     position: absolute;
-    bottom: 0;
+    bottom: -2px;
     left: 50%;
     transform: translateX(-50%);
     width: 0;
@@ -327,11 +341,13 @@
 
 .tab-btn:hover {
     color: #333;
+    background: rgba(0,0,0,0.02);
 }
 
 .tab-btn.active {
     color: #0a0a0a;
     font-weight: 600;
+    border-color: #0a0a0a;
 }
 
 .tab-btn.active::after {
@@ -347,21 +363,41 @@
     margin: 0 auto;
 }
 
-/* Menu Card */
+/* Menu Card - Enhanced for Café */
 .menu-card {
     background: #fff;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-    transition: all 0.3s ease;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    transition: all 0.4s ease;
     overflow: hidden;
+    border: 1px solid rgba(0,0,0,0.03);
+    position: relative;
 }
 
 .menu-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+    transform: translateY(-12px);
+    box-shadow: 0 16px 40px rgba(0,0,0,0.12);
+    border-color: rgba(0,0,0,0.08);
 }
 
-/* Card Image */
+/* Add subtle hover effect to card */
+.menu-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, transparent, #0a0a0a, transparent);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.menu-card:hover::before {
+    opacity: 0.3;
+}
+
+/* Card Image - Enhanced for Café */
 .card-image {
     position: relative;
     aspect-ratio: 1/1;
@@ -377,11 +413,30 @@
     height: 100%;
     object-fit: contain;
     object-position: center;
-    transition: transform 0.3s ease;
+    transition: transform 0.5s ease, filter 0.3s ease;
+    filter: brightness(0.98) contrast(1.02);
 }
 
 .menu-card:hover .card-image img {
-    transform: scale(1.1);
+    transform: scale(1.05);
+    filter: brightness(1) contrast(1.05);
+}
+
+/* Add subtle overlay effect on hover */
+.card-image::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.03));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.menu-card:hover .card-image::after {
+    opacity: 0.5;
 }
 
 .image-placeholder {
@@ -398,6 +453,7 @@
     font-size: 0.9rem;
     letter-spacing: 2px;
     text-transform: uppercase;
+    font-weight: 500;
 }
 
 .category-badge {
