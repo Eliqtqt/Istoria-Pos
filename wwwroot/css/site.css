@@ -162,14 +162,15 @@ body {
 
 /* Hero Section - Full Width Modern Design */
 .hero-section {
-   min-height: 70vh;
-   display: flex;
-   align-items: center;
-   background: url('/Images/logo.jpg') center center / cover no-repeat;
-   background-attachment: fixed;
-   position: relative;
-   overflow: hidden;
-   width: 100%;
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    background: url('/Images/logo.jpg') center center / cover no-repeat;
+    background-attachment: fixed;
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    padding-top: 4.5rem; /* To account for fixed navbar */
 }
 
 .hero-overlay {
@@ -690,11 +691,16 @@ body {
   .navbar {
     padding: 1rem;
     background: rgba(255, 255, 255, 0.98) !important;
-    position: absolute;
+    position: fixed;
   }
-  
+
+  body {
+    padding-top: 3.5rem; /* Smaller height for mobile navbar */
+  }
+
   .hero-section {
     min-height: 100vh;
+    padding-top: 3.5rem; /* To account for fixed navbar on mobile */
   }
   
   .hero-section .hero-content {
