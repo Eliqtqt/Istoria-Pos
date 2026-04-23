@@ -57,13 +57,32 @@ p, a, span, div {
 /* Navigation - Minimalist Top Bar */
 .navbar {
   background: rgba(255, 255, 255, 0.95) !important;
-  position: absolute;
+  position: fixed;
   width: 100%;
   top: 0;
   z-index: 1000;
   padding: 1.5rem 3rem;
   backdrop-filter: blur(10px);
   transition: all 0.3s ease;
+}
+
+/* Fix for fixed navbar - add top padding to body */
+body {
+  padding-top: 4.5rem; /* Approximate height of navbar */
+}
+
+/* Mobile Navigation Fix */
+@media (max-width: 768px) {
+  .navbar {
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.98) !important;
+    position: fixed;
+  }
+  
+  /* Adjust body padding for mobile */
+  body {
+    padding-top: 3.5rem; /* Smaller height for mobile navbar */
+  }
 }
 
 .navbar-brand {
