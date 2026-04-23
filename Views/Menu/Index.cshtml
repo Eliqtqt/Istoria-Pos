@@ -37,92 +37,93 @@
         <div class="alert-box">
             @TempData["Success"]
         </div>
-    }
+     }
+ 
+     <!-- Menu Grid -->
+     <div class="menu-grid">
+         @foreach (var item in Model)
+         {
+              var isDrink = item.Category.ToLower() == "coffee" || item.Category.ToLower() == "non-coffee" || 
+                            item.Category.ToLower() == "specials" || item.Category.ToLower() == "latte" ||
+                            item.Category.ToLower() == "tea" || item.Category.ToLower() == "frappe" || 
+                            item.Category.ToLower() == "milk tea";
+              
+               <div class="menu-card" data-category="@item.Category.ToLower()">
+                  <!-- Card Image -->
+                  <div class="card-image">
+                      @if (!string.IsNullOrEmpty(item.ImageUrl) && item.ImageUrl.StartsWith("http"))
+                      {
+                          <img src="@item.ImageUrl" alt="@item.Name" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                          <div class="image-placeholder" style="display:none;">
+                              <span>Image</span>
+                          </div>
+                      }
+                      else if (!string.IsNullOrEmpty(item.ImageUrl))
+                      {
+                          <img src="@item.ImageUrl" alt="@item.Name" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                          <div class="image-placeholder" style="display:none;">
+                              <span>Image</span>
+                          </div>
+                      }
+                      else
+                      {
+                          <div class="image-placeholder">
+                              <span>No Image</span>
+                          </div>
+                      }
+                      <span class="category-badge">@item.Category</span>
+                  </div>
+                  
+                  <!-- Product Info (always visible) -->
+                  <div class="product-info">
+                      <div class="overlay-content">
+                          <h3 class="product-name">@item.Name</h3>
+                          <p class="product-description">@item.Description</p>
+                           
+                          @if (item.Rating > 0)
+                          {
+                              <div class="rating-wrapper">
+                                  <div class="stars">
+                                      @for (int i = 1; i <= 5; i++)
+                                      {
+                                          <i class="fas fa-star" style="color: @(i <= item.Rating ? "#fff" : "rgba(255,255,255,0.4)")"></i>
+                                      }
+                                  </div>
+                                  <span class="rating-value">@item.Rating.ToString("F1")</span>
+                              </div>
+                          }
 
-    <!-- Menu Grid -->
-    <div class="menu-grid">
-        @foreach (var item in Model)
-        {
-            var isDrink = item.Category.ToLower() == "coffee" || item.Category.ToLower() == "non-coffee" || 
-                          item.Category.ToLower() == "specials" || item.Category.ToLower() == "latte" ||
-                          item.Category.ToLower() == "tea" || item.Category.ToLower() == "frappe" || 
-                          item.Category.ToLower() == "milk tea";
-             
-             <div class="menu-card" data-category="@item.Category.ToLower()">
-                 <!-- Card Image -->
-                 <div class="card-image">
-                     @if (!string.IsNullOrEmpty(item.ImageUrl) && item.ImageUrl.StartsWith("http"))
-                     {
-                         <img src="@item.ImageUrl" alt="@item.Name" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                         <div class="image-placeholder" style="display:none;">
-                             <span>Image</span>
-                         </div>
-                     }
-                     else if (!string.IsNullOrEmpty(item.ImageUrl))
-                     {
-                         <img src="@item.ImageUrl" alt="@item.Name" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                         <div class="image-placeholder" style="display:none;">
-                             <span>Image</span>
-                         </div>
-                     }
-                     else
-                     {
-                         <div class="image-placeholder">
-                             <span>No Image</span>
-                         </div>
-                     }
-                     <span class="category-badge">@item.Category</span>
-                 </div>
-                 
-                 <!-- Product Info (visible by default) -->
-                 <div class="product-info">
-                     <div class="overlay-content">
-                         <h3 class="product-name">@item.Name</h3>
-                         <p class="product-description">@item.Description</p>
-                          
-                         @if (item.Rating > 0)
-                         {
-                             <div class="rating-wrapper">
-                                 <div class="stars">
-                                     @for (int i = 1; i <= 5; i++)
-                                     {
-                                         <i class="fas fa-star" style="color: @(i <= item.Rating ? "#fff" : "rgba(255,255,255,0.4)")"></i>
-                                     }
-                                 </div>
-                                 <span class="rating-value">@item.Rating.ToString("F1")</span>
-                             </div>
-                         }
-
-                         <div class="card-footer">
-                             <span class="price">&#8369;@item.Price.ToString("F2")</span>
-                             <div class="card-buttons">
-                                 @if (isDrink)
-                                 {
-                                     <button type="button" class="btn-customize" onclick="openCustomizeModal(@item.Id, &quot;@item.Name&quot;, @item.Price, true)">
-                                         Customize
-                                     </button>
-                                 }
-                                 else
-                                 {
-                                     <form asp-controller="Cart" asp-action="Add" method="post">
-                                         <input type="hidden" name="id" value="@item.Id" />
-                                         <input type="hidden" name="name" value="@item.Name" />
-                                         <input type="hidden" name="price" value="@item.Price" />
-                                         <input type="hidden" name="quantity" value="1" />
-                                         <button type="submit" class="btn-add">
-                                             <i class="fas fa-plus"></i> Add
-                                         </button>
-                                     </form>
-                                 }
-                                 <a href="@Url.Action("Details", "Menu", new { id = item.Id })" class="btn-view">
-                                     View
-                                 </a>
-                             </div>
-                         </div>
-                 </div>
-             </div>
-        }
-    </div>
+                          <div class="card-footer">
+                              <span class="price">&#8369;@item.Price.ToString("F2")</span>
+                              <div class="card-buttons">
+                                  @if (isDrink)
+                                  {
+                                      <button type="button" class="btn-customize" onclick="openCustomizeModal(@item.Id, &quot;@item.Name&quot;, @item.Price, true)">
+                                          Customize
+                                      </button>
+                                  }
+                                  else
+                                  {
+                                      <form asp-controller="Cart" asp-action="Add" method="post">
+                                          <input type="hidden" name="id" value="@item.Id" />
+                                          <input type="hidden" name="name" value="@item.Name" />
+                                          <input type="hidden" name="price" value="@item.Price" />
+                                          <input type="hidden" name="quantity" value="1" />
+                                          <button type="submit" class="btn-add">
+                                              <i class="fas fa-plus"></i> Add
+                                          </button>
+                                      </form>
+                                  }
+                                  <a href="@Url.Action("Details", "Menu", new { id = item.Id })" class="btn-view">
+                                      View
+                                  </a>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+         }
+     </div>
 </div>
 
 <!-- Customization Modal -->
