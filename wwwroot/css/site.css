@@ -143,14 +143,14 @@ p, a, span, div {
 
 /* Hero Section - Full Width Modern Design */
 .hero-section {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  background: url('/Images/logo.jpg') center center / cover no-repeat;
-  background-attachment: fixed;
-  position: relative;
-  overflow: hidden;
-  width: 100%;
+   min-height: 70vh;
+   display: flex;
+   align-items: center;
+   background: url('/Images/logo.jpg') center center / cover no-repeat;
+   background-attachment: fixed;
+   position: relative;
+   overflow: hidden;
+   width: 100%;
 }
 
 .hero-overlay {
