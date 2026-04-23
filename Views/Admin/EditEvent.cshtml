@@ -3,94 +3,289 @@
     ViewData["Title"] = "Edit Event";
 }
 
-<div class="page-header">
-    <h1>Edit Event</h1>
-    <div class="divider"></div>
-</div>
+<style>
+    .admin-header {
+        background: linear-gradient(135deg, #000 0%, #1a0f0a 50%, #0d0705 100%);
+        padding: 3rem;
+        margin-bottom: 2.5rem;
+        border-radius: 16px;
+        color: #fff;
+        box-shadow: 0 8px 32px rgba(44, 24, 16, 0.4);
+        border: 1px solid rgba(212, 175, 135, 0.2);
+    }
+    
+    .admin-header h1 {
+        font-family: 'Playfair Display', Georgia, serif;
+        font-size: 1.75rem;
+        margin: 0;
+    }
+    
+    .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+    
+    .page-header h1 {
+        font-family: 'Playfair Display', Georgia, serif;
+        font-size: 1.75rem;
+        margin: 0;
+    }
+    
+    .divider {
+        width: 60px;
+        height: 1px;
+        background: #000;
+        margin: 0 auto 1rem;
+    }
+    
+    .btn-primary {
+        background: linear-gradient(135deg, #000 0%, #333 100%);
+        color: #fff;
+        padding: 0.85rem 2rem;
+        border-radius: 25px;
+        border: none;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        font-size: 0.9rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    
+    .btn-primary:hover {
+        background: linear-gradient(135deg, #333 0%, #000 100%);
+        color: #fff;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(44, 24, 16, 0.3);
+    }
+    
+    .btn-outline {
+        background: transparent;
+        color: #000;
+        padding: 0.85rem 2rem;
+        border: 1px solid #000;
+        border-radius: 25px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        font-weight: 500;
+        font-size: 0.9rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    
+    .btn-outline:hover {
+        background: #000;
+        color: #fff;
+    }
+    
+    .form-card {
+        background: #fff;
+        border: 1px solid #e8e0d8;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+    }
+    
+    .form-card .card-header {
+        background: linear-gradient(135deg, #000 0%, #333 100%);
+        color: #fff;
+        padding: 1.25rem 1.5rem;
+        font-size: 0.9rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    
+    .form-card .card-body {
+        padding: 2rem;
+    }
+    
+    .form-label-custom {
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-size: 0.75rem;
+        color: #000;
+        margin-bottom: 0.75rem;
+        display: block;
+    }
+    
+    .form-control-custom {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        border: 1px solid #e8e0d8;
+        border-radius: 12px;
+        background: #faf8f5;
+        color: #000;
+        font-size: 0.95rem;
+        transition: all 0.3s ease;
+    }
+    
+    .form-control-custom:focus {
+        outline: none;
+        border-color: #000;
+        box-shadow: 0 0 0 3px rgba(44, 24, 16, 0.1);
+    }
+    
+    .help-text {
+        color: #666;
+        font-size: 0.75rem;
+        margin-top: 0.5rem;
+    }
+    
+    .alert-error {
+        background: linear-gradient(135deg, #c62828 0%, #b71c1c 100%);
+        color: #fff;
+        border: none;
+        border-radius: 12px;
+        padding: 1.25rem 1.5rem;
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    
+    .alert-success {
+        background: linear-gradient(135deg, #000 0%, #333 100%);
+        color: #fff;
+        border: none;
+        border-radius: 12px;
+        padding: 1.25rem 1.5rem;
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    
+    .form-check-custom {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.75rem 0;
+    }
+    
+    .form-check-custom input {
+        width: 18px;
+        height: 18px;
+        accent-color: #000;
+    }
+    
+    .form-check-custom label {
+        color: #000;
+        font-weight: 500;
+    }
+</style>
 
-<div class="container">
+<div class="container-fluid" style="padding: 2.5rem 2rem;">
+    <!-- Header -->
+    <div class="admin-header">
+        <div class="d-flex justify-content-between align-items-center">
+            <h1><i class="fas fa-calendar-edit" style="margin-right: 0.75rem; color: #ccc;"></i> Edit Event</h1>
+        </div>
+    </div>
+
     @if (TempData["Error"] != null)
     {
-        <div class="alert-danger" style="padding: 1rem; margin-bottom: 2rem;">@TempData["Error"]</div>
+        <div class="alert-error">
+            <i class="fas fa-exclamation-circle"></i>
+            @TempData["Error"]
+        </div>
     }
     @if (TempData["Success"] != null)
     {
-        <div class="alert-success" style="padding: 1rem; margin-bottom: 2rem;">@TempData["Success"]</div>
+        <div class="alert-success">
+            <i class="fas fa-check-circle"></i>
+            @TempData["Success"]
+        </div>
     }
 
-    <div class="admin-card">
-        <form asp-action="EditEvent" method="post" enctype="multipart/form-data">
-            @Html.AntiForgeryToken()
-            <input type="hidden" asp-for="Id" />
-            <div class="row">
-                <div class="col-md-6 mb-4">
-                    <label for="Title" class="form-label" style="font-weight: 500; text-transform: uppercase; letter-spacing: 1px; font-size: 0.8rem;">Title *</label>
-                    <input type="text" id="Title" name="Title" class="form-control" required style="border: none; border-bottom: 1px solid #ddd; border-radius: 0; padding: 0.8rem 0;" value="@Model.Title" />
+    <div class="form-card">
+        <div class="card-header">
+            <i class="fas fa-calendar-alt"></i> Edit "@Model.Title"
+        </div>
+        <div class="card-body">
+            <form asp-action="EditEvent" method="post" enctype="multipart/form-data">
+                @Html.AntiForgeryToken()
+                <input type="hidden" asp-for="Id" />
+                <div class="row">
+                    <div class="col-md-6 mb-4">
+                        <label for="Title" class="form-label-custom">Title *</label>
+                        <input type="text" id="Title" name="Title" class="form-control-custom" required placeholder="Enter event title" value="@Model.Title" />
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <label for="Icon" class="form-label-custom">Icon</label>
+                        <select id="Icon" name="Icon" class="form-control-custom">
+                            <option value="fa-calendar" selected="@(Model.Icon == "fa-calendar")">Calendar</option>
+                            <option value="fa-coffee" selected="@(Model.Icon == "fa-coffee")">Coffee</option>
+                            <option value="fa-music" selected="@(Model.Icon == "fa-music")">Music</option>
+                            <option value="fa-leaf" selected="@(Model.Icon == "fa-leaf")">Leaf</option>
+                            <option value="fa-birthday-cake" selected="@(Model.Icon == "fa-birthday-cake")">Birthday</option>
+                            <option value="fa-laptop" selected="@(Model.Icon == "fa-laptop")">Laptop</option>
+                            <option value="fa-palette" selected="@(Model.Icon == "fa-palette")">Art</option>
+                            <option value="fa-users" selected="@(Model.Icon == "fa-users")">Group</option>
+                            <option value="fa-glass-cheers" selected="@(Model.Icon == "fa-glass-cheers")">Cheers</option>
+                            <option value="fa-book" selected="@(Model.Icon == "fa-book")">Book</option>
+                        </select>
+                    </div>
                 </div>
-                <div class="col-md-6 mb-4">
-                    <label for="Icon" class="form-label" style="font-weight: 500; text-transform: uppercase; letter-spacing: 1px; font-size: 0.8rem;">Icon Class</label>
-                    <select id="Icon" name="Icon" class="form-select" style="border: none; border-bottom: 1px solid #ddd; border-radius: 0;">
-                        <option value="fa-calendar" selected="@(Model.Icon == "fa-calendar")">Calendar</option>
-                        <option value="fa-coffee" selected="@(Model.Icon == "fa-coffee")">Coffee</option>
-                        <option value="fa-music" selected="@(Model.Icon == "fa-music")">Music</option>
-                        <option value="fa-leaf" selected="@(Model.Icon == "fa-leaf")">Leaf</option>
-                        <option value="fa-birthday-cake" selected="@(Model.Icon == "fa-birthday-cake")">Birthday</option>
-                        <option value="fa-laptop" selected="@(Model.Icon == "fa-laptop")">Laptop</option>
-                        <option value="fa-palette" selected="@(Model.Icon == "fa-palette")">Art</option>
-                        <option value="fa-users" selected="@(Model.Icon == "fa-users")">Group</option>
-                        <option value="fa-glass-cheers" selected="@(Model.Icon == "fa-glass-cheers")">Cheers</option>
-                        <option value="fa-book" selected="@(Model.Icon == "fa-book")">Book</option>
-                    </select>
-                </div>
-            </div>
 
-            <div class="mb-4">
-                <label for="Description" class="form-label" style="font-weight: 500; text-transform: uppercase; letter-spacing: 1px; font-size: 0.8rem;">Description *</label>
-                <textarea id="Description" name="Description" class="form-control" rows="4" required style="border: none; border-bottom: 1px solid #ddd; border-radius: 0;">@Model.Description</textarea>
-            </div>
-
-            <div class="row">
-                <div class="col-md-6 mb-4">
-                    <label for="Schedule" class="form-label" style="font-weight: 500; text-transform: uppercase; letter-spacing: 1px; font-size: 0.8rem;">Schedule</label>
-                    <input type="text" id="Schedule" name="Schedule" class="form-control" placeholder="e.g., Every Saturday" style="border: none; border-bottom: 1px solid #ddd; border-radius: 0; padding: 0.8rem 0;" value="@Model.Schedule" />
+                <div class="mb-4">
+                    <label for="Description" class="form-label-custom">Description *</label>
+                    <textarea id="Description" name="Description" class="form-control-custom" rows="4" required placeholder="Describe your event...">@Model.Description</textarea>
                 </div>
-                <div class="col-md-6 mb-4">
-                    <label for="Time" class="form-label" style="font-weight: 500; text-transform: uppercase; letter-spacing: 1px; font-size: 0.8rem;">Time</label>
-                    <input type="text" id="Time" name="Time" class="form-control" placeholder="e.g., 10:00 AM - 12:00 PM" style="border: none; border-bottom: 1px solid #ddd; border-radius: 0; padding: 0.8rem 0;" value="@Model.Time" />
-                </div>
-            </div>
 
-            <div class="mb-4">
-                <label for="ImageFile" class="form-label" style="font-weight: 500; text-transform: uppercase; letter-spacing: 1px; font-size: 0.8rem;">Event Image</label>
-                @if (!string.IsNullOrEmpty(Model.ImagePath))
-                {
-                    <div style="margin-bottom: 1rem;">
-                        <img src="@Model.ImagePath" alt="Current Image" style="max-width: 200px; border-radius: 4px;" />
-                        <div style="margin-top: 0.5rem;">
-                            <input type="checkbox" id="keepImage" name="keepImage" value="true" checked />
-                            <label for="keepImage">Keep current image</label>
+                <div class="row">
+                    <div class="col-md-6 mb-4">
+                        <label for="Schedule" class="form-label-custom">Schedule</label>
+                        <input type="text" id="Schedule" name="Schedule" class="form-control-custom" placeholder="e.g., Every Saturday" value="@Model.Schedule" />
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <label for="Time" class="form-label-custom">Time</label>
+                        <input type="text" id="Time" name="Time" class="form-control-custom" placeholder="e.g., 10:00 AM - 12:00 PM" value="@Model.Time" />
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <label for="ImageFile" class="form-label-custom">Event Image</label>
+                    @if (!string.IsNullOrEmpty(Model.ImagePath))
+                    {
+                        <div style="margin-bottom: 1rem;">
+                            <img src="@Model.ImagePath" alt="Current Image" style="max-width: 200px; border-radius: 4px;" />
+                            <div style="margin-top: 0.5rem;">
+                                <div class="form-check-custom">
+                                    <input type="checkbox" id="keepImage" name="keepImage" value="true" checked />
+                                    <label for="keepImage">Keep current image</label>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    <input type="file" id="ImageFile" name="ImageFile" class="form-control-custom" accept="image/*" />
+                    <div class="help-text">Supported formats: JPG, PNG, GIF, WebP</div>
+                </div>
+
+                <div class="row mb-4">
+                    <div class="col-md-12">
+                        <div class="form-check-custom">
+                            <input type="checkbox" id="IsActive" name="IsActive" value="true" checked="@Model.IsActive" />
+                            <label for="IsActive">Active (Show on website)</label>
                         </div>
                     </div>
-                }
-                <input type="file" id="ImageFile" name="ImageFile" class="form-control" accept="image/*" style="border: none; border-bottom: 1px solid #ddd; border-radius: 0; padding: 0.8rem 0;" />
-                <small style="color: #888; font-size: 0.8rem;">Supported formats: JPG, PNG, GIF, WebP</small>
-            </div>
-
-            <div class="row mb-4">
-                <div class="col-md-12">
-                    <div class="form-check">
-                        <input type="checkbox" id="IsActive" name="IsActive" class="form-check-input" value="true" checked="@Model.IsActive" style="accent-color: #0a0a0a;" />
-                        <label for="IsActive" class="form-check-label" style="margin-left: 0.5rem;">Active (Show on website)</label>
-                    </div>
                 </div>
-            </div>
 
-            <div style="display: flex; gap: 1rem; margin-top: 2rem;">
-                <button type="submit" class="btn-primary" style="padding: 1rem 3rem;">Update Event</button>
-                <a asp-action="Events" class="btn-outline" style="text-decoration: none; padding: 1rem 2rem;">
-                    ← Back to List
-                </a>
-            </div>
-        </form>
+                <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                    <button type="submit" class="btn-primary">
+                        <i class="fas fa-save" style="margin-right: 0.5rem;"></i> Update Event
+                    </button>
+                    <a asp-action="Events" class="btn-outline">
+                        <i class="fas fa-arrow-left" style="margin-right: 0.5rem;"></i> Back to List
+                    </a>
+                </div>
+            </form>
+        </div>
     </div>
 </div>

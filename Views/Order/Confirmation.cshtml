@@ -79,49 +79,57 @@
     .confirmation-container {
         max-width: 700px;
         margin: 0 auto;
-        padding: 3rem 1rem;
+        padding: 4rem 1.5rem;
     }
 
     .confirmation-content {
         background: white;
-        border-radius: 8px;
+        border-radius: 12px;
         box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-        padding: 3rem;
+        padding: 4rem;
         text-align: center;
     }
 
     .success-icon {
-        margin-bottom: 1.5rem;
+        margin-bottom: 2rem;
     }
 
     .success-icon i {
-        font-size: 4rem;
+        font-size: 5rem;
         color: #28a745;
     }
 
     .confirmation-content h1 {
         font-family: 'Playfair Display', serif;
         color: #1a1a1a;
-        margin-bottom: 0.5rem;
+        margin-bottom: 0.75rem;
+        font-size: 2.5rem;
     }
 
     .order-number {
-        font-size: 1.25rem;
+        font-size: 1.5rem;
         color: #666;
-        margin-bottom: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .divider {
+        width: 60px;
+        height: 2px;
+        background: #0a0a0a;
+        margin: 0 auto 2rem;
     }
 
     .order-details {
         background: #f8f8f8;
-        padding: 1.5rem;
-        border-radius: 8px;
-        margin: 1.5rem 0;
+        padding: 2rem;
+        border-radius: 12px;
+        margin: 2rem 0;
     }
 
     .detail-row {
         display: flex;
         justify-content: space-between;
-        padding: 0.5rem 0;
+        padding: 0.85rem 0;
         border-bottom: 1px solid #eee;
     }
 
@@ -131,12 +139,70 @@
 
     .status-badge {
         display: inline-block;
-        padding: 0.25rem 0.75rem;
+        padding: 0.4rem 1rem;
         background: #ffc107;
         color: #333;
         border-radius: 20px;
-        font-size: 0.875rem;
+        font-size: 0.9rem;
         font-weight: 600;
+    }
+
+    .order-items {
+        margin: 2.5rem 0;
+        text-align: left;
+    }
+
+    .order-items h3 {
+        margin-bottom: 1.25rem;
+        color: #1a1a1a;
+    }
+
+    .items-table th {
+        text-align: left;
+        padding: 1rem;
+        border-bottom: 2px solid #1a1a1a;
+        color: #333;
+        font-weight: 600;
+    }
+
+    .items-table td {
+        padding: 1rem;
+        border-bottom: 1px solid #eee;
+    }
+
+    .confirmation-message {
+        color: #666;
+        margin: 2rem 0;
+        font-size: 1rem;
+    }
+
+    .confirmation-actions {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        margin-top: 2.5rem;
+    }
+
+    .btn-primary {
+        display: inline-block;
+        padding: 1rem 2.5rem;
+        background: #1a1a1a;
+        color: white;
+        text-decoration: none;
+        border-radius: 8px;
+        transition: background 0.2s;
+        font-weight: 600;
+    }
+
+    .btn-secondary {
+        display: inline-block;
+        padding: 1rem 2.5rem;
+        background: white;
+        color: #1a1a1a;
+        text-decoration: none;
+        border: 1px solid #1a1a1a;
+        border-radius: 8px;
+        transition: all 0.2s;
     }
 
     .status-badge.paid {

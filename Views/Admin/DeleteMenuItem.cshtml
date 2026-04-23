@@ -6,8 +6,8 @@
 <style>
     .admin-header {
         background: linear-gradient(135deg, #000 0%, #1a0f0a 50%, #0d0705 100%);
-        padding: 2rem;
-        margin-bottom: 2rem;
+        padding: 3rem;
+        margin-bottom: 2.5rem;
         border-radius: 16px;
         color: #fff;
         box-shadow: 0 8px 32px rgba(44, 24, 16, 0.4);
@@ -22,11 +22,12 @@
     .back-btn {
         background: #fff;
         color: #000;
-        padding: 0.6rem 1.25rem;
+        padding: 0.75rem 1.5rem;
         border-radius: 25px;
         text-decoration: none;
         transition: all 0.3s ease;
         font-weight: 500;
+        font-size: 0.9rem;
     }
     
     .back-btn:hover {
@@ -38,7 +39,7 @@
         background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
         border: 1px solid #ffcc80;
         border-radius: 16px;
-        padding: 1.5rem;
+        padding: 2rem;
         margin-bottom: 2rem;
     }
     
@@ -68,19 +69,19 @@
     }
     
     .info-card .card-body {
-        padding: 1.5rem;
+        padding: 2rem;
     }
     
     .info-card .card-footer {
         background: #faf8f5;
-        padding: 1rem 1.5rem;
+        padding: 1.5rem;
         border-top: 1px solid #e8e0d8;
     }
     
     .info-item {
         display: flex;
         justify-content: space-between;
-        padding: 0.75rem 0;
+        padding: 1rem 0;
         border-bottom: 1px solid #f0ebe5;
     }
     
@@ -108,6 +109,10 @@
         font-weight: 600;
         transition: all 0.3s ease;
         cursor: pointer;
+        font-size: 0.9rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
     }
     
     .btn-danger:hover {
@@ -124,6 +129,10 @@
         text-decoration: none;
         transition: all 0.3s ease;
         font-weight: 500;
+        font-size: 0.9rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
     }
     
     .btn-secondary:hover {
@@ -132,7 +141,7 @@
     }
 </style>
 
-<div class="container-fluid" style="padding: 2rem;">
+<div class="container-fluid" style="padding: 2.5rem 2rem;">
     <!-- Header -->
     <div class="admin-header">
         <div class="d-flex justify-content-between align-items-center">
@@ -174,7 +183,7 @@
                     <i class="fas fa-trash" style="margin-right: 0.5rem;"></i> Confirm Delete
                 </button>
             </form>
-            <a asp-action="MenuItems" class="btn-secondary" style="margin-left: 0.75rem;">
+            <a asp-action="MenuItems" class="btn-secondary" style="margin-left: 1rem;">
                 <i class="fas fa-arrow-left" style="margin-right: 0.5rem;"></i> Cancel
             </a>
         </div>

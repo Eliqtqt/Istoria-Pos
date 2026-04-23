@@ -64,24 +64,24 @@
                         </div>
                         
                         <!-- GCash Payment Details -->
-                        <div class="gcash-details" style="display: none; margin-top: 1.5rem; padding: 1.5rem; background: #f8f8f8; border: 1px solid #ddd;">
-                            <h4 style="color: #0a0a0a; margin-bottom: 1rem; font-size: 1rem;"><i class="fas fa-info-circle"></i> GCash Payment Instructions</h4>
-                            <p style="color: #666; margin-bottom: 1rem; font-size: 0.9rem;">
+                        <div class="gcash-details" style="display: none; margin-top: 2rem; padding: 2rem; background: #f8f8f8; border: 1px solid #ddd; border-radius: 12px;">
+                            <h4 style="color: #0a0a0a; margin-bottom: 1.25rem; font-size: 1.1rem;"><i class="fas fa-info-circle"></i> GCash Payment Instructions</h4>
+                            <p style="color: #666; margin-bottom: 1.25rem; font-size: 0.9rem;">
                                 Scan the QR code below using your GCash app to pay. The amount will be filled automatically.
                             </p>
-                            <div style="text-align: center; margin-bottom: 1rem;">
+                            <div style="text-align: center; margin-bottom: 1.25rem; padding: 1rem;">
                                 <img src="~/Images/gcash.jpg" alt="GCash QR Code" style="max-width: 220px; border: 1px solid #ddd; padding: 10px; background: white; border-radius: 8px;">
                             </div>
-                            <div style="background: #fff; padding: 1rem; border: 1px solid #0a0a0a; text-align: center;">
+                            <div style="background: #fff; padding: 1.25rem; border: 1px solid #0a0a0a; text-align: center; border-radius: 8px;">
                                 <p style="color: #666; font-size: 0.85rem; margin-bottom: 0.5rem;">Or send to:</p>
                                 <p style="color: #0a0a0a; font-size: 1.5rem; font-weight: 700; margin: 0;">0963 178 3917</p>
                                 <p style="color: #888; font-size: 0.85rem; margin-top: 0.5rem;">Istoria Coffee</p>
                             </div>
-                            <p style="color: #888; font-size: 0.85rem; margin-top: 1rem;">
+                            <p style="color: #888; font-size: 0.85rem; margin-top: 1.25rem;">
                                 <i class="fas fa-check-circle"></i> Total to pay: <strong>₱@total.ToString("F2")</strong>
                             </p>
                             <p style="color: #666; font-size: 0.85rem; margin-top: 1rem;">
-                                After payment, take a screenshot and send it to our <a href="https://m.me/istoriacoffee" target="_blank" style="color: #0a0a0a;">Messenger</a> or email <a href="mailto:business.istoria@gmail.com" style="color: #0a0a0a;">business.istoria@gmail.com</a>
+                                After payment, take a screenshot and send it to our <a href="https://m.me/istoriacoffee" target="_blank" style="color: #0a0a0a; text-decoration: underline;">Messenger</a> or email <a href="mailto:business.istoria@gmail.com" style="color: #0a0a0a; text-decoration: underline;">business.istoria@gmail.com</a>
                             </p>
                         </div>
                     </div>
@@ -177,19 +177,19 @@
     .checkout-container {
         max-width: 1200px;
         margin: 0 auto;
-        padding: 1rem 1rem 3rem;
+        padding: 2.5rem 1.5rem 3rem;
     }
 
     .checkout-header {
         text-align: center;
-        margin-bottom: 2rem;
+        margin-bottom: 2.5rem;
     }
 
     .checkout-header h1 {
         font-family: 'Playfair Display', serif;
         font-size: 2.5rem;
         color: #0a0a0a;
-        margin-bottom: 0.5rem;
+        margin-bottom: 0.75rem;
     }
 
     .checkout-header .divider {
@@ -206,30 +206,30 @@
 
     .checkout-form {
         background: #fff;
-        padding: 2rem;
+        padding: 2.5rem;
         border: 1px solid #eee;
     }
 
     .form-section {
-        margin-bottom: 2rem;
-        padding-bottom: 2rem;
+        margin-bottom: 2.5rem;
+        padding-bottom: 2.5rem;
         border-bottom: 1px solid #eee;
     }
 
     .form-section:last-of-type {
         border-bottom: none;
-        margin-bottom: 1rem;
+        margin-bottom: 1.5rem;
         padding-bottom: 0;
     }
 
     .form-section h3 {
         font-family: 'Playfair Display', serif;
-        font-size: 1.3rem;
+        font-size: 1.5rem;
         color: #0a0a0a;
-        margin-bottom: 1.5rem;
+        margin-bottom: 1.75rem;
         display: flex;
         align-items: center;
-        gap: 10px;
+        gap: 12px;
     }
 
     .form-section h3 i {
@@ -237,23 +237,23 @@
     }
 
     .form-group {
-        margin-bottom: 1.5rem;
+        margin-bottom: 1.75rem;
     }
 
     .form-label {
         display: block;
         font-weight: 600;
         color: #333;
-        margin-bottom: 0.5rem;
+        margin-bottom: 0.75rem;
         font-size: 0.9rem;
     }
 
     .form-control {
         width: 100%;
         border: 1px solid #ddd;
-        border-radius: 0;
-        padding: 0.875rem 1rem;
-        font-size: 0.95rem;
+        border-radius: 12px;
+        padding: 1rem;
+        font-size: 1rem;
         transition: all 0.3s;
         background: #fafafa;
     }
@@ -278,9 +278,9 @@
     .payment-option {
         display: flex;
         align-items: center;
-        padding: 1.25rem;
+        padding: 1.5rem;
         border: 2px solid #eee;
-        border-radius: 0;
+        border-radius: 12px;
         cursor: pointer;
         transition: all 0.3s;
     }
@@ -306,9 +306,9 @@
     }
 
     .payment-content > i {
-        font-size: 1.5rem;
+        font-size: 1.75rem;
         color: #0a0a0a;
-        width: 40px;
+        width: 45px;
         text-align: center;
     }
 
@@ -316,27 +316,28 @@
         display: block;
         font-weight: 600;
         color: #0a0a0a;
-        font-size: 0.95rem;
+        font-size: 1rem;
     }
 
     .payment-desc {
         display: block;
         color: #666;
-        font-size: 0.8rem;
+        font-size: 0.85rem;
         margin-top: 2px;
     }
 
     .order-items {
         background: #fafafa;
-        padding: 1rem;
-        margin-bottom: 1rem;
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+        border-radius: 12px;
     }
 
     .order-item {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 0.75rem 0;
+        padding: 1rem 0;
         border-bottom: 1px solid #eee;
     }
 
@@ -374,9 +375,10 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 1rem;
+        padding: 1.25rem;
         background: #0a0a0a;
         color: #fff;
+        border-radius: 8px;
     }
 
     .order-total span:first-child {
@@ -407,6 +409,8 @@
         letter-spacing: 1px;
         cursor: pointer;
         transition: all 0.3s;
+        border-radius: 12px;
+        margin-top: 1.5rem;
     }
 
     .btn-place-order:hover {
@@ -420,25 +424,26 @@
         border: 1px solid #eee;
         padding: 2rem;
         margin-bottom: 1.5rem;
+        border-radius: 12px;
     }
 
     .info-header {
         display: flex;
         align-items: center;
-        gap: 10px;
+        gap: 12px;
         margin-bottom: 1.5rem;
         padding-bottom: 1rem;
         border-bottom: 1px solid #eee;
     }
 
     .info-header i {
-        font-size: 1.5rem;
+        font-size: 1.75rem;
         color: #0a0a0a;
     }
 
     .info-header h4 {
         font-family: 'Playfair Display', serif;
-        font-size: 1.2rem;
+        font-size: 1.3rem;
         margin: 0;
         color: #0a0a0a;
     }
@@ -446,7 +451,7 @@
     .info-items {
         display: flex;
         flex-direction: column;
-        gap: 1.25rem;
+        gap: 1.5rem;
     }
 
     .info-item {
@@ -456,35 +461,36 @@
     }
 
     .info-item > i {
-        width: 20px;
+        width: 22px;
         color: #0a0a0a;
-        font-size: 0.9rem;
-        margin-top: 2px;
+        font-size: 0.95rem;
+        margin-top: 3px;
     }
 
     .info-title {
         display: block;
         font-weight: 600;
         color: #0a0a0a;
-        font-size: 0.9rem;
+        font-size: 0.95rem;
     }
 
     .info-desc {
         display: block;
         color: #666;
-        font-size: 0.8rem;
+        font-size: 0.85rem;
         margin-top: 2px;
     }
 
     .promo-card {
         display: flex;
         align-items: center;
-        gap: 10px;
-        padding: 1rem 1.5rem;
+        gap: 12px;
+        padding: 1.25rem 1.5rem;
         background: #fafafa;
         border: 1px dashed #ddd;
         color: #666;
-        font-size: 0.85rem;
+        font-size: 0.9rem;
+        border-radius: 12px;
     }
 
     .promo-card i {
