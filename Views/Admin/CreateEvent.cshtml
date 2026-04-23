@@ -231,32 +231,30 @@
                     </div>
                 </div>
 
-                <div class="mb-4">
-                    <label for="ImageFile" class="form-label-custom">Event Image</label>
-                    <input type="file" id="ImageFile" name="ImageFile" class="form-control-custom" accept="image/*" />
-                    <div class="help-text">Supported formats: JPG, PNG, GIF, WebP</div>
-                </div>
+                 <div class="mb-4">
+                     <label for="ImageFile" class="form-label-custom">Event Image</label>
+                     <input type="file" id="ImageFile" name="ImageFile" class="form-control-custom" accept="image/*" />
+                     <div class="help-text">Supported formats: JPG, PNG, GIF, WebP</div>
+                 </div>
 
-            <div class="row mb-4">
-                <div class="col-md-12">
-                    <div class="form-check-custom">
-                        <input type="checkbox" id="IsActive" name="IsActive" value="true" checked />
-                        <label for="IsActive">Active (Show on website)</label>
-                    </div>
-                </div>
-            </div>
-                    </div>
-                </div>
+                 <div class="row mb-4">
+                     <div class="col-md-12">
+                         <div class="form-check-custom">
+                             <input type="checkbox" id="IsActive" name="IsActive" value="true" checked />
+                             <label for="IsActive">Active (Show on website)</label>
+                         </div>
+                     </div>
+                 </div>
 
-                <div style="display: flex; gap: 1rem; margin-top: 2rem;">
-                    <button type="submit" class="btn-primary">
-                        <i class="fas fa-plus-circle" style="margin-right: 0.5rem;"></i> Create Event
-                    </button>
-                    <a asp-action="Events" class="btn-outline">
-                        <i class="fas fa-arrow-left" style="margin-right: 0.5rem;"></i> Back to List
-                    </a>
-                </div>
-            </form>
-        </div>
-    </div>
+                 <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                     <button type="submit" class="btn-primary">
+                         <i class="fas fa-plus-circle" style="margin-right: 0.5rem;"></i> Create Event
+                     </button>
+                     <a asp-action="Events" class="btn-outline">
+                         <i class="fas fa-arrow-left" style="margin-right: 0.5rem;"></i> Back to List
+                     </a>
+                 </div>
+             </form>
+         </div>
+     </div>
 </div>
