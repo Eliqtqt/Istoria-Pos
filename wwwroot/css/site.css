@@ -164,31 +164,31 @@ p, a, span, div {
 }
 
 .hero-section .hero-content {
-  position: relative;
-  z-index: 2;
-  padding: 8rem 4rem 4rem;
-  max-width: 700px;
+    position: relative;
+    z-index: 2;
+    padding: 6rem 3rem 3rem;
+    max-width: 800px;
 }
 
 .hero-section h1 {
-  font-size: 4.5rem;
-  line-height: 1.1;
-  margin-bottom: 1.5rem;
-  color: var(--bw-white);
+    font-size: 3.5rem;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+    color: var(--bw-white);
 }
 
 .hero-section h1 span {
-  display: block;
-  font-style: italic;
-  color: rgba(255,255,255,0.6);
+    display: block;
+    font-style: italic;
+    color: rgba(255,255,255,0.6);
 }
 
 .hero-section .lead {
-  font-size: 1.1rem;
-  max-width: 450px;
-  color: rgba(255,255,255,0.75);
-  margin-bottom: 2.5rem;
-  line-height: 1.8;
+    font-size: 1rem;
+    max-width: 500px;
+    color: rgba(255,255,255,0.75);
+    margin-bottom: 2rem;
+    line-height: 1.8;
 }
 
 /* Elegant Button */
