@@ -3,6 +3,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Text.Json;
 
+// Disable file watching in production to avoid inotify limit issues
+if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") != "Development")
+{
+    Environment.SetEnvironmentVariable("DOTNET_USE_POLLING_FILE_WATCHER", "false");
+}
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Disable file watching in production to avoid inotify limit
@@ -15,13 +21,6 @@ if (!builder.Environment.IsDevelopment())
         config.AddJsonFile("appsettings.json", optional: false, reloadOnChange: false)
               .AddJsonFile($"appsettings.{hostingContext.HostingEnvironment.EnvironmentName}.json", optional: true, reloadOnChange: false)
               .AddEnvironmentVariables();
-    });
-
-    // Disable file system watching to prevent inotify limit issues
-    builder.Services.Configure<Microsoft.Extensions.FileProviders.Physical.PhysicalFileProviderOptions>(options =>
-    {
-        options.UsePollingFileWatcher = false;
-        options.UseActivePolling = false;
     });
 }
 
