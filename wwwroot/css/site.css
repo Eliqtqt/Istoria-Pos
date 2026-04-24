@@ -736,6 +736,10 @@ body {
   background: #000;
 }
 
+#menuCarousel .carousel-inner {
+  height: 100%;
+}
+
 #menuCarousel .carousel-item {
   height: 100%;
   position: relative;
