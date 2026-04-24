@@ -727,31 +727,17 @@ body {
 
 /* Menu Styles - Updated Design */
 
-/* Enhanced Menu Carousel */
+/* Video Menu Carousel */
 #menuCarousel {
   height: 70vh;
   min-height: 500px;
   position: relative;
   overflow: hidden;
+  background: #000;
 }
 
-#menuCarousel .carousel-indicators {
-  bottom: 30px;
-}
-
-#menuCarousel .carousel-indicators button {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.5);
-  border: 2px solid rgba(255, 255, 255, 0.8);
-  margin: 0 6px;
-  transition: all 0.3s ease;
-}
-
-#menuCarousel .carousel-indicators button.active {
-  background-color: #fff;
-  transform: scale(1.2);
+#menuCarousel .carousel-inner {
+  height: 100%;
 }
 
 #menuCarousel .carousel-item {
@@ -759,16 +745,20 @@ body {
   position: relative;
 }
 
-#menuCarousel .carousel-slide {
-  height: 100%;
-  width: 100%;
+#menuCarousel .carousel-video-wrapper {
   position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+#menuCarousel .carousel-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 #menuCarousel .carousel-overlay {
@@ -777,135 +767,51 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.4);
+  background: linear-gradient(135deg, rgba(10,10,10,0.7) 0%, rgba(20,20,20,0.6) 50%, rgba(10,10,10,0.7) 100%);
   z-index: 1;
 }
 
-#menuCarousel .carousel-content {
-  position: relative;
+#menuCarousel .carousel-caption-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   z-index: 2;
+  padding: 2rem;
+}
+
+#menuCarousel .carousel-caption {
   text-align: center;
   color: white;
-  max-width: 800px;
-  padding: 2rem;
-  animation: fadeInUp 1s ease-out;
+  max-width: 600px;
+  width: 100%;
 }
 
-#menuCarousel .slide-icon {
-  font-size: 4rem;
-  margin-bottom: 1.5rem;
-  opacity: 0.9;
-  animation: bounceIn 1.2s ease-out;
-}
-
-#menuCarousel .slide-title {
+#menuCarousel .hero-title {
   font-size: 3.5rem;
-  font-weight: 700;
+  font-weight: 400;
   margin-bottom: 1rem;
   letter-spacing: 2px;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-  font-family: 'Playfair Display', Georgia, serif;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
 }
 
-#menuCarousel .slide-subtitle {
-  font-size: 1.4rem;
-  margin-bottom: 1.5rem;
+#menuCarousel .hero-subtitle {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
   letter-spacing: 1px;
-  color: rgba(255,255,255,0.95);
-  font-family: 'Poppins', 'Inter', sans-serif;
-  font-weight: 300;
+  color: rgba(255,255,255,0.9);
 }
 
-#menuCarousel .slide-description {
-  font-size: 1.1rem;
-  line-height: 1.7;
-  max-width: 600px;
+#menuCarousel .hero-tagline {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: rgba(255,255,255,0.7);
+  max-width: 500px;
   margin: 0 auto;
-  color: rgba(255,255,255,0.85);
-  font-family: 'Poppins', 'Inter', sans-serif;
-  font-weight: 400;
-}
-
-/* Slide Backgrounds */
-#menuCarousel .slide-welcome {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-}
-
-#menuCarousel .slide-coffee {
-  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-}
-
-#menuCarousel .slide-pastries {
-  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-}
-
-#menuCarousel .slide-atmosphere {
-  background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
-}
-
-/* Control Buttons */
-#menuCarousel .carousel-control-prev,
-#menuCarousel .carousel-control-next {
-  width: 60px;
-  height: 60px;
-  background: rgba(255, 255, 255, 0.2);
-  border: 2px solid rgba(255, 255, 255, 0.5);
-  border-radius: 50%;
-  top: 50%;
-  transform: translateY(-50%);
-  transition: all 0.3s ease;
-}
-
-#menuCarousel .carousel-control-prev {
-  left: 30px;
-}
-
-#menuCarousel .carousel-control-next {
-  right: 30px;
-}
-
-#menuCarousel .carousel-control-prev:hover,
-#menuCarousel .carousel-control-next:hover {
-  background: rgba(255, 255, 255, 0.3);
-  border-color: rgba(255, 255, 255, 0.8);
-  transform: translateY(-50%) scale(1.1);
-}
-
-#menuCarousel .carousel-control-prev-icon,
-#menuCarousel .carousel-control-next-icon {
-  width: 20px;
-  height: 20px;
-  filter: invert(1);
-}
-
-/* Animations */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes bounceIn {
-  0% {
-    opacity: 0;
-    transform: scale(0.3);
-  }
-  50% {
-    opacity: 1;
-    transform: scale(1.05);
-  }
-  70% {
-    transform: scale(0.9);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
 }
 
 .hero-title {
@@ -1189,6 +1095,23 @@ body {
   #menuCarousel {
     height: 60vh;
     min-height: 400px;
+  }
+
+  #menuCarousel .carousel-caption-container {
+    padding: 1rem;
+  }
+
+  #menuCarousel .hero-title {
+    font-size: 2.5rem;
+    letter-spacing: 1px;
+  }
+
+  #menuCarousel .hero-subtitle {
+    font-size: 1rem;
+  }
+
+  #menuCarousel .hero-tagline {
+    font-size: 0.8rem;
   }
 
   #menuCarousel .carousel-content {
