@@ -748,76 +748,6 @@ body {
   justify-content: center;
 }
 
-/* Featured Menu Carousel */
-#featuredCarousel {
-  background: linear-gradient(135deg, #f8f8f8 0%, #e8e8e8 100%);
-  padding: 40px 0;
-  margin-bottom: 40px;
-}
-
-#featuredCarousel .featured-slide {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 20px;
-  gap: 40px;
-}
-
-#featuredCarousel .featured-content {
-  flex: 1;
-  text-align: left;
-}
-
-#featuredCarousel .featured-content h2 {
-  font-size: 2.5rem;
-  font-weight: 600;
-  color: #333;
-  margin-bottom: 1rem;
-  font-family: 'Playfair Display', Georgia, serif;
-}
-
-#featuredCarousel .featured-content p {
-  font-size: 1.1rem;
-  color: #666;
-  line-height: 1.6;
-  margin-bottom: 2rem;
-  font-family: 'Poppins', 'Inter', sans-serif;
-}
-
-#featuredCarousel .featured-image {
-  flex: 1;
-  text-align: center;
-}
-
-#featuredCarousel .featured-image img {
-  max-width: 100%;
-  height: 300px;
-  object-fit: cover;
-  border-radius: 12px;
-  box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-}
-
-#featuredCarousel .btn-primary {
-  background: #333;
-  border: 1px solid #333;
-  padding: 12px 30px;
-  font-size: 1rem;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  border-radius: 6px;
-  transition: all 0.3s ease;
-}
-
-#featuredCarousel .btn-primary:hover {
-  background: #555;
-  border-color: #555;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-}
-
 .hero-video {
   position: absolute;
   top: 0;
@@ -1132,29 +1062,6 @@ body {
 
   #menuCarousel .video-content {
     padding: 0 20px;
-  }
-
-  #featuredCarousel .featured-slide {
-    flex-direction: column;
-    text-align: center;
-    gap: 30px;
-  }
-
-  #featuredCarousel .featured-content h2 {
-    font-size: 2rem;
-  }
-
-  #featuredCarousel .featured-content p {
-    font-size: 1rem;
-  }
-
-  #featuredCarousel .featured-image img {
-    height: 200px;
-  }
-
-  #featuredCarousel .btn-primary {
-    padding: 10px 25px;
-    font-size: 0.9rem;
   }
 
   .hero-title {
