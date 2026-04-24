@@ -13,12 +13,20 @@
                 <video autoplay muted loop playsinline class="carousel-video" poster="@Url.Content("~/Images/image.png")" style="width: 100%; height: 100%; object-fit: cover;" controls>
                     <source src="@Url.Content("~/videos/istoriajo.mp4")" type="video/mp4">
                     <div class="video-fallback">
-                        <img src="@Url.Content("~/Images/image.png")" alt="Istoria Coffee" style="width: 100%; height: 100%; object-fit: cover;" />
-                        <p style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; font-size: 1.2rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.7);">
-                            ISTORIA Coffee - Video Loading...
-                        </p>
+                        <img src="@Url.Content("~/Images/image.png")" alt="Istoria Coffee" />
+                        <div class="fallback-text">
+                            <h2>ISTORIA Coffee</h2>
+                            <p>Experience the perfect blend of tradition and modernity</p>
+                        </div>
                     </div>
                 </video>
+                <div class="video-fallback">
+                    <img src="@Url.Content("~/Images/image.png")" alt="Istoria Coffee" />
+                    <div class="fallback-text">
+                        <h2>ISTORIA Coffee</h2>
+                        <p>Experience the perfect blend of tradition and modernity</p>
+                    </div>
+                </div>
                 <div class="carousel-overlay"></div>
                 <div class="carousel-caption-container">
                     <div class="carousel-caption">
@@ -229,32 +237,40 @@
 
 
 
-// Debug video loading
+// Video loading handling
 document.addEventListener('DOMContentLoaded', function() {
     const video = document.querySelector('.carousel-video');
+    const fallback = document.querySelector('.video-fallback');
+    
     if (video) {
         console.log('Video element found:', video);
-        console.log('Video source:', video.querySelector('source').src);
+        console.log('Video source:', video.querySelector('source')?.src || 'No source');
 
-        video.addEventListener('loadstart', function() {
-            console.log('Video load started');
-        });
-        video.addEventListener('loadeddata', function() {
-            console.log('Video loaded successfully');
-            // Remove controls once video loads
-            setTimeout(() => {
-                video.removeAttribute('controls');
-            }, 1000);
-        });
+        // Show fallback if video fails to load
         video.addEventListener('error', function(e) {
             console.error('Video failed to load:', e);
-            console.error('Video error details:', video.error);
+            if (fallback) {
+                fallback.style.display = 'flex';
+                console.log('Showing video fallback');
+            }
         });
+        
+        // Hide fallback when video loads successfully
+        video.addEventListener('loadeddata', function() {
+            console.log('Video loaded successfully');
+            if (fallback) {
+                fallback.style.display = 'none';
+            }
+            // Ensure controls are removed (should not have been added)
+            video.removeAttribute('controls');
+        });
+        
+        // Also hide fallback if video can play
         video.addEventListener('canplay', function() {
             console.log('Video can play');
-        });
-        video.addEventListener('play', function() {
-            console.log('Video started playing');
+            if (fallback) {
+                fallback.style.display = 'none';
+            }
         });
     } else {
         console.error('Video element not found');
