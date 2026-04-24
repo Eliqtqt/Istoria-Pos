@@ -4,26 +4,93 @@
     ViewData["Title"] = "Menu";
 }
 
-<!-- Video Carousel -->
-<div id="menuCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
+<!-- Enhanced Menu Carousel -->
+<div id="menuCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
+    <div class="carousel-indicators">
+        <button type="button" data-bs-target="#menuCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#menuCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#menuCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        <button type="button" data-bs-target="#menuCarousel" data-bs-slide-to="3" aria-label="Slide 4"></button>
+    </div>
+
     <div class="carousel-inner">
+        <!-- Slide 1: Welcome -->
         <div class="carousel-item active">
-            <div class="carousel-video-wrapper">
-                <video autoplay muted loop playsinline class="carousel-video" style="width: 100%; height: 100%; object-fit: cover;">
-                    <source src="@Url.Content("~/videos/istoriajo.mp4")" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
+            <div class="carousel-slide slide-welcome">
                 <div class="carousel-overlay"></div>
-                <div class="carousel-caption-container">
-                    <div class="carousel-caption">
-                        <h1 class="hero-title">ISTORIA</h1>
-                        <p class="hero-subtitle">[is-tor-yuh] • noun</p>
-                        <p class="hero-tagline">a place of laughter, comfort and acceptance; where memories are made over a cup of coffee and friends.</p>
+                <div class="carousel-content">
+                    <div class="slide-icon">
+                        <i class="fas fa-coffee"></i>
+                    </div>
+                    <h1 class="slide-title">Welcome to ISTORIA</h1>
+                    <p class="slide-subtitle">Where Every Cup Tells a Story</p>
+                    <div class="slide-description">
+                        Experience meticulously crafted beverages in an atmosphere of refined simplicity
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 2: Coffee -->
+        <div class="carousel-item">
+            <div class="carousel-slide slide-coffee">
+                <div class="carousel-overlay"></div>
+                <div class="carousel-content">
+                    <div class="slide-icon">
+                        <i class="fas fa-mug-hot"></i>
+                    </div>
+                    <h1 class="slide-title">Premium Coffee</h1>
+                    <p class="slide-subtitle">Artisanal Brews & Specialty Drinks</p>
+                    <div class="slide-description">
+                        From rich espressos to creative lattes, discover our carefully sourced coffee beans
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: Pastries -->
+        <div class="carousel-item">
+            <div class="carousel-slide slide-pastries">
+                <div class="carousel-overlay"></div>
+                <div class="carousel-content">
+                    <div class="slide-icon">
+                        <i class="fas fa-birthday-cake"></i>
+                    </div>
+                    <h1 class="slide-title">Fresh Pastries</h1>
+                    <p class="slide-subtitle">Baked Daily with Love</p>
+                    <div class="slide-description">
+                        Indulge in our selection of freshly baked croissants, cakes, and artisanal breads
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Atmosphere -->
+        <div class="carousel-item">
+            <div class="carousel-slide slide-atmosphere">
+                <div class="carousel-overlay"></div>
+                <div class="carousel-content">
+                    <div class="slide-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h1 class="slide-title">Perfect Atmosphere</h1>
+                    <p class="slide-subtitle">Your Home Away from Home</p>
+                    <div class="slide-description">
+                        A place of laughter, comfort, and acceptance where memories are made
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <button class="carousel-control-prev" type="button" data-bs-target="#menuCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#menuCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
 </div>
 
 <!-- Menu Container -->
