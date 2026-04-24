@@ -215,6 +215,32 @@
 
 
 <script>
+// Category filtering functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const tabButtons = document.querySelectorAll('.tab-btn');
+    const menuCards = document.querySelectorAll('.menu-card');
+
+    tabButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            // Remove active class from all buttons
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+            // Add active class to clicked button
+            this.classList.add('active');
+
+            const category = this.getAttribute('data-category');
+
+            menuCards.forEach(card => {
+                const cardCategory = card.getAttribute('data-category');
+                if (category === 'all' || cardCategory === category) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+    });
+});
+
 var menuBasePrice = 0;
 
 function openCustomizeModal(id, name, price, isCustomizable) {
