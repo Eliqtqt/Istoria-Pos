@@ -726,6 +726,75 @@ body {
 }
 
 /* Menu Styles - Updated Design */
+
+/* Video Carousel */
+#menuCarousel {
+  height: 70vh;
+  min-height: 500px;
+  position: relative;
+  overflow: hidden;
+}
+
+.carousel-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.carousel-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(10,10,10,0.7) 0%, rgba(20,20,20,0.6) 50%, rgba(10,10,10,0.7) 100%);
+  z-index: 1;
+}
+
+.carousel-caption {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 2;
+  color: white;
+  max-width: 600px;
+  width: 90%;
+}
+
+.hero-title {
+  font-size: 3.5rem;
+  font-weight: 400;
+  margin-bottom: 1rem;
+  letter-spacing: 2px;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+.hero-title span {
+  display: block;
+  font-style: italic;
+  color: rgba(255,255,255,0.8);
+}
+
+.hero-subtitle {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  letter-spacing: 1px;
+  color: rgba(255,255,255,0.9);
+}
+
+.hero-tagline {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: rgba(255,255,255,0.7);
+  max-width: 500px;
+  margin: 0 auto;
+}
+
 /* Layout */
 .menu-wrapper {
   background: #f8f8f8;
@@ -975,6 +1044,28 @@ body {
 
 /* Responsive Design */
 @media (max-width: 768px) {
+  #menuCarousel {
+    height: 60vh;
+    min-height: 400px;
+  }
+
+  .carousel-caption {
+    padding: 0 20px;
+  }
+
+  .hero-title {
+    font-size: 2.5rem;
+    letter-spacing: 1px;
+  }
+
+  .hero-subtitle {
+    font-size: 1rem;
+  }
+
+  .hero-tagline {
+    font-size: 0.8rem;
+  }
+
   .menu-container {
     padding: 0 20px;
   }
