@@ -733,32 +733,31 @@ body {
   min-height: 500px;
   position: relative;
   overflow: hidden;
+  background: #000;
 }
 
 #menuCarousel .carousel-item {
   height: 100%;
-}
-
-#menuCarousel .video-hero-section {
   position: relative;
-  height: 100%;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
-.hero-video {
-  position: absolute;
-  top: 0;
-  left: 0;
+#menuCarousel .carousel-video-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+#menuCarousel .carousel-video {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  z-index: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
-.video-overlay {
+#menuCarousel .carousel-overlay {
   position: absolute;
   top: 0;
   left: 0;
@@ -768,13 +767,47 @@ body {
   z-index: 1;
 }
 
-.video-content {
-  position: relative;
+#menuCarousel .carousel-caption-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   z-index: 2;
+  padding: 2rem;
+}
+
+#menuCarousel .carousel-caption {
   text-align: center;
   color: white;
   max-width: 600px;
-  width: 90%;
+  width: 100%;
+}
+
+#menuCarousel .hero-title {
+  font-size: 3.5rem;
+  font-weight: 400;
+  margin-bottom: 1rem;
+  letter-spacing: 2px;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+#menuCarousel .hero-subtitle {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  letter-spacing: 1px;
+  color: rgba(255,255,255,0.9);
+}
+
+#menuCarousel .hero-tagline {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: rgba(255,255,255,0.7);
+  max-width: 500px;
+  margin: 0 auto;
 }
 
 .hero-title {
@@ -1060,20 +1093,20 @@ body {
     min-height: 400px;
   }
 
-  #menuCarousel .video-content {
-    padding: 0 20px;
+  #menuCarousel .carousel-caption-container {
+    padding: 0 15px;
   }
 
-  .hero-title {
+  #menuCarousel .hero-title {
     font-size: 2.5rem;
     letter-spacing: 1px;
   }
 
-  .hero-subtitle {
+  #menuCarousel .hero-subtitle {
     font-size: 1rem;
   }
 
-  .hero-tagline {
+  #menuCarousel .hero-tagline {
     font-size: 0.8rem;
   }
 
