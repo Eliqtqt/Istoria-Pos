@@ -727,12 +727,21 @@ body {
 
 /* Menu Styles - Updated Design */
 
-/* Video Hero Section */
-.video-hero-section {
-  position: relative;
+/* Video Carousel */
+#menuCarousel {
   height: 70vh;
   min-height: 500px;
+  position: relative;
   overflow: hidden;
+}
+
+#menuCarousel .carousel-item {
+  height: 100%;
+}
+
+#menuCarousel .video-hero-section {
+  position: relative;
+  height: 100%;
   width: 100%;
   display: flex;
   align-items: center;
@@ -1046,12 +1055,12 @@ body {
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  .video-hero-section {
+  #menuCarousel {
     height: 60vh;
     min-height: 400px;
   }
 
-  .video-content {
+  #menuCarousel .video-content {
     padding: 0 20px;
   }
 
