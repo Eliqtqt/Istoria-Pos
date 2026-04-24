@@ -16,6 +16,13 @@ if (!builder.Environment.IsDevelopment())
               .AddJsonFile($"appsettings.{hostingContext.HostingEnvironment.EnvironmentName}.json", optional: true, reloadOnChange: false)
               .AddEnvironmentVariables();
     });
+
+    // Disable file system watching to prevent inotify limit issues
+    builder.Services.Configure<Microsoft.Extensions.FileProviders.Physical.PhysicalFileProviderOptions>(options =>
+    {
+        options.UsePollingFileWatcher = false;
+        options.UseActivePolling = false;
+    });
 }
 
 builder.Services.AddControllersWithViews();
@@ -124,6 +131,14 @@ app.UseStaticFiles(new StaticFileOptions
         Mappings =
         {
             [".mp4"] = "video/mp4"
+        }
+    },
+    OnPrepareResponse = ctx =>
+    {
+        // Enable caching in production for better performance
+        if (!app.Environment.IsDevelopment())
+        {
+            ctx.Context.Response.Headers.CacheControl = "public,max-age=31536000";
         }
     }
 });
