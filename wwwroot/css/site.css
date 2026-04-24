@@ -727,24 +727,29 @@ body {
 
 /* Menu Styles - Updated Design */
 
-/* Video Carousel */
-#menuCarousel {
+/* Video Hero Section */
+.video-hero-section {
+  position: relative;
   height: 70vh;
   min-height: 500px;
-  position: relative;
   overflow: hidden;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.carousel-video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+.hero-video {
   position: absolute;
   top: 0;
   left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
 }
 
-.carousel-overlay {
+.video-overlay {
   position: absolute;
   top: 0;
   left: 0;
@@ -754,13 +759,10 @@ body {
   z-index: 1;
 }
 
-.carousel-caption {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
+.video-content {
+  position: relative;
   z-index: 2;
+  text-align: center;
   color: white;
   max-width: 600px;
   width: 90%;
@@ -1044,12 +1046,12 @@ body {
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  #menuCarousel {
+  .video-hero-section {
     height: 60vh;
     min-height: 400px;
   }
 
-  .carousel-caption {
+  .video-content {
     padding: 0 20px;
   }
 
