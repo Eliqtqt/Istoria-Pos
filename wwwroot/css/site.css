@@ -761,6 +761,8 @@ body {
   left: 0;
   z-index: 0;
   display: block;
+  opacity: 1;
+  visibility: visible;
 }
 
 #menuCarousel .video-fallback {

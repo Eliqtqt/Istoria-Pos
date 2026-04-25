@@ -10,8 +10,9 @@
         <!-- Video Slide -->
         <div class="carousel-item active">
             <div class="carousel-video-wrapper">
-                <video autoplay muted loop playsinline class="carousel-video" poster="@Url.Content("~/Images/image.png")">
+                <video autoplay muted loop playsinline class="carousel-video" poster="@Url.Content("~/Images/image.png")" controls style="border: 2px solid red; z-index: 9999;">
                     <source src="@Url.Content("~/videos/istoriajo.mp4")" type="video/mp4">
+                    <p>Your browser does not support the video tag. <a href="@Url.Content("~/videos/istoriajo.mp4")">Download video</a></p>
                 </video>
                 <div class="video-fallback">
                     <img src="@Url.Content("~/Images/image.png")" alt="Istoria Coffee" />
