@@ -760,6 +760,7 @@ body {
   top: 0;
   left: 0;
   z-index: 0;
+  display: block;
 }
 
 #menuCarousel .video-fallback {
