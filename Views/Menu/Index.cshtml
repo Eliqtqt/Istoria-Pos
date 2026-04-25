@@ -10,9 +10,9 @@
         <!-- Video Slide -->
         <div class="carousel-item active">
             <div class="carousel-video-wrapper">
-                <video autoplay muted loop playsinline class="carousel-video" poster="@Url.Content("~/Images/image.png")" controls style="border: 2px solid red; z-index: 9999;">
+                <video autoplay muted loop playsinline class="carousel-video" poster="@Url.Content("~/Images/image.png")" preload="auto">
                     <source src="@Url.Content("~/videos/istoriajo.mp4")" type="video/mp4">
-                    <p>Your browser does not support the video tag. <a href="@Url.Content("~/videos/istoriajo.mp4")">Download video</a></p>
+                    <p>Video not supported. <a href="@Url.Content("~/videos/istoriajo.mp4")">Download video</a></p>
                 </video>
                 <div class="video-fallback">
                     <img src="@Url.Content("~/Images/image.png")" alt="Istoria Coffee" />
@@ -235,28 +235,49 @@
 document.addEventListener('DOMContentLoaded', function() {
     const video = document.querySelector('.carousel-video');
     const fallback = document.querySelector('.video-fallback');
-    
+
     if (video) {
         console.log('Video element found:', video);
         console.log('Video source:', video.querySelector('source')?.src || 'No source');
+        console.log('Video readyState:', video.readyState);
+
+        // Force video to load
+        video.load();
+
+        // Try to play video (handle autoplay restrictions)
+        const playPromise = video.play();
+        if (playPromise !== undefined) {
+            playPromise.then(() => {
+                console.log('Video started playing automatically');
+                if (fallback) fallback.style.display = 'none';
+            }).catch(error => {
+                console.log('Autoplay failed, video paused:', error);
+                // Keep video visible but paused
+                if (fallback) fallback.style.display = 'none';
+            });
+        }
 
         // Show fallback if video fails to load
         video.addEventListener('error', function(e) {
             console.error('Video failed to load:', e);
+            console.error('Video error code:', video.error?.code);
+            console.error('Video error message:', video.error?.message);
             if (fallback) {
                 fallback.style.display = 'flex';
                 console.log('Showing video fallback');
             }
         });
-        
+
         // Hide fallback when video loads successfully
         video.addEventListener('loadeddata', function() {
             console.log('Video loaded successfully');
+            console.log('Video duration:', video.duration);
+            console.log('Video dimensions:', video.videoWidth, 'x', video.videoHeight);
             if (fallback) {
                 fallback.style.display = 'none';
             }
         });
-        
+
         // Also hide fallback if video can play
         video.addEventListener('canplay', function() {
             console.log('Video can play');
@@ -264,6 +285,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 fallback.style.display = 'none';
             }
         });
+
+        // Handle user interaction (for browsers that require it)
+        document.addEventListener('click', function() {
+            if (video.paused) {
+                video.play().catch(e => console.log('Manual play failed:', e));
+            }
+        }, { once: true });
+
     } else {
         console.error('Video element not found');
     }
