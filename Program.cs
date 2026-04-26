@@ -1,4 +1,5 @@
 using CafeWebsite.Data;
+using CafeWebsite.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Text.Json;

@@ -34,6 +34,9 @@ namespace CafeWebsite.Services
                 return;
             }
 
+            // Ensure fromEmail is not null (fallback to smtpUsername which is already validated)
+            fromEmail = fromEmail ?? smtpUsername;
+
             using var client = new SmtpClient(smtpHost, smtpPort)
             {
                 EnableSsl = true,
