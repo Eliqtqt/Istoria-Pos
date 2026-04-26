@@ -815,22 +815,23 @@ body {
 
 #menuCarousel .carousel-caption-container {
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   z-index: 2;
-  padding: 2rem;
+  width: 100%;
+  text-align: center;
+  padding: 0 2rem;
+  box-sizing: border-box;
 }
 
 #menuCarousel .carousel-caption {
+  position: static;
   text-align: center;
   color: white;
   max-width: 600px;
-  width: 100%;
+  margin: 0 auto;
+  width: auto;
 }
 
 #menuCarousel .hero-title {
@@ -1139,9 +1140,9 @@ body {
     min-height: 400px;
   }
 
-  #menuCarousel .carousel-caption-container {
-    padding: 1rem;
-  }
+   #menuCarousel .carousel-caption-container {
+     padding: 0 1rem;
+   }
 
   #menuCarousel .hero-title {
     font-size: 2.5rem;
