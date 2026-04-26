@@ -65,7 +65,8 @@ namespace CafeWebsite.Services
         public async Task SendEmailConfirmationAsync(string to, string username, string confirmationLink)
         {
             var subject = "Confirm your Istoria Coffee account";
-            var htmlMessage = $@<!DOCTYPE html>
+            var htmlMessage = $@"
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset=""UTF-8"">
