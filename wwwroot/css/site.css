@@ -300,9 +300,218 @@ body {
 /* Menu Grid - Masonry Style */
 .menu-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 2rem;
   padding: 2rem 0;
+}
+
+/* Menu Cards */
+.menu-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  transition: all 0.35s ease;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid rgba(0,0,0,0.04);
+}
+
+.menu-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 24px rgba(0,0,0,0.12);
+}
+
+/* Card Image */
+.card-image {
+  position: relative;
+  aspect-ratio: 4/3;
+  background: #f8f8f8;
+  overflow: hidden;
+}
+
+.card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.5s ease;
+}
+
+.menu-card:hover .card-image img {
+  transform: scale(1.05);
+}
+
+/* Category Tag */
+.category-tag {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: linear-gradient(135deg, #8B4513 0%, #A0522D 100%);
+  color: #fff;
+  padding: 0.4rem 0.8rem;
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-family: 'Poppins', 'Inter', sans-serif;
+  border-radius: 4px;
+  box-shadow: 0 2px 6px rgba(139, 69, 19, 0.4);
+  z-index: 10;
+}
+
+/* Image Placeholder */
+.image-placeholder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+  color: #999;
+  font-family: 'Poppins', 'Inter', sans-serif;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.image-placeholder span {
+  padding: 1rem 1.5rem;
+  text-align: center;
+  border: 2px dashed #ccc;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.6);
+  backdrop-filter: blur(4px);
+}
+
+/* Product Info */
+.product-info {
+  padding: 1.25rem 1.5rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex-grow: 1;
+}
+
+/* Product Name */
+.product-name {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.15rem;
+  font-weight: 500;
+  color: #1a1a1a;
+  margin: 0;
+  line-height: 1.3;
+}
+
+/* Product Description */
+.product-description {
+  font-family: 'Poppins', 'Inter', sans-serif;
+  font-size: 0.85rem;
+  line-height: 1.55;
+  color: #666;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Rating */
+.rating-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.4rem;
+  margin: 0.25rem 0;
+}
+
+.stars {
+  display: flex;
+  gap: 2px;
+}
+
+.stars i {
+  font-size: 0.75rem;
+  color: #c9a227;
+}
+
+.rating-value {
+  font-family: 'Poppins', 'Inter', sans-serif;
+  font-size: 0.75rem;
+  color: #666;
+  font-weight: 500;
+}
+
+/* Product Actions */
+.product-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+  padding-top: 0.75rem;
+}
+
+.price {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #8B4513;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.btn-customize,
+.btn-add {
+  padding: 0.4rem 0.9rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: 'Poppins', 'Inter', sans-serif;
+}
+
+.btn-customize {
+  background: #f0f0f0;
+  color: #333;
+}
+
+.btn-customize:hover {
+  background: #e0e0e0;
+}
+
+.btn-add {
+  background: #8B4513;
+  color: #fff;
+}
+
+.btn-add:hover {
+  background: #A0522D;
+}
+
+.btn-view {
+  padding: 0.4rem 0.9rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  text-decoration: none;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  color: #666;
+  transition: all 0.2s ease;
+  font-family: 'Poppins', 'Inter', sans-serif;
+  display: inline-block;
+}
+
+.btn-view:hover {
+  border-color: #8B4513;
+  color: #8B4513;
 }
 
 .menu-card {
@@ -989,18 +1198,46 @@ body {
 }
 
 /* Category Tag */
-.category-badge {
+.category-tag {
   position: absolute;
   top: 12px;
   left: 12px;
-  background: #000;
+  background: #8B4513;
   color: #fff;
-  padding: 0.25rem 0.5rem;
+  padding: 0.35rem 0.75rem;
   font-size: 0.7rem;
-  font-weight: 500;
+  font-weight: 600;
   letter-spacing: 0.5px;
   text-transform: uppercase;
   font-family: 'Poppins', 'Inter', sans-serif;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+/* Image Placeholder */
+.image-placeholder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+  color: #999;
+  font-family: 'Poppins', 'Inter', sans-serif;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.image-placeholder span {
+  padding: 1rem;
+  text-align: center;
+  border: 2px dashed #ccc;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.5);
 }
 
 /* Product Info */
@@ -1074,59 +1311,6 @@ body {
   font-size: 1.4rem;
   font-weight: 400;
   color: #000;
-}
-
-/* Action Buttons */
-.action-buttons {
-  display: flex;
-  gap: 0.5rem;
-}
-
-.btn-customize,
-.btn-add,
-.btn-view {
-  padding: 0.6rem 1rem;
-  font-size: 0.8rem;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  border-radius: 4px;
-  font-family: 'Poppins', 'Inter', sans-serif;
-}
-
-.btn-customize {
-  background: #000;
-  color: #fff;
-  border: 1px solid #000;
-}
-
-.btn-customize:hover {
-  background: #fff;
-  color: #000;
-}
-
-.btn-add {
-  background: #000;
-  color: #fff;
-  border: 1px solid #000;
-}
-
-.btn-add:hover {
-  background: #fff;
-  color: #000;
-}
-
-.btn-view {
-  background: transparent;
-  color: #000;
-  border: 1px solid #000;
-}
-
-.btn-view:hover {
-  background: #000;
-  color: #fff;
 }
 
 /* Alert Box */
