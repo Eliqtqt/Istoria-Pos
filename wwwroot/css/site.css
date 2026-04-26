@@ -888,8 +888,8 @@ body {
 
 /* Layout */
 .menu-wrapper {
-  background: #f8f8f8 url('../Images/cement.jpg') no-repeat center center;
-  background-size: cover;
+  background: #f8f8f8 url('../Images/cement.jpg') repeat center center;
+  background-size: auto;
   min-height: 100vh;
   padding: 60px 0;
 }
