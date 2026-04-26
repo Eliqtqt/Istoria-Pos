@@ -904,16 +904,16 @@ body {
 .category-tabs {
   display: flex;
   justify-content: center;
-  gap: 2rem;
-  padding: 20px 0;
+  gap: 1rem;
+  padding: 15px 20px;
   border-bottom: 1px solid #ddd;
   margin-bottom: 40px;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   background: rgba(255, 255, 255, 0.85);
   border-radius: 8px;
-  max-width: 90%;
+  max-width: 100%;
   margin: 0 auto 40px auto;
-  padding: 15px 20px;
+  overflow-x: auto;
 }
 
 .tab-btn {
@@ -1211,11 +1211,12 @@ body {
   }
 
    .category-tabs {
-     gap: 1rem;
-     padding: 10px 15px 15px 15px;
+     gap: 0.5rem;
+     padding: 10px 15px;
      background: rgba(255, 255, 255, 0.85);
      border-radius: 8px;
-     max-width: 95%;
+     max-width: 100%;
+     overflow-x: auto;
    }
 
   .tab-btn {
