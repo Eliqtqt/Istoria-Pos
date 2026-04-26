@@ -905,10 +905,15 @@ body {
   display: flex;
   justify-content: center;
   gap: 2rem;
-  padding: 0 0 20px 0;
+  padding: 20px 0;
   border-bottom: 1px solid #ddd;
   margin-bottom: 40px;
   flex-wrap: wrap;
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 8px;
+  max-width: 90%;
+  margin: 0 auto 40px auto;
+  padding: 15px 20px;
 }
 
 .tab-btn {
@@ -1205,10 +1210,13 @@ body {
     padding: 0 20px;
   }
 
-  .category-tabs {
-    gap: 1rem;
-    padding: 0 0 15px 0;
-  }
+   .category-tabs {
+     gap: 1rem;
+     padding: 10px 15px 15px 15px;
+     background: rgba(255, 255, 255, 0.85);
+     border-radius: 8px;
+     max-width: 95%;
+   }
 
   .tab-btn {
     padding: 0.4rem 0.8rem;
