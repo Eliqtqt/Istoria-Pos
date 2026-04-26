@@ -12,6 +12,15 @@
                 <p class="subtitle">Sign in to continue to your account</p>
             </div>
 
+            <!-- Success Message -->
+            @if (TempData["Success"] != null)
+            {
+                <div class="alert-message success">
+                    <i class="fas fa-check-circle"></i>
+                    @TempData["Success"]
+                </div>
+            }
+
             <!-- Error Messages -->
             @if (TempData["Error"] != null)
             {
@@ -40,7 +49,7 @@
                 <div class="form-group">
                     <label for="username" class="form-label">Username</label>
                     <input type="text" class="form-control" id="username" name="username" 
-                           placeholder="Enter your username" required />
+                           placeholder="Enter your username" value="@(TempData["Username"] ?? "")" required />
                 </div>
                 
                 <div class="form-group">
@@ -51,7 +60,7 @@
 
                 <div class="form-options">
                     <label class="checkbox-label">
-                        <input type="checkbox" class="checkbox-input" />
+                        <input type="checkbox" class="checkbox-input" name="rememberMe" />
                         <span class="checkbox-custom"></span>
                         Remember me
                     </label>
@@ -63,10 +72,63 @@
                 </button>
             </form>
 
-            <!-- Register Link -->
+            <!-- Resend Verification & Register Link -->
             <div class="auth-footer">
                 <p>Don't have an account? <a asp-action="Register">Create one</a></p>
+                <p class="resend-link">
+                    <a href="#" onclick="resendConfirmation(event)">Resend confirmation email</a>
+                </p>
             </div>
+
+            <!-- Resend Confirmation Modal -->
+            <div id="resendModal" class="modal-overlay" style="display:none;">
+                <div class="modal-content">
+                    <h3>Resend Email Confirmation</h3>
+                    <p>Enter your email address to receive a new confirmation link.</p>
+                    <input type="email" id="resendEmail" class="form-control" placeholder="Enter your email" />
+                    <div class="modal-actions">
+                        <button type="button" class="btn-cancel" onclick="closeResendModal()">Cancel</button>
+                        <button type="button" class="btn-submit" onclick="submitResend()">Send</button>
+                    </div>
+                </div>
+            </div>
+
+            <script>
+                function resendConfirmation(e) {
+                    e.preventDefault();
+                    document.getElementById('resendModal').style.display = 'flex';
+                }
+
+                function closeResendModal() {
+                    document.getElementById('resendModal').style.display = 'none';
+                }
+
+                async function submitResend() {
+                    const email = document.getElementById('resendEmail').value;
+                    if (!email) {
+                        alert('Please enter your email address');
+                        return;
+                    }
+
+                    const form = document.createElement('form');
+                    form.method = 'POST';
+                    form.action = '@Url.Action("ResendConfirmation", "Account")';
+                    
+                    const input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = 'email';
+                    input.value = email;
+                    form.appendChild(input);
+                    
+                    document.body.appendChild(form);
+                    form.submit();
+                }
+
+                // Close modal on outside click
+                document.getElementById('resendModal')?.addEventListener('click', function(e) {
+                    if (e.target === this) closeResendModal();
+                });
+            </script>
         </div>
     </div>
 </div>
@@ -123,14 +185,25 @@
         margin-bottom: 1.5rem;
         font-size: 0.875rem;
         display: flex;
-        align-items: center;
+        align-items: flex-start;
         gap: 0.5rem;
     }
 
+    .alert-message.success {
+        background: #f0f9f0;
+        color: #2d5a27;
+        border: 1px solid #c3e6c3;
+    }
+
     .alert-message.error {
-        background: #f8f8f8;
-        color: #0a0a0a;
-        border: 1px solid #d0d0d0;
+        background: #fef2f2;
+        color: #991b1b;
+        border: 1px solid #fecaca;
+    }
+
+    .alert-message i {
+        margin-top: 2px;
+        font-size: 1rem;
     }
 
     .form-group {
@@ -151,7 +224,7 @@
         width: 100%;
         padding: 0.875rem 1rem;
         border: 1px solid #cccccc;
-        border-radius: 0;
+        border-radius: 4px;
         font-size: 0.95rem;
         transition: border-color 0.2s, box-shadow 0.2s;
         background: #fafafa;
@@ -160,8 +233,8 @@
 
     .form-control:focus {
         outline: none;
-        border-color: #0a0a0a;
-        box-shadow: 0 0 0 3px rgba(10, 10, 10, 0.08);
+        border-color: #8B4513;
+        box-shadow: 0 0 0 3px rgba(139, 69, 19, 0.1);
         background: #ffffff;
     }
 
@@ -198,7 +271,7 @@
         width: 18px;
         height: 18px;
         border: 1px solid #999999;
-        border-radius: 0;
+        border-radius: 3px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -206,8 +279,8 @@
     }
 
     .checkbox-input:checked + .checkbox-custom {
-        background: #0a0a0a;
-        border-color: #0a0a0a;
+        background: #8B4513;
+        border-color: #8B4513;
     }
 
     .checkbox-input:checked + .checkbox-custom::after {
@@ -217,25 +290,24 @@
     }
 
     .link-text {
-        color: #0a0a0a;
+        color: #8B4513;
         text-decoration: none;
         font-weight: 500;
         border-bottom: 1px solid transparent;
         transition: border-color 0.2s;
-        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     }
 
     .link-text:hover {
-        border-bottom-color: #0a0a0a;
+        border-bottom-color: #8B4513;
     }
 
     .btn-submit {
         width: 100%;
         padding: 1rem 1.5rem;
-        background: #0a0a0a;
+        background: #8B4513;
         color: white;
-        border: 1px solid #0a0a0a;
-        border-radius: 0;
+        border: 1px solid #8B4513;
+        border-radius: 4px;
         font-size: 0.85rem;
         font-weight: 600;
         letter-spacing: 1.5px;
@@ -246,13 +318,13 @@
     }
 
     .btn-submit:hover {
-        background: #333333;
-        border-color: #333333;
+        background: #A0522D;
+        border-color: #A0522D;
     }
 
     .btn-submit:active {
-        background: #000000;
-        border-color: #000000;
+        background: #8B4513;
+        border-color: #8B4513;
     }
 
     .auth-footer {
@@ -266,7 +338,7 @@
     }
 
     .auth-footer a {
-        color: #0a0a0a;
+        color: #8B4513;
         font-weight: 600;
         text-decoration: none;
         border-bottom: 1px solid transparent;
@@ -275,7 +347,83 @@
 
     .auth-footer a:hover {
         text-decoration: none;
-        border-bottom-color: #0a0a0a;
+        border-bottom-color: #8B4513;
+    }
+
+    .resend-link {
+        margin-top: 1rem;
+        font-size: 0.8rem;
+    }
+
+    .resend-link a {
+        color: #8B4513;
+        text-decoration: none;
+        font-weight: 500;
+    }
+
+    .resend-link a:hover {
+        text-decoration: underline;
+    }
+
+    /* Modal */
+    .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+    }
+
+    .modal-content {
+        background: #ffffff;
+        padding: 2rem;
+        border-radius: 8px;
+        max-width: 400px;
+        width: 90%;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+
+    .modal-content h3 {
+        font-family: 'Playfair Display', Georgia, serif;
+        font-size: 1.3rem;
+        margin-bottom: 0.75rem;
+        color: #0a0a0a;
+    }
+
+    .modal-content p {
+        font-size: 0.9rem;
+        color: #666;
+        margin-bottom: 1.25rem;
+    }
+
+    .modal-content .form-control {
+        margin-bottom: 1.25rem;
+    }
+
+    .modal-actions {
+        display: flex;
+        gap: 0.75rem;
+        justify-content: flex-end;
+    }
+
+    .btn-cancel {
+        padding: 0.6rem 1.2rem;
+        background: #f0f0f0;
+        color: #333;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 0.85rem;
+        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+
+    .btn-cancel:hover {
+        background: #e0e0e0;
     }
 
     @@media (max-width: 480px) {

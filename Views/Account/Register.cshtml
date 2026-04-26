@@ -11,7 +11,24 @@
                 <p class="subtitle">Join us and start your journey</p>
             </div>
 
+            <!-- Success Message -->
+            @if (TempData["Success"] != null)
+            {
+                <div class="alert-message success">
+                    <i class="fas fa-check-circle"></i>
+                    @TempData["Success"]
+                </div>
+            }
+
             <!-- Error Messages -->
+            @if (TempData["Error"] != null)
+            {
+                <div class="alert-message error">
+                    <i class="fas fa-exclamation-circle"></i>
+                    @TempData["Error"]
+                </div>
+            }
+
             @if (ViewData.ModelState.ErrorCount > 0)
             {
                 <div class="alert-message error">
@@ -25,22 +42,24 @@
 
             <!-- Register Form -->
             <form asp-action="Register" method="post" class="auth-form">
+                @Html.AntiForgeryToken()
+                
                 <div class="form-group">
                     <label for="username" class="form-label">Username</label>
                     <input type="text" class="form-control" id="username" name="username" 
-                           placeholder="Choose a username" required />
+                           placeholder="Choose a username" value="@(TempData["RegUsername"] ?? "")" required />
                 </div>
                 
                 <div class="form-group">
                     <label for="email" class="form-label">Email Address</label>
                     <input type="email" class="form-control" id="email" name="email" 
-                           placeholder="Enter your email" required />
+                           placeholder="Enter your email" value="@(TempData["RegEmail"] ?? "")" required />
                 </div>
                 
                 <div class="form-group">
                     <label for="password" class="form-label">Password</label>
                     <input type="password" class="form-control" id="password" name="password" 
-                           placeholder="Create a password" required />
+                           placeholder="Create a password (min 6 characters)" required minlength="6" />
                 </div>
 
                 <div class="form-group">
@@ -51,9 +70,9 @@
 
                 <div class="terms-check">
                     <label class="checkbox-label">
-                        <input type="checkbox" class="checkbox-input" id="termsAccept" required />
+                        <input type="checkbox" class="checkbox-input" id="termsAccept" name="termsAccept" required />
                         <span class="checkbox-custom"></span>
-                        <span>I agree to the <a href="#">Terms</a> and <a href="#">Privacy Policy</a></span>
+                        <span>I agree to the <a href="#" onclick="return false;">Terms</a> and <a href="#" onclick="return false;">Privacy Policy</a></span>
                     </label>
                 </div>
                 
@@ -118,18 +137,29 @@
 
     .alert-message {
         padding: 0.875rem 1rem;
-        border-radius: 0;
+        border-radius: 4px;
         margin-bottom: 1.5rem;
         font-size: 0.875rem;
         display: flex;
-        align-items: center;
+        align-items: flex-start;
         gap: 0.5rem;
     }
 
+    .alert-message.success {
+        background: #f0f9f0;
+        color: #2d5a27;
+        border: 1px solid #c3e6c3;
+    }
+
     .alert-message.error {
-        background: #f8f8f8;
-        color: #0a0a0a;
-        border: 1px solid #d0d0d0;
+        background: #fef2f2;
+        color: #991b1b;
+        border: 1px solid #fecaca;
+    }
+
+    .alert-message i {
+        margin-top: 2px;
+        font-size: 1rem;
     }
 
     .form-group {
@@ -150,7 +180,7 @@
         width: 100%;
         padding: 0.875rem 1rem;
         border: 1px solid #cccccc;
-        border-radius: 0;
+        border-radius: 4px;
         font-size: 0.95rem;
         transition: border-color 0.2s, box-shadow 0.2s;
         background: #fafafa;
@@ -159,8 +189,8 @@
 
     .form-control:focus {
         outline: none;
-        border-color: #0a0a0a;
-        box-shadow: 0 0 0 3px rgba(10, 10, 10, 0.08);
+        border-color: #8B4513;
+        box-shadow: 0 0 0 3px rgba(139, 69, 19, 0.1);
         background: #ffffff;
     }
 
@@ -196,7 +226,7 @@
         height: 18px;
         min-width: 18px;
         border: 1px solid #999999;
-        border-radius: 0;
+        border-radius: 3px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -205,8 +235,8 @@
     }
 
     .checkbox-input:checked + .checkbox-custom {
-        background: #0a0a0a;
-        border-color: #0a0a0a;
+        background: #8B4513;
+        border-color: #8B4513;
     }
 
     .checkbox-input:checked + .checkbox-custom::after {
@@ -216,7 +246,7 @@
     }
 
     .checkbox-label a {
-        color: #0a0a0a;
+        color: #8B4513;
         text-decoration: none;
         font-weight: 600;
     }
@@ -228,10 +258,10 @@
     .btn-submit {
         width: 100%;
         padding: 1rem 1.5rem;
-        background: #0a0a0a;
+        background: #8B4513;
         color: white;
-        border: 1px solid #0a0a0a;
-        border-radius: 0;
+        border: 1px solid #8B4513;
+        border-radius: 4px;
         font-size: 0.85rem;
         font-weight: 600;
         letter-spacing: 1.5px;
@@ -242,13 +272,13 @@
     }
 
     .btn-submit:hover {
-        background: #333333;
-        border-color: #333333;
+        background: #A0522D;
+        border-color: #A0522D;
     }
 
     .btn-submit:active {
-        background: #000000;
-        border-color: #000000;
+        background: #8B4513;
+        border-color: #8B4513;
     }
 
     .auth-footer {
@@ -262,7 +292,7 @@
     }
 
     .auth-footer a {
-        color: #0a0a0a;
+        color: #8B4513;
         font-weight: 600;
         text-decoration: none;
         border-bottom: 1px solid transparent;
@@ -271,7 +301,7 @@
 
     .auth-footer a:hover {
         text-decoration: none;
-        border-bottom-color: #0a0a0a;
+        border-bottom-color: #8B4513;
     }
 
     @@media (max-width: 480px) {

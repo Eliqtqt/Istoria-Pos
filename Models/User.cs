@@ -18,6 +18,12 @@ namespace CafeWebsite.Models
 
         public string Role { get; set; } = "Customer"; // Customer or Admin
 
+        public bool EmailConfirmed { get; set; } = false;
+
+        public string? EmailConfirmationToken { get; set; }
+
+        public DateTime? TokenExpiration { get; set; }
+
         public ICollection<Order> Orders { get; set; } = new List<Order>();
     }
 }
