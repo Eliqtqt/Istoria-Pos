@@ -205,56 +205,6 @@ namespace CafeWebsite.Controllers
             return View();
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register(string username, string email, string password, string confirmPassword)
-        {
-            if (password != confirmPassword)
-            {
-                ModelState.AddModelError(string.Empty, "Passwords do not match");
-                return View();
-            }
-
-            var existingUser = await _context.Users.FirstOrDefaultAsync(u => u.Username == username || u.Email == email);
-            if (existingUser != null)
-            {
-                ModelState.AddModelError(string.Empty, "Username or email already exists");
-                return View();
-            }
-
-            var token = Guid.NewGuid().ToString();
-            var tokenExpiration = DateTime.UtcNow.AddHours(24);
-
-            var user = new User
-            {
-                Username = username,
-                Email = email,
-                PasswordHash = HashPassword(password),
-                Role = "Customer",
-                EmailConfirmed = false,
-                EmailConfirmationToken = token,
-                TokenExpiration = tokenExpiration
-            };
-
-            _context.Users.Add(user);
-            await _context.SaveChangesAsync();
-
-            // Send confirmation email
-            var confirmationLink = Url.Action("VerifyEmail", "Account", new { email = email, token = token }, Request.Scheme);
-            try
-            {
-                await _emailSender.SendEmailConfirmationAsync(email, username, confirmationLink!);
-                TempData["Success"] = "Registration successful! Please check your email to confirm your account before logging in.";
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Email sending failed: {ex.Message}");
-                TempData["Error"] = "Registration successful but we couldn't send the confirmation email. Please contact support.";
-            }
-
-            return RedirectToAction("Login");
-        }
-
         [HttpGet]
         public async Task<IActionResult> VerifyEmail(string email, string token)
         {
