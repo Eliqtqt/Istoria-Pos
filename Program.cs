@@ -28,7 +28,7 @@ if (!builder.Environment.IsDevelopment())
 builder.Services.AddControllersWithViews();
 
 // Register email sender service
-builder.Services.AddSingleton<IEmailSender, Services.EmailSender>();
+builder.Services.AddSingleton<IEmailSender, EmailSender>();
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 var envConnection = Environment.GetEnvironmentVariable("DATABASE_URL");
