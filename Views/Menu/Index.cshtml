@@ -6,6 +6,40 @@
 
 
 
+<!-- Video Menu Carousel -->
+<div id="menuCarousel" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+        <!-- Video Slide -->
+        <div class="carousel-item active">
+            <div class="carousel-video-wrapper">
+                <!-- Video element -->
+                <video autoplay muted loop playsinline class="carousel-video" preload="auto">
+                    <source src="@Url.Content("~/Videos/istoriajo.mp4")" type="video/mp4">
+                    <p>Video not supported. <a href="@Url.Content("~/Videos/istoriajo.mp4")">Download video</a></p>
+                </video>
+                <!-- Fallback background shown if video fails -->
+                <div class="video-fallback">
+                    <img src="@Url.Content("~/Images/image.png")" alt="Istoria Coffee" />
+                    <div class="fallback-text">
+                        <h2>ISTORIA Coffee</h2>
+                        <p>Experience the perfect blend of tradition and modernity</p>
+                    </div>
+                </div>
+                <!-- Dark overlay for text readability -->
+                <div class="carousel-overlay"></div>
+                <div class="carousel-caption-container">
+                    <div class="carousel-caption">
+                        <h1 class="hero-title">ISTORIA</h1>
+                        <p class="hero-subtitle">[is-tor-yuh] • noun</p>
+                        <p class="hero-tagline">a place of laughter, comfort and acceptance; where memories are made over a cup of coffee and friends.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <!-- Menu Container -->
 <div class="menu-wrapper">
     <div class="menu-container">
@@ -202,6 +236,49 @@
 
 
 
+
+
+// Video loading handling
+document.addEventListener('DOMContentLoaded', function() {
+    const video = document.querySelector('.carousel-video');
+    const fallback = document.querySelector('.video-fallback');
+
+    if (video) {
+        // Force video to load
+        video.load();
+
+        // Try to play video (handle autoplay restrictions)
+        const playPromise = video.play();
+        if (playPromise !== undefined) {
+            playPromise.then(() => {
+                if (fallback) fallback.style.display = 'none';
+            }).catch(error => {
+                if (fallback) fallback.style.display = 'none';
+            });
+        }
+
+        // Show fallback if video fails to load
+        video.addEventListener('error', function(e) {
+            if (fallback) {
+                fallback.style.display = 'flex';
+            }
+        });
+
+        // Hide fallback when video loads successfully
+        video.addEventListener('loadeddata', function() {
+            if (fallback) {
+                fallback.style.display = 'none';
+            }
+        });
+
+        // Also hide fallback if video can play
+        video.addEventListener('canplay', function() {
+            if (fallback) {
+                fallback.style.display = 'none';
+            }
+        });
+    }
+});
 
 
 // Category filtering functionality
