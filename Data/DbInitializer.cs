@@ -7,22 +7,27 @@ namespace CafeWebsite.Data
 {
     public static class DbInitializer
     {
-        private static string HashPassword(string password)
-        {
-            using var sha256 = SHA256.Create();
-            var hashedBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
-            return Convert.ToBase64String(hashedBytes);
-        }
-
         public static async Task InitializeAsync(CafeDbContext context)
         {
             try
             {
-                await context.Database.EnsureCreatedAsync();
+                // Apply any pending migrations
+                await context.Database.MigrateAsync();
+                Console.WriteLine("[DB Init] Database migrations applied");
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"[DB Init] Error creating DB: {ex.Message}");
+                Console.WriteLine($"[DB Init] Migration error: {ex.Message}");
+                // If migrations fail, try to ensure database exists (for first-time setup)
+                try
+                {
+                    await context.Database.EnsureCreatedAsync();
+                    Console.WriteLine("[DB Init] Database created (no migrations applied)");
+                }
+                catch (Exception ex2)
+                {
+                    Console.WriteLine($"[DB Init] Error creating DB: {ex2.Message}");
+                }
             }
 
             // Create admin user if not exists
@@ -34,7 +39,8 @@ namespace CafeWebsite.Data
                     Username = "admin",
                     Email = "admin@cafesite.com",
                     PasswordHash = HashPassword("admin123"),
-                    Role = "Admin"
+                    Role = "Admin",
+                    EmailConfirmed = true // Admin is pre-confirmed
                 };
                 context.Users.Add(adminUser);
                 await context.SaveChangesAsync();
@@ -155,6 +161,13 @@ namespace CafeWebsite.Data
 
             await context.SaveChangesAsync();
             Console.WriteLine("[DB Init] Menu items seeded");
+        }
+
+        private static string HashPassword(string password)
+        {
+            using var sha256 = SHA256.Create();
+            var hashedBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
+            return Convert.ToBase64String(hashedBytes);
         }
     }
 }
