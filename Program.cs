@@ -82,14 +82,26 @@ if (hasEnvVar)
         connectionString = url;
     }
 }
-else if (string.IsNullOrEmpty(connectionString) || connectionString.StartsWith("${") || connectionString.StartsWith("{"))
+
+if (string.IsNullOrEmpty(connectionString) || connectionString.Contains("${") || connectionString.StartsWith("{"))
 {
-    throw new InvalidOperationException("Database connection string is not configured. Please set DATABASE_URL environment variable.");
+    // Try to use a fallback SQLite for development, or provide clear error
+    if (builder.Environment.IsDevelopment())
+    {
+        Console.WriteLine("[WARN] No database connection configured. Using SQLite fallback for development.");
+        connectionString = "Data Source=dev.db";
+    }
+    else
+    {
+        var errorMsg = "DATABASE_URL environment variable is not set. Please configure it in your deployment environment.";
+        Console.WriteLine($"[ERROR] {errorMsg}");
+        throw new InvalidOperationException(errorMsg);
+    }
 }
 
 Console.WriteLine($"[DEBUG] Final connection string: '{connectionString.Substring(0, Math.Min(20, connectionString.Length))}...'");
 
-builder.Services.AddDbContext<CafeWebsite.Data.CafeDbContext>(options =>
+builder.Services.AddDbContext<CafeDbContext>(options =>
     options.UseNpgsql(connectionString));
 
 builder.Services.AddDistributedMemoryCache();
