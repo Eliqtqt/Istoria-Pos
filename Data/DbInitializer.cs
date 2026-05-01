@@ -9,49 +9,80 @@ namespace CafeWebsite.Data
     {
         public static async Task InitializeAsync(CafeDbContext context)
         {
+            bool migrationsApplied = false;
+            
             try
             {
-                // Apply any pending migrations
+                // Try to apply migrations
                 await context.Database.MigrateAsync();
-                Console.WriteLine("[DB Init] Database migrations applied");
+                Console.WriteLine("[DB Init] Database migrations applied successfully");
+                migrationsApplied = true;
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"[DB Init] Migration error: {ex.Message}");
-                // If migrations fail, try to ensure database exists (for first-time setup)
+                
+                // Check if it's a connection error vs migration conflict
+                if (ex.Message.Contains("connection") || ex.Message.Contains("network") || ex.Message.Contains("timeout"))
+                {
+                    Console.WriteLine("[DB Init] Connection failed - will retry on next request");
+                    throw; // Re-throw connection errors to fail fast
+                }
+            }
+
+            // Only proceed with seeding if migrations succeeded or database was newly created
+            if (!migrationsApplied)
+            {
                 try
                 {
+                    // If migrations failed for other reasons, try EnsureCreated as fallback
+                    // This will create a fresh database if none exists
                     await context.Database.EnsureCreatedAsync();
                     Console.WriteLine("[DB Init] Database created (no migrations applied)");
                 }
                 catch (Exception ex2)
                 {
                     Console.WriteLine($"[DB Init] Error creating DB: {ex2.Message}");
+                    throw;
                 }
             }
 
             // Create admin user if not exists
-            var adminExists = await context.Users.AnyAsync(u => u.Username == "admin");
-            if (!adminExists)
+            try
             {
-                var adminUser = new User
+                var adminExists = await context.Users.AnyAsync(u => u.Username == "admin");
+                if (!adminExists)
                 {
-                    Username = "admin",
-                    Email = "admin@cafesite.com",
-                    PasswordHash = HashPassword("admin123"),
-                    Role = "Admin",
-                    EmailConfirmed = true // Admin is pre-confirmed
-                };
-                context.Users.Add(adminUser);
-                await context.SaveChangesAsync();
-                Console.WriteLine("[DB Init] Admin user created");
+                    var adminUser = new User
+                    {
+                        Username = "admin",
+                        Email = "admin@cafesite.com",
+                        PasswordHash = HashPassword("admin123"),
+                        Role = "Admin",
+                        EmailConfirmed = true // Admin is pre-confirmed
+                    };
+                    context.Users.Add(adminUser);
+                    await context.SaveChangesAsync();
+                    Console.WriteLine("[DB Init] Admin user created");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[DB Init] Error creating admin: {ex.Message}");
+                // Table might not exist yet if migration hasn't been fully applied
+                if (ex.InnerException?.Message.Contains("column") == true || 
+                    ex.InnerException?.Message.Contains("does not exist") == true)
+                {
+                    Console.WriteLine("[DB Init] Users table schema not ready - will retry on next request");
+                    throw;
+                }
             }
 
             var hasMenuItems = await context.MenuItems.AnyAsync();
             if (hasMenuItems)
             {
                 Console.WriteLine("[DB Init] Menu already seeded");
-                return; // DB has been seeded
+                return;
             }
 
             var menuItems = new MenuItem[]

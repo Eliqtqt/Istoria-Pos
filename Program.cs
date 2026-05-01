@@ -102,7 +102,16 @@ if (string.IsNullOrEmpty(connectionString) || connectionString.Contains("${") ||
 Console.WriteLine($"[DEBUG] Final connection string: '{connectionString.Substring(0, Math.Min(20, connectionString.Length))}...'");
 
 builder.Services.AddDbContext<CafeDbContext>(options =>
-    options.UseNpgsql(connectionString));
+{
+    if (connectionString.StartsWith("Data Source="))
+    {
+        options.UseSqlite(connectionString);
+    }
+    else
+    {
+        options.UseNpgsql(connectionString);
+    }
+});
 
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
