@@ -35,6 +35,17 @@ var connectionString = rawConnection?.Trim();
 var envConnection = Environment.GetEnvironmentVariable("DATABASE_URL")?.Trim();
 var hasEnvVar = !string.IsNullOrEmpty(envConnection);
 
+if (!hasEnvVar)
+{
+    // Fallback to RENDER_DATABASE_URL if DATABASE_URL not set (common misnaming)
+    envConnection = Environment.GetEnvironmentVariable("RENDER_DATABASE_URL")?.Trim();
+    if (!string.IsNullOrEmpty(envConnection))
+    {
+        hasEnvVar = true;
+        Console.WriteLine("[DEBUG] Using RENDER_DATABASE_URL as DATABASE_URL fallback");
+    }
+}
+
 Console.WriteLine($"[DEBUG] Configuration connection string (first 50 chars): '{(rawConnection != null ? rawConnection.Substring(0, Math.Min(50, rawConnection.Length)) : "null")}...'");
 Console.WriteLine($"[DEBUG] DATABASE_URL env: '{envConnection ?? "null"}'");
 Console.WriteLine($"[DEBUG] Has DATABASE_URL: {hasEnvVar}");
