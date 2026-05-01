@@ -36,11 +36,30 @@ namespace CafeWebsite.Data
             catch (Exception ex) when (isDevelopment)
             {
                 Console.WriteLine($"[DB Init] Error: {ex}");
+                // Check for common connection/auth errors
+                var msg = ex.Message.ToLowerInvariant();
+                if (msg.Contains("password") || msg.Contains("authentication") || msg.Contains("28p01"))
+                {
+                    Console.WriteLine("[DB Init] AUTHENTICATION FAILED: Check your database credentials (DATABASE_URL or ConnectionStrings__DefaultConnection).");
+                }
+                else if (msg.Contains("connection") || msg.Contains("timeout") || msg.Contains("network"))
+                {
+                    Console.WriteLine("[DB Init] CONNECTION FAILED: Verify database host/port and that the database is running.");
+                }
+                else if (msg.Contains("ssl") || msg.Contains("tls"))
+                {
+                    Console.WriteLine("[DB Init] SSL/TLS ERROR: Ensure SSL mode is set to require or adjust server certificate settings.");
+                }
+                else
+                {
+                    Console.WriteLine("[DB Init] UNEXPECTED ERROR: Review configuration and database state.");
+                }
+
                 // In development, fall back to EnsureCreated
                 try
                 {
                     await context.Database.EnsureCreatedAsync();
-                    Console.WriteLine("[DB Init] Database created (fallback)");
+                    Console.WriteLine("[DB Init] Database created via EnsureCreated (development fallback)");
                 }
                 catch (Exception ex2)
                 {
@@ -50,7 +69,16 @@ namespace CafeWebsite.Data
             }
             catch (Exception ex) when (!isDevelopment)
             {
-                Console.WriteLine($"[DB Init] Fatal error: {ex}");
+                Console.WriteLine($"[DB Init] FATAL: {ex}");
+                var msg = ex.Message.ToLowerInvariant();
+                if (msg.Contains("password") || msg.Contains("authentication") || msg.Contains("28p01"))
+                {
+                    Console.WriteLine("[DB Init] AUTHENTICATION FAILED: Verify DATABASE_URL contains the correct credentials provided by Render.");
+                }
+                else if (msg.Contains("connection") || msg.Contains("timeout"))
+                {
+                    Console.WriteLine("[DB Init] CONNECTION FAILED: Check DATABASE_URL and ensure the database is accessible.");
+                }
                 throw;
             }
 

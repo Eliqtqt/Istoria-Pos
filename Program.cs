@@ -29,62 +29,30 @@ builder.Services.AddControllersWithViews();
 // Register email sender service
 builder.Services.AddSingleton<IEmailSender, EmailSender>();
 
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-var envConnection = Environment.GetEnvironmentVariable("DATABASE_URL");
+// Get connection string from configuration (ConnectionStrings__DefaultConnection) or DATABASE_URL
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")?.Trim();
+var envConnection = Environment.GetEnvironmentVariable("DATABASE_URL")?.Trim();
 var hasEnvVar = !string.IsNullOrEmpty(envConnection);
 
-Console.WriteLine($"[DEBUG] appsettings connection: '{connectionString}'");
-Console.WriteLine($"[DEBUG] DATABASE_URL env: '{envConnection}'");
+Console.WriteLine($"[DEBUG] Configuration connection string (first 50 chars): '{(connectionString != null ? connectionString.Substring(0, Math.Min(50, connectionString.Length)) : "null")}...'");
+Console.WriteLine($"[DEBUG] DATABASE_URL env: '{envConnection ?? "null"}'");
 Console.WriteLine($"[DEBUG] Has DATABASE_URL: {hasEnvVar}");
 
 if (hasEnvVar)
 {
-    // Parse Render's URL: postgresql://user:pass@host:port/db
+    // Render provides DATABASE_URL as a PostgreSQL URI. Npgsql supports this format directly.
+    // Ensure SSL mode is required for Render's hosted PostgreSQL.
     var url = envConnection!;
-
-    // Convert postgresql:// to postgres://
-    url = url.Replace("postgresql://", "postgres://");
-    
-    try 
+    if (!url.Contains("?ssl-mode=") && !url.Contains("&ssl-mode="))
     {
-        // Manually parse URL
-        var withoutProto = url.Substring("postgres://".Length);
-        var atIndex = withoutProto.IndexOf('@');
-        if (atIndex > 0)
-        {
-            var userInfo = withoutProto.Substring(0, atIndex);
-            var afterAt = withoutProto.Substring(atIndex + 1);
-            
-            var userParts = userInfo.Split(':');
-            var user = userParts[0];
-            var pass = userParts.Length > 1 ? userParts[1] : "";
-            
-            var slashIndex = afterAt.IndexOf('/');
-            var hostPort = slashIndex > 0 ? afterAt.Substring(0, slashIndex) : afterAt;
-            var db = slashIndex > 0 ? afterAt.Substring(slashIndex + 1) : "db";
-            
-            var colonIndex = hostPort.IndexOf(':');
-            var host = colonIndex > 0 ? hostPort.Substring(0, colonIndex) : hostPort;
-            var portStr = colonIndex > 0 ? hostPort.Substring(colonIndex + 1) : "5432";
-            
-            connectionString = $"Host={host};Port={portStr};Database={db};Username={user};Password={pass}";
-            Console.WriteLine($"[DEBUG] Parsed: Host={host}, Port={portStr}, DB={db}, User={user}");
-        }
-        else
-        {
-            connectionString = url;
-        }
+        url += (url.Contains("?") ? "&" : "?") + "ssl-mode=require";
     }
-    catch (Exception ex)
-    {
-        Console.WriteLine($"[DEBUG] Parse error: {ex.Message}");
-        connectionString = url;
-    }
+    connectionString = url;
+    Console.WriteLine($"[DEBUG] Using DATABASE_URL as connection string with SSL enforced");
 }
-
-if (string.IsNullOrEmpty(connectionString) || connectionString.Contains("${") || connectionString.StartsWith("{"))
+else if (string.IsNullOrEmpty(connectionString))
 {
-    // Try to use a fallback SQLite for development, or provide clear error
+    // No connection string provided
     if (builder.Environment.IsDevelopment())
     {
         Console.WriteLine("[WARN] No database connection configured. Using SQLite fallback for development.");
@@ -92,13 +60,13 @@ if (string.IsNullOrEmpty(connectionString) || connectionString.Contains("${") ||
     }
     else
     {
-        var errorMsg = "DATABASE_URL environment variable is not set. Please configure it in your deployment environment.";
+        var errorMsg = "DATABASE_URL environment variable or ConnectionStrings__DefaultConnection is not set. Please configure database connection in Render environment variables.";
         Console.WriteLine($"[ERROR] {errorMsg}");
         throw new InvalidOperationException(errorMsg);
     }
 }
 
-Console.WriteLine($"[DEBUG] Final connection string: '{connectionString.Substring(0, Math.Min(20, connectionString.Length))}...'");
+Console.WriteLine($"[DEBUG] Final connection string (first 50 chars): '{connectionString.Substring(0, Math.Min(50, connectionString.Length))}...'");
 
 builder.Services.AddDbContext<CafeDbContext>(options =>
 {
