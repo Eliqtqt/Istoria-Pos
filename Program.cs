@@ -41,8 +41,8 @@ Console.WriteLine($"[DEBUG] Has DATABASE_URL: {hasEnvVar}");
 if (hasEnvVar)
 {
     // Parse Render's URL: postgresql://user:pass@host:port/db
-    var url = envConnection;
-    
+    var url = envConnection!;
+
     // Convert postgresql:// to postgres://
     url = url.Replace("postgresql://", "postgres://");
     
