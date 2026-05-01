@@ -1,6 +1,9 @@
 using CafeWebsite.Models;
 using Microsoft.EntityFrameworkCore;
 using BCrypt.Net;
+using System.Data;
+using System.Data.Common;
+using Npgsql;
 
 namespace CafeWebsite.Data
 {
@@ -8,45 +11,50 @@ namespace CafeWebsite.Data
     {
         public static async Task InitializeAsync(CafeDbContext context)
         {
-            bool migrationsApplied = false;
-            
+            var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production";
+            bool isDevelopment = environment == "Development";
+
             try
             {
-                // Try to apply migrations
+                // Check if migration history exists
+                bool historyExists = await TableExistsAsync(context, "__EFMigrationsHistory");
+                bool usersExists = await TableExistsAsync(context, "Users");
+
+                // Handle databases created without migrations (e.g., from EnsureCreated)
+                if (!historyExists && usersExists)
+                {
+                    Console.WriteLine("[DB Init] Pre-migration database detected. Applying manual fixes...");
+                    await AddMissingColumnsAsync(context);
+                    await CreateBaselineMigrationHistoryAsync(context);
+                    Console.WriteLine("[DB Init] Manual fix complete");
+                }
+
+                // Apply any pending migrations (should be none after baseline)
                 await context.Database.MigrateAsync();
                 Console.WriteLine("[DB Init] Database migrations applied successfully");
-                migrationsApplied = true;
             }
-            catch (Exception ex)
+            catch (Exception ex) when (isDevelopment)
             {
-                Console.WriteLine($"[DB Init] Migration error: {ex.Message}");
-                
-                // Check if it's a connection error vs migration conflict
-                if (ex.Message.Contains("connection") || ex.Message.Contains("network") || ex.Message.Contains("timeout"))
-                {
-                    Console.WriteLine("[DB Init] Connection failed - will retry on next request");
-                    throw; // Re-throw connection errors to fail fast
-                }
-            }
-
-            // Only proceed with seeding if migrations succeeded or database was newly created
-            if (!migrationsApplied)
-            {
+                Console.WriteLine($"[DB Init] Error: {ex}");
+                // In development, fall back to EnsureCreated
                 try
                 {
-                    // If migrations failed for other reasons, try EnsureCreated as fallback
-                    // This will create a fresh database if none exists
                     await context.Database.EnsureCreatedAsync();
-                    Console.WriteLine("[DB Init] Database created (no migrations applied)");
+                    Console.WriteLine("[DB Init] Database created (fallback)");
                 }
                 catch (Exception ex2)
                 {
-                    Console.WriteLine($"[DB Init] Error creating DB: {ex2.Message}");
+                    Console.WriteLine($"[DB Init] EnsureCreated failed: {ex2}");
                     throw;
                 }
             }
+            catch (Exception ex) when (!isDevelopment)
+            {
+                Console.WriteLine($"[DB Init] Fatal error: {ex}");
+                throw;
+            }
 
-            // Create admin user if not exists
+            // Seed admin user
             try
             {
                 var adminExists = await context.Users.AnyAsync(u => u.Username == "admin");
@@ -58,7 +66,7 @@ namespace CafeWebsite.Data
                         Email = "admin@cafesite.com",
                         PasswordHash = HashPassword("admin123"),
                         Role = "Admin",
-                        EmailConfirmed = true // Admin is pre-confirmed
+                        EmailConfirmed = true
                     };
                     context.Users.Add(adminUser);
                     await context.SaveChangesAsync();
@@ -68,15 +76,17 @@ namespace CafeWebsite.Data
             catch (Exception ex)
             {
                 Console.WriteLine($"[DB Init] Error creating admin: {ex.Message}");
-                // Table might not exist yet if migration hasn't been fully applied
-                if (ex.InnerException?.Message.Contains("column") == true || 
-                    ex.InnerException?.Message.Contains("does not exist") == true)
+                if (ex.InnerException?.Message.Contains("column") == true ||
+                    ex.InnerException?.Message.Contains("does not exist") == true ||
+                    ex.Message.Contains("column") ||
+                    ex.Message.Contains("does not exist"))
                 {
-                    Console.WriteLine("[DB Init] Users table schema not ready - will retry on next request");
+                    Console.WriteLine("[DB Init] Users table schema not ready - aborting");
                     throw;
                 }
             }
 
+            // Seed menu items if none exist
             var hasMenuItems = await context.MenuItems.AnyAsync();
             if (hasMenuItems)
             {
@@ -191,6 +201,151 @@ namespace CafeWebsite.Data
 
             await context.SaveChangesAsync();
             Console.WriteLine("[DB Init] Menu items seeded");
+        }
+
+        private static async Task<bool> TableExistsAsync(CafeDbContext context, string tableName)
+        {
+            var conn = context.Database.GetDbConnection();
+            var shouldClose = conn.State == ConnectionState.Closed;
+            if (shouldClose) await conn.OpenAsync();
+            
+            using var cmd = conn.CreateCommand();
+            var connType = conn.GetType().Name;
+            
+            if (connType.Contains("Npgsql") || connType.Contains("PostgreSQL"))
+            {
+                cmd.CommandText = @"
+                    SELECT EXISTS (
+                        SELECT 1 FROM information_schema.tables 
+                        WHERE table_name = @tableName AND table_schema = 'public'
+                    )";
+            }
+            else // SQLite
+            {
+                cmd.CommandText = @"
+                    SELECT COUNT(*) FROM sqlite_master 
+                    WHERE type='table' AND name = @tableName
+                ";
+            }
+            
+            var param = cmd.CreateParameter();
+            param.ParameterName = "@tableName";
+            param.Value = tableName;
+            cmd.Parameters.Add(param);
+            
+            var result = await cmd.ExecuteScalarAsync();
+            if (shouldClose) conn.Close();
+            
+            if (result is bool b) return b;
+            if (result is int i) return i > 0;
+            if (result is long l) return l > 0;
+            return Convert.ToBoolean(result);
+        }
+
+        private static async Task AddMissingColumnsAsync(CafeDbContext context)
+        {
+            var conn = context.Database.GetDbConnection();
+            var shouldClose = conn.State == ConnectionState.Closed;
+            if (shouldClose) await conn.OpenAsync();
+            
+            using var cmd = conn.CreateCommand();
+            
+            if (conn is Npgsql.NpgsqlConnection)
+            {
+                // PostgreSQL - add columns if not exists
+                cmd.CommandText = @"
+                    ALTER TABLE ""Users"" ADD COLUMN IF NOT EXISTS ""EmailConfirmed"" boolean NOT NULL DEFAULT false;
+                    ALTER TABLE ""Users"" ADD COLUMN IF NOT EXISTS ""EmailConfirmationToken"" text NULL;
+                    ALTER TABLE ""Users"" ADD COLUMN IF NOT EXISTS ""TokenExpiration"" timestamp with time zone NULL;
+                ";
+                await cmd.ExecuteNonQueryAsync();
+            }
+            else // SQLite
+            {
+                // SQLite - try to add columns, ignore if they exist
+                try
+                {
+                    cmd.CommandText = "ALTER TABLE Users ADD COLUMN EmailConfirmed INTEGER NOT NULL DEFAULT 0";
+                    await cmd.ExecuteNonQueryAsync();
+                }
+                catch { }
+                try
+                {
+                    cmd.CommandText = "ALTER TABLE Users ADD COLUMN EmailConfirmationToken TEXT NULL";
+                    await cmd.ExecuteNonQueryAsync();
+                }
+                catch { }
+                try
+                {
+                    cmd.CommandText = "ALTER TABLE Users ADD COLUMN TokenExpiration TEXT NULL";
+                    await cmd.ExecuteNonQueryAsync();
+                }
+                catch { }
+            }
+            
+            if (shouldClose) conn.Close();
+        }
+
+        private static async Task CreateBaselineMigrationHistoryAsync(CafeDbContext context)
+        {
+            var conn = context.Database.GetDbConnection();
+            var shouldClose = conn.State == ConnectionState.Closed;
+            if (shouldClose) await conn.OpenAsync();
+            
+            using var cmd = conn.CreateCommand();
+            
+            if (conn is Npgsql.NpgsqlConnection)
+            {
+                cmd.CommandText = @"
+                    CREATE TABLE IF NOT EXISTS ""__EFMigrationsHistory""
+                    (""MigrationId"" text NOT NULL CONSTRAINT ""PK___EFMigrationsHistory"" PRIMARY KEY,
+                     ""ProductVersion"" text NOT NULL)
+                ";
+                await cmd.ExecuteNonQueryAsync();
+
+                var migrations = new[]
+                {
+                    ("20260403061139_InitialCreate", "8.0.0"),
+                    ("20260427050249_AddEmailVerificationFieldsToUser", "8.0.0")
+                };
+
+                foreach (var (id, version) in migrations)
+                {
+                    cmd.CommandText = $@"
+                        INSERT INTO ""__EFMigrationsHistory"" (""MigrationId"", ""ProductVersion"")
+                        SELECT '{id}', '{version}'
+                        WHERE NOT EXISTS (SELECT 1 FROM ""__EFMigrationsHistory"" WHERE ""MigrationId"" = '{id}')
+                    ";
+                    await cmd.ExecuteNonQueryAsync();
+                }
+            }
+            else // SQLite
+            {
+                cmd.CommandText = @"
+                    CREATE TABLE IF NOT EXISTS __EFMigrationsHistory (
+                        MigrationId TEXT NOT NULL PRIMARY KEY,
+                        ProductVersion TEXT NOT NULL
+                    )
+                ";
+                await cmd.ExecuteNonQueryAsync();
+
+                var migrations = new[]
+                {
+                    ("20260403061139_InitialCreate", "8.0.0"),
+                    ("20260427050249_AddEmailVerificationFieldsToUser", "8.0.0")
+                };
+
+                foreach (var (id, version) in migrations)
+                {
+                    cmd.CommandText = $@"
+                        INSERT OR IGNORE INTO __EFMigrationsHistory (MigrationId, ProductVersion)
+                        VALUES ('{id}', '{version}')
+                    ";
+                    await cmd.ExecuteNonQueryAsync();
+                }
+            }
+            
+            if (shouldClose) conn.Close();
         }
 
         private static string HashPassword(string password)
