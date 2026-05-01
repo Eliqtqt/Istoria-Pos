@@ -4,35 +4,24 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Text.Json;
 
+// Set environment early
+var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production";
+
 // Disable file watching in production to avoid inotify limit issues
-var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 if (environment != "Development")
 {
     Environment.SetEnvironmentVariable("DOTNET_USE_POLLING_FILE_WATCHER", "1");
 }
 
-WebApplicationBuilder builder;
+var builder = WebApplication.CreateBuilder(args);
+
+// In production, configure app configuration without file watching
 if (environment != "Development")
 {
-    // In production, create builder with custom options to disable file watching
-    var options = new WebApplicationOptions
-    {
-        Args = args,
-        ApplicationName = System.Diagnostics.Process.GetCurrentProcess().ProcessName,
-        ContentRootPath = Directory.GetCurrentDirectory(),
-        EnvironmentName = environment
-    };
-    builder = WebApplication.CreateBuilder(options);
-
-    // Clear default configuration and add without file watching
     builder.Configuration.Sources.Clear();
     builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnChange: false)
                         .AddJsonFile($"appsettings.{environment}.json", optional: true, reloadOnChange: false)
                         .AddEnvironmentVariables();
-}
-else
-{
-    builder = WebApplication.CreateBuilder(args);
 }
 
 builder.Services.AddControllersWithViews();
