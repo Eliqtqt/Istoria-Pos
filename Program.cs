@@ -5,24 +5,34 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Text.Json;
 
 // Disable file watching in production to avoid inotify limit issues
-if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") != "Development")
+var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+if (environment != "Development")
 {
-    Environment.SetEnvironmentVariable("DOTNET_USE_POLLING_FILE_WATCHER", "false");
+    Environment.SetEnvironmentVariable("DOTNET_USE_POLLING_FILE_WATCHER", "1");
 }
 
-var builder = WebApplication.CreateBuilder(args);
-
-// Disable file watching in production to avoid inotify limit
-if (!builder.Environment.IsDevelopment())
+WebApplicationBuilder builder;
+if (environment != "Development")
 {
-    builder.Host.ConfigureAppConfiguration((hostingContext, config) =>
+    // In production, create builder with custom options to disable file watching
+    var options = new WebApplicationOptions
     {
-        config.Sources.Clear();
-        config.AddCommandLine(args);
-        config.AddJsonFile("appsettings.json", optional: false, reloadOnChange: false)
-              .AddJsonFile($"appsettings.{hostingContext.HostingEnvironment.EnvironmentName}.json", optional: true, reloadOnChange: false)
-              .AddEnvironmentVariables();
-    });
+        Args = args,
+        ApplicationName = System.Diagnostics.Process.GetCurrentProcess().ProcessName,
+        ContentRootPath = Directory.GetCurrentDirectory(),
+        EnvironmentName = environment
+    };
+    builder = WebApplication.CreateBuilder(options);
+
+    // Clear default configuration and add without file watching
+    builder.Configuration.Sources.Clear();
+    builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnChange: false)
+                        .AddJsonFile($"appsettings.{environment}.json", optional: true, reloadOnChange: false)
+                        .AddEnvironmentVariables();
+}
+else
+{
+    builder = WebApplication.CreateBuilder(args);
 }
 
 builder.Services.AddControllersWithViews();
