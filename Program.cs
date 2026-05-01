@@ -30,11 +30,12 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddSingleton<IEmailSender, EmailSender>();
 
 // Get connection string from configuration (ConnectionStrings__DefaultConnection) or DATABASE_URL
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")?.Trim();
+var rawConnection = builder.Configuration.GetConnectionString("DefaultConnection");
+var connectionString = rawConnection?.Trim();
 var envConnection = Environment.GetEnvironmentVariable("DATABASE_URL")?.Trim();
 var hasEnvVar = !string.IsNullOrEmpty(envConnection);
 
-Console.WriteLine($"[DEBUG] Configuration connection string (first 50 chars): '{(connectionString != null ? connectionString.Substring(0, Math.Min(50, connectionString.Length)) : "null")}...'");
+Console.WriteLine($"[DEBUG] Configuration connection string (first 50 chars): '{(rawConnection != null ? rawConnection.Substring(0, Math.Min(50, rawConnection.Length)) : "null")}...'");
 Console.WriteLine($"[DEBUG] DATABASE_URL env: '{envConnection ?? "null"}'");
 Console.WriteLine($"[DEBUG] Has DATABASE_URL: {hasEnvVar}");
 
@@ -50,9 +51,9 @@ if (hasEnvVar)
     connectionString = url;
     Console.WriteLine($"[DEBUG] Using DATABASE_URL as connection string with SSL enforced");
 }
-else if (string.IsNullOrEmpty(connectionString))
+else if (string.IsNullOrEmpty(connectionString) || connectionString.Contains("${") || connectionString.StartsWith("{"))
 {
-    // No connection string provided
+    // No valid connection string provided
     if (builder.Environment.IsDevelopment())
     {
         Console.WriteLine("[WARN] No database connection configured. Using SQLite fallback for development.");
@@ -60,10 +61,17 @@ else if (string.IsNullOrEmpty(connectionString))
     }
     else
     {
-        var errorMsg = "DATABASE_URL environment variable or ConnectionStrings__DefaultConnection is not set. Please configure database connection in Render environment variables.";
+        var errorMsg = "DATABASE_URL environment variable or ConnectionStrings__DefaultConnection is not set or contains a placeholder. Please configure database connection in Render environment variables.";
         Console.WriteLine($"[ERROR] {errorMsg}");
         throw new InvalidOperationException(errorMsg);
     }
+}
+else if ((connectionString.StartsWith("postgresql://", StringComparison.OrdinalIgnoreCase) || connectionString.StartsWith("postgres://", StringComparison.OrdinalIgnoreCase))
+         && !connectionString.Contains("ssl-mode="))
+{
+    // If the connection string is a URI but lacks ssl-mode, enforce it
+    connectionString += (connectionString.Contains("?") ? "&" : "?") + "ssl-mode=require";
+    Console.WriteLine($"[DEBUG] Added SSL mode requirement to URI connection string");
 }
 
 Console.WriteLine($"[DEBUG] Final connection string (first 50 chars): '{connectionString.Substring(0, Math.Min(50, connectionString.Length))}...'");
