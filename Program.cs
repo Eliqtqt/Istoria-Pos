@@ -133,6 +133,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 
 var app = builder.Build();
 
+// Build cache invalidation marker - 2026-05-05
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
