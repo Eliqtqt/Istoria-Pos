@@ -53,24 +53,24 @@ Console.WriteLine($"[DEBUG] Has DATABASE_URL: {hasEnvVar}");
  if (hasEnvVar)
  {
      // Parse DATABASE_URL (PostgreSQL URI) and convert to Npgsql connection string
-     var uri = new Uri(envConnection);
+     var uri = new Uri(envConnection!);
      var port = uri.Port > 0 ? uri.Port : 5432;
      var database = uri.AbsolutePath.TrimStart('/');
      var userInfo = uri.UserInfo.Split(':');
      var username = userInfo[0];
      var password = userInfo.Length > 1 ? userInfo[1] : "";
      
-     var builder = new System.Text.StringBuilder();
-     builder.Append($"Host={uri.Host}");
-     builder.Append($";Port={port}");
-     builder.Append($";Database={database}");
-     builder.Append($";Username={username}");
-     builder.Append($";Password={password}");
-      builder.Append(";SSL Mode=Require");
+     var connBuilder = new System.Text.StringBuilder();
+     connBuilder.Append($"Host={uri.Host}");
+     connBuilder.Append($";Port={port}");
+     connBuilder.Append($";Database={database}");
+     connBuilder.Append($";Username={username}");
+     connBuilder.Append($";Password={password}");
+     connBuilder.Append(";SSL Mode=Require");
      // Include Trust Server Certificate for Render (or if you have custom CA)
-     builder.Append(";Trust Server Certificate=true");
+     connBuilder.Append(";Trust Server Certificate=true");
      
-     connectionString = builder.ToString();
+     connectionString = connBuilder.ToString();
      Console.WriteLine($"[DEBUG] Parsed DATABASE_URL into Npgsql connection string");
  }
 else if (string.IsNullOrEmpty(connectionString) || connectionString.Contains("${") || connectionString.StartsWith("{"))
