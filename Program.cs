@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Text.Json;
 
 // Set environment early
+// Cache-bust: 2026-05-05T22:08Z
 var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production";
 
 // Disable file watching in production to avoid inotify limit issues
