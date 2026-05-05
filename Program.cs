@@ -139,7 +139,6 @@ using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
     var db = services.GetRequiredService<CafeDbContext>();
-    db.Database.Migrate();
     await DbInitializer.InitializeAsync(db);
 }
 

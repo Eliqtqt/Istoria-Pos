@@ -16,28 +16,20 @@ namespace CafeWebsite.Data
 
             try
             {
-                // Check if migration history exists
-                bool historyExists = await TableExistsAsync(context, "__EFMigrationsHistory");
+                // Always ensure required migration baseline entries exist in history table
+                await EnsureBaselineMigrationsAsync(context);
+                
                 bool usersExists = await TableExistsAsync(context, "Users");
 
-                // Handle databases created without migrations (e.g., from EnsureCreated)
-                if (!historyExists && usersExists)
+                // If database was created without migrations (EnsureCreated), we need to manually add missing columns
+                if (usersExists)
                 {
-                    Console.WriteLine("[DB Init] Pre-migration database detected. Applying manual fixes...");
                     await AddMissingColumnsAsync(context);
-                    await CreateBaselineMigrationHistoryAsync(context);
-                    Console.WriteLine("[DB Init] Manual fix complete");
                 }
 
-            // Apply any pending migrations (should be none after baseline)
-            await context.Database.MigrateAsync();
-            Console.WriteLine("[DB Init] Database migrations applied successfully");
-
-            // Safety net: ensure required user columns exist even if migrations are out of sync
-            if (usersExists)
-            {
-                await AddMissingColumnsAsync(context);
-            }
+                // Apply any pending migrations beyond baseline
+                await context.Database.MigrateAsync();
+                Console.WriteLine("[DB Init] Database migrations applied successfully");
             }
             catch (Exception ex) when (isDevelopment)
             {
@@ -380,6 +372,48 @@ namespace CafeWebsite.Data
             }
             
             if (shouldClose) conn.Close();
+        }
+
+        private static async Task EnsureBaselineMigrationsAsync(CafeDbContext context)
+        {
+            var conn = context.Database.GetDbConnection();
+            var shouldClose = conn.State == ConnectionState.Closed;
+            if (shouldClose) await conn.OpenAsync();
+            
+            try
+            {
+                using var cmd = conn.CreateCommand();
+                if (conn is Npgsql.NpgsqlConnection)
+                {
+                    // Ensure __EFMigrationsHistory exists and has required baseline entries
+                    cmd.CommandText = @"
+                        CREATE TABLE IF NOT EXISTS ""__EFMigrationsHistory""
+                        (""MigrationId"" text NOT NULL CONSTRAINT ""PK___EFMigrationsHistory"" PRIMARY KEY,
+                         ""ProductVersion"" text NOT NULL)
+                    ";
+                    await cmd.ExecuteNonQueryAsync();
+
+                    var migrations = new[]
+                    {
+                        ("20260403061139_InitialCreate", "8.0.0"),
+                        ("20260427050249_AddEmailVerificationFieldsToUser", "8.0.0")
+                    };
+
+                    foreach (var (id, version) in migrations)
+                    {
+                        cmd.CommandText = $@"
+                            INSERT INTO ""__EFMigrationsHistory"" (""MigrationId"", ""ProductVersion"")
+                            SELECT '{id}', '{version}'
+                            WHERE NOT EXISTS (SELECT 1 FROM ""__EFMigrationsHistory"" WHERE ""MigrationId"" = '{id}')
+                        ";
+                        await cmd.ExecuteNonQueryAsync();
+                    }
+                }
+            }
+            finally
+            {
+                if (shouldClose) conn.Close();
+            }
         }
 
         private static string HashPassword(string password)
