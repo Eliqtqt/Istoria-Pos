@@ -3,6 +3,7 @@ using CafeWebsite.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Text.Json;
+using System;
 
 // Set environment early
 // Cache-bust: 2026-05-05T22:08Z
