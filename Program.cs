@@ -50,18 +50,29 @@ Console.WriteLine($"[DEBUG] Configuration connection string (first 50 chars): '{
 Console.WriteLine($"[DEBUG] DATABASE_URL env: '{envConnection ?? "null"}'");
 Console.WriteLine($"[DEBUG] Has DATABASE_URL: {hasEnvVar}");
 
-if (hasEnvVar)
-{
-    // Render provides DATABASE_URL as a PostgreSQL URI. Npgsql supports this format directly.
-    // Ensure SSL mode is required for Render's hosted PostgreSQL.
-    var url = envConnection!;
-    if (!url.Contains("?ssl-mode=") && !url.Contains("&ssl-mode="))
-    {
-        url += (url.Contains("?") ? "&" : "?") + "ssl-mode=require";
-    }
-    connectionString = url;
-    Console.WriteLine($"[DEBUG] Using DATABASE_URL as connection string with SSL enforced");
-}
+ if (hasEnvVar)
+ {
+     // Parse DATABASE_URL (PostgreSQL URI) and convert to Npgsql connection string
+     var uri = new Uri(envConnection);
+     var port = uri.Port > 0 ? uri.Port : 5432;
+     var database = uri.AbsolutePath.TrimStart('/');
+     var userInfo = uri.UserInfo.Split(':');
+     var username = userInfo[0];
+     var password = userInfo.Length > 1 ? userInfo[1] : "";
+     
+     var builder = new System.Text.StringBuilder();
+     builder.Append($"Host={uri.Host}");
+     builder.Append($";Port={port}");
+     builder.Append($";Database={database}");
+     builder.Append($";Username={username}");
+     builder.Append($";Password={password}");
+     builder.Append(";SslMode=Require");
+     // Include Trust Server Certificate for Render (or if you have custom CA)
+     builder.Append(";Trust Server Certificate=true");
+     
+     connectionString = builder.ToString();
+     Console.WriteLine($"[DEBUG] Parsed DATABASE_URL into Npgsql connection string");
+ }
 else if (string.IsNullOrEmpty(connectionString) || connectionString.Contains("${") || connectionString.StartsWith("{"))
 {
     // No valid connection string provided
