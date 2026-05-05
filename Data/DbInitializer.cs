@@ -29,9 +29,15 @@ namespace CafeWebsite.Data
                     Console.WriteLine("[DB Init] Manual fix complete");
                 }
 
-                // Apply any pending migrations (should be none after baseline)
-                await context.Database.MigrateAsync();
-                Console.WriteLine("[DB Init] Database migrations applied successfully");
+            // Apply any pending migrations (should be none after baseline)
+            await context.Database.MigrateAsync();
+            Console.WriteLine("[DB Init] Database migrations applied successfully");
+
+            // Safety net: ensure required user columns exist even if migrations are out of sync
+            if (usersExists)
+            {
+                await AddMissingColumnsAsync(context);
+            }
             }
             catch (Exception ex) when (isDevelopment)
             {
