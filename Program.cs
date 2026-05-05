@@ -125,7 +125,9 @@ var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
-    await DbInitializer.InitializeAsync(services.GetRequiredService<CafeDbContext>());
+    var db = services.GetRequiredService<CafeDbContext>();
+    db.Database.Migrate();
+    await DbInitializer.InitializeAsync(db);
 }
 
 if (!app.Environment.IsDevelopment())
