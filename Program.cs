@@ -66,7 +66,7 @@ Console.WriteLine($"[DEBUG] Has DATABASE_URL: {hasEnvVar}");
      builder.Append($";Database={database}");
      builder.Append($";Username={username}");
      builder.Append($";Password={password}");
-     builder.Append(";SslMode=Require");
+      builder.Append(";SSL Mode=Require");
      // Include Trust Server Certificate for Render (or if you have custom CA)
      builder.Append(";Trust Server Certificate=true");
      
