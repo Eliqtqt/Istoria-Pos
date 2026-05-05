@@ -5,16 +5,12 @@
       "PackagePath": "staticwebassets\\CafeWebsite.bundle.scp.css"
     },
     {
-      "Id": "C:\\Users\\Admin\\Desktop\\cafewebsite\\wwwroot\\Images\\gcash.jpg",
-      "PackagePath": "staticwebassets\\Images\\gcash.jpg"
+      "Id": "C:\\Users\\Admin\\Desktop\\cafewebsite\\wwwroot\\Images\\cement.jpg",
+      "PackagePath": "staticwebassets\\Images\\cement.jpg"
     },
     {
       "Id": "C:\\Users\\Admin\\Desktop\\cafewebsite\\wwwroot\\Images\\image.png",
       "PackagePath": "staticwebassets\\Images\\image.png"
-    },
-    {
-      "Id": "C:\\Users\\Admin\\Desktop\\cafewebsite\\wwwroot\\Images\\logo.jpg",
-      "PackagePath": "staticwebassets\\Images\\logo.jpg"
     },
     {
       "Id": "C:\\Users\\Admin\\Desktop\\cafewebsite\\wwwroot\\Videos\\istoriajo.mp4",

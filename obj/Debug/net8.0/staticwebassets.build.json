@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "ei3cfn8msll//aO/N+hwdVvBxPjMMFaOfURSHbhshys=",
+  "Hash": "K0fxmXLPnrJ66b+ngkJFtZYf9D3OUfDgXphC9/G0xlU=",
   "Source": "CafeWebsite",
   "BasePath": "_content/CafeWebsite",
   "Mode": "Default",
@@ -93,12 +93,12 @@
       "OriginalItemSpec": "wwwroot\\favicon.ico"
     },
     {
-      "Identity": "C:\\Users\\Admin\\Desktop\\cafewebsite\\wwwroot\\Images\\gcash.jpg",
+      "Identity": "C:\\Users\\Admin\\Desktop\\cafewebsite\\wwwroot\\Images\\cement.jpg",
       "SourceId": "CafeWebsite",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Admin\\Desktop\\cafewebsite\\wwwroot\\",
       "BasePath": "_content/CafeWebsite",
-      "RelativePath": "Images/gcash.jpg",
+      "RelativePath": "Images/cement.jpg",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -109,7 +109,7 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\Images\\gcash.jpg"
+      "OriginalItemSpec": "wwwroot\\Images\\cement.jpg"
     },
     {
       "Identity": "C:\\Users\\Admin\\Desktop\\cafewebsite\\wwwroot\\Images\\image.png",
@@ -129,25 +129,6 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Images\\image.png"
-    },
-    {
-      "Identity": "C:\\Users\\Admin\\Desktop\\cafewebsite\\wwwroot\\Images\\logo.jpg",
-      "SourceId": "CafeWebsite",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Admin\\Desktop\\cafewebsite\\wwwroot\\",
-      "BasePath": "_content/CafeWebsite",
-      "RelativePath": "Images/logo.jpg",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
-      "AssetMergeSource": "",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\Images\\logo.jpg"
     },
     {
       "Identity": "C:\\Users\\Admin\\Desktop\\cafewebsite\\wwwroot\\js\\site.js",
