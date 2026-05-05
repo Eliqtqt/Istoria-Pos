@@ -1,3 +1,5 @@
+# Build arg to invalidate cache - 2026-05-05
+ARG CACHE_BUST=2026-05-05T22-10Z
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 WORKDIR /app
 EXPOSE 8080
