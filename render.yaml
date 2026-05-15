@@ -1,7 +1,17 @@
 services:
   - type: web
-    name: cafewebsite
+    name: istoria-pos
     env: docker
-    region: oregon
-    rootDirectory: .
-    dockerfilePath: Dockerfile
+    region: ohio
+    buildCommand: ''
+    startCommand: dotnet CafeWebsite.dll
+    autoDeploy: true
+    envVars:
+      - key: ASPNETCORE_ENVIRONMENT
+        value: Production
+      - key: ASPNETCORE_URLS
+        value: http://+:8080
+      - key: DATABASE_URL
+        sync: false
+      - key: DOTNET_USE_POLLING_FILE_WATCHER
+        value: '1'
