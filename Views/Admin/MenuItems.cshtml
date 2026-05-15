@@ -1,4 +1,4 @@
-@model IEnumerable<CafeWebsite.Models.MenuItem>
+﻿@model IEnumerable<CafeWebsite.Models.MenuItem>
 @{
     ViewData["Title"] = "Menu Items";
 }
@@ -6,7 +6,7 @@
 <style>
     .admin-header {
         background: linear-gradient(135deg, #000 0%, #1a0f0a 50%, #0d0705 100%);
-        padding: 3rem;
+        padding: 2rem 3rem;
         margin-bottom: 2.5rem;
         border-radius: 16px;
         color: #fff;
@@ -182,7 +182,7 @@
     }
 </style>
 
-<div class="container-fluid" style="padding: 2.5rem 2rem;">
+<div class="container-fluid" style="padding: 1rem 2rem 2.5rem;">
     <!-- Admin Header -->
     <div class="admin-header">
         <div class="d-flex justify-content-between align-items-center">
@@ -235,7 +235,7 @@
                             <td><span style="color: #666; font-weight: 600;">#</span>@item.Id</td>
                             <td><strong style="color: #000;">@item.Name</strong></td>
                             <td><span class="badge-category">@item.Category</span></td>
-                            <td><strong style="color: #000;">₱@item.Price.ToString("F2")</strong></td>
+                            <td><strong style="color: #000;">â‚±@item.Price.ToString("F2")</strong></td>
                             <td>
                                 @if (item.Rating > 0)
                                 {
@@ -266,3 +266,4 @@
         </div>
     </div>
 </div>
+

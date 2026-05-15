@@ -1,4 +1,4 @@
-@model CafeWebsite.Models.MenuItem
+﻿@model CafeWebsite.Models.MenuItem
 @{
     ViewData["Title"] = "Edit Menu Item";
     var categories = new[] { "All", "Coffee", "Non-Coffee", "Specials", "Latte", "Pasta", "Potato", "Chicken Poppers" };
@@ -7,7 +7,7 @@
 <style>
     .admin-header {
         background: linear-gradient(135deg, #000 0%, #1a0f0a 50%, #0d0705 100%);
-        padding: 3rem;
+        padding: 2rem 3rem;
         margin-bottom: 2.5rem;
         border-radius: 16px;
         color: #fff;
@@ -187,7 +187,7 @@
     }
 </style>
 
-<div class="container-fluid" style="padding: 2.5rem 2rem;">
+<div class="container-fluid" style="padding: 1rem 2rem 2.5rem;">
     <!-- Header -->
     <div class="admin-header">
         <div class="d-flex justify-content-between align-items-center">
@@ -233,14 +233,14 @@
                     <div class="col-md-4 mb-4">
                         <label for="Price" class="form-label-custom">Price *</label>
                         <div class="input-group-custom">
-                            <span>₱</span>
+                            <span>â‚±</span>
                             <input type="number" id="Price" name="Price" class="form-control-custom" step="0.01" min="0.01" value="@Model.Price" required style="border-radius: 0;" />
                         </div>
                     </div>
                     <div class="col-md-4 mb-4">
                         <label for="ImageUrl" class="form-label-custom">Image URL</label>
                         <input type="text" id="ImageUrl" name="ImageUrl" class="form-control-custom" value="@Model.ImageUrl" placeholder="Paste image URL here..." />
-                        <div class="help-text">Right-click an image online → Copy image address → Paste here</div>
+                        <div class="help-text">Right-click an image online â†’ Copy image address â†’ Paste here</div>
                         @if (!string.IsNullOrEmpty(Model.ImageUrl))
                         {
                             <div class="image-preview">
@@ -294,3 +294,4 @@
         </div>
     </div>
 </div>
+

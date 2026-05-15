@@ -1,4 +1,4 @@
-@model CafeWebsite.Models.MenuItem
+﻿@model CafeWebsite.Models.MenuItem
 @{
     ViewData["Title"] = "Delete Menu Item";
 }
@@ -6,7 +6,7 @@
 <style>
     .admin-header {
         background: linear-gradient(135deg, #000 0%, #1a0f0a 50%, #0d0705 100%);
-        padding: 3rem;
+        padding: 2rem 3rem;
         margin-bottom: 2.5rem;
         border-radius: 16px;
         color: #fff;
@@ -141,7 +141,7 @@
     }
 </style>
 
-<div class="container-fluid" style="padding: 2.5rem 2rem;">
+<div class="container-fluid" style="padding: 1rem 2rem 2.5rem;">
     <!-- Header -->
     <div class="admin-header">
         <div class="d-flex justify-content-between align-items-center">
@@ -172,7 +172,7 @@
             </dl>
             <dl class="info-item">
                 <dt>Price</dt>
-                <dd>₱@Model.Price.ToString("F2")</dd>
+                <dd>â‚±@Model.Price.ToString("F2")</dd>
             </dl>
         </div>
         <div class="card-footer">
@@ -189,3 +189,4 @@
         </div>
     </div>
 </div>
+
