@@ -78,10 +78,10 @@
                                     </td>
                                     <td>
                                         <div class="price-cell">
-                                            <span class="base-price">₱@item.Price.ToString("F2")</span>
+                                            <span class="base-price">&#8369;@item.Price.ToString("F2")</span>
                                             @if (item.GetAdditionalPrice() > 0)
                                             {
-                                                <span class="add-price">+ ₱@item.GetAdditionalPrice().ToString("F2")</span>
+                                                <span class="add-price">+ &#8369;@item.GetAdditionalPrice().ToString("F2")</span>
                                             }
                                         </div>
                                     </td>
@@ -112,7 +112,7 @@
                                             </form>
                                         </div>
                                     </td>
-                                    <td class="item-total">₱@item.GetTotalPrice().ToString("F2")</td>
+                                    <td class="item-total">&#8369;@item.GetTotalPrice().ToString("F2")</td>
                                     <td>
                                         <form asp-controller="Cart" asp-action="Remove" method="post">
                                             <input type="hidden" name="id" value="@item.MenuItemId" />
@@ -154,7 +154,7 @@
                 <div class="summary-details">
                     <div class="summary-row">
                         <span>Subtotal</span>
-                        <span>₱@total.ToString("F2")</span>
+                        <span>&#8369;@total.ToString("F2")</span>
                     </div>
                     <div class="summary-row">
                         <span><i class="fas fa-truck"></i> Delivery</span>
@@ -164,7 +164,7 @@
                 
                 <div class="summary-total">
                     <span>Total</span>
-                    <span>₱@total.ToString("F2")</span>
+                    <span>&#8369;@total.ToString("F2")</span>
                 </div>
 
                 <div class="checkout-section">
@@ -572,7 +572,7 @@
         margin-right: 5px;
     }
 
-    @@media (max-width: 992px) {
+    @media (max-width: 992px) {
         .cart-content {
             grid-template-columns: 1fr;
         }
@@ -582,7 +582,7 @@
         }
     }
     
-    @@media (max-width: 768px) {
+    @media (max-width: 768px) {
         .cart-header h1 {
             font-size: 2rem;
         }

@@ -54,7 +54,7 @@
             <div class="product-info">
                 <div class="product-header">
                     <h1>@Model.Name</h1>
-                    <div class="product-price">₱@Model.Price.ToString("F2")</div>
+                    <div class="product-price">&#8369;@Model.Price.ToString("F2")</div>
                 </div>
 
                 <!-- Rating Section -->
@@ -93,7 +93,7 @@
                             <input type="hidden" name="isCustomizable" value="true" />
                             <button type="submit" class="btn-add-cart">
                                 <i class="fas fa-shopping-bag"></i>
-                                <span>Add to Cart - ₱@Model.Price.ToString("F2")</span>
+                                <span>Add to Cart - &#8369;@Model.Price.ToString("F2")</span>
                             </button>
                         </form>
                         <button class="btn-customize-main" onclick="openCustomizeModal(@Model.Id, '@Model.Name', @Model.Price, true)">
@@ -111,7 +111,7 @@
                             <input type="hidden" name="quantity" value="1" />
                             <button type="submit" class="btn-add-cart">
                                 <i class="fas fa-shopping-bag"></i>
-                                <span>Add to Cart - ₱@Model.Price.ToString("F2")</span>
+                                <span>Add to Cart - &#8369;@Model.Price.ToString("F2")</span>
                             </button>
                         </form>
                     }
@@ -176,15 +176,15 @@
                         
                         <div class="customize-item-header">
                             <h4>@Model.Name</h4>
-                            <p>Base Price: ₱@Model.Price.ToString("F2")</p>
+                            <p>Base Price: &#8369;@Model.Price.ToString("F2")</p>
                         </div>
                         
                         <div class="option-group">
                             <label><i class="fas fa-expand"></i> Size</label>
                             <div class="size-options">
                                 <label><input type="radio" name="size" value="Regular" checked><span>Regular</span></label>
-                                <label><input type="radio" name="size" value="Large"><span>Large +₱20</span></label>
-                                <label><input type="radio" name="size" value="Extra Large"><span>XL +₱35</span></label>
+                                <label><input type="radio" name="size" value="Large"><span>Large +&#8369;20</span></label>
+                                <label><input type="radio" name="size" value="Extra Large"><span>XL +&#8369;35</span></label>
                             </div>
                         </div>
                         
@@ -205,7 +205,7 @@
                         </div>
                         
                         <div class="option-group">
-                            <label><i class="fas fa-plus-circle"></i> Toppings (+₱15 each)</label>
+                            <label><i class="fas fa-plus-circle"></i> Toppings (+&#8369;15 each)</label>
                             <div class="topping-options">
                                 <label><input type="checkbox" name="toppings" value="Pearl"><span>Pearl</span></label>
                                 <label><input type="checkbox" name="toppings" value="Coconut"><span>Coconut</span></label>
@@ -232,7 +232,7 @@
                         
                         <div class="total-display">
                             <span>Total:</span>
-                            <span id="detailTotal">₱@Model.Price.ToString("F2")</span>
+                            <span id="detailTotal">&#8369;@Model.Price.ToString("F2")</span>
                         </div>
                     </form>
                 </div>
@@ -791,7 +791,7 @@
             additionalPrice += toppings * 15;
             
             var total = (basePrice + additionalPrice) * quantity;
-            $('#detailTotal').text('₱' + total.toFixed(2));
+            $('#detailTotal').text('&#8369;' + total.toFixed(2));
         }
 
         function addCustomizedToCart() {
