@@ -1,4 +1,4 @@
-# Nixpacks config — force .NET 8.0 provider so Render won't auto-detect Go
+﻿# Minimal Nixpacks config - detect .NET 8
 [phases.build]
 cmds = ["dotnet publish CafeWebsite.csproj -c Release -o out --no-restore"]
 
