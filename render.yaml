@@ -3,7 +3,7 @@ services:
     name: istoria-pos
     env: nixpacks
     region: ohio
-    buildCommand: bash build.sh
+    buildCommand: ./build.sh
     startCommand: dotnet ./out/CafeWebsite.dll
     autoDeploy: true
     envVars:
@@ -15,3 +15,5 @@ services:
         sync: false
       - key: DOTNET_USE_POLLING_FILE_WATCHER
         value: '1'
+      - key: DOTNET_SKIP_FIRST_TIME_EXPERIENCE
+        value: 'true'
