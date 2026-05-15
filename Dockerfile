@@ -1,21 +1,24 @@
-# Build arg to invalidate cache - 2026-05-05
-ARG CACHE_BUST=2026-05-05T22-10Z
-FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
-WORKDIR /app
-EXPOSE 8080
-ENV ASPNETCORE_URLS=http://+:8080
+# Build arg to invalidate cache - 2026-05-16
+ARG CACHE_BUST=2026-05-16T08:15Z
 
+# Build stage
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
+
 COPY ["CafeWebsite.csproj", "./"]
-RUN dotnet restore "CafeWebsite.csproj"
+RUN dotnet restore "CafeWebsite.csproj" --verbosity minimal
+
 COPY . .
-RUN dotnet build "CafeWebsite.csproj" -c Release -o /app/build
+RUN dotnet publish "CafeWebsite.csproj" -c Release -o /app/publish --no-restore --verbosity minimal
 
-FROM build AS publish
-RUN dotnet publish "CafeWebsite.csproj" -c Release -o /app/publish
-
-FROM base AS final
+# Runtime stage
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
 WORKDIR /app
-COPY --from=publish /app/publish .
+
+EXPOSE 8080
+ENV ASPNETCORE_URLS=http://+:8080
+ENV DOTNET_USE_POLLING_FILE_WATCHER=1
+ENV DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1
+
+COPY --from=build /app/publish .
 ENTRYPOINT ["dotnet", "CafeWebsite.dll"]

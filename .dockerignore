@@ -2,28 +2,9 @@
 bin/
 obj/
 
-# Git
-.git/
-.gitignore
-
-# IDE
-.vscode/
-.idea/
-*.suo
-*.user
-*.userosscache
-*.sln.docstates
-
 # OS
 .DS_Store
 Thumbs.db
-
-# .NET
-*.psm1
-*.psd1
-*.nupkg
-*.nuget.props
-*.nuget.targets
 
 # Node
 node_modules/
@@ -34,18 +15,17 @@ package-lock.json
 yarn.lock
 pnpm-lock.yaml
 
+# .NET
+*.psm1
+*.psd1
+*.nupkg
+*.nuget.props
+*.nuget.targets
+
 # Temporary files
 *.tmp
 *.temp
 *.log
-
-# Render specific
-.render/
-
-# Environment files (except production ones you want to keep)
-.env
-.env.local
-.env.*.local
 
 # Tests
 Tests/
@@ -53,18 +33,6 @@ Tests/
 test/
 tests/
 
-# Documentation
-README.md
-CHANGELOG.md
-docs/
-
-# Docker
-Dockerfile*
-docker-compose*
-.dockerignore
-
-# Misc
-*.md
-*.yml
-*.yaml
-!.dockerignore
+# Local dev databases
+*.db
+*.db-shm
