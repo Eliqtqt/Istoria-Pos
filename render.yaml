@@ -1,10 +1,10 @@
 services:
   - type: web
     name: istoria-pos
-    env: docker
+    env: nixpacks
     region: ohio
-    buildCommand: ''
-    startCommand: dotnet CafeWebsite.dll
+    buildCommand: bash build.sh
+    startCommand: dotnet ./out/CafeWebsite.dll
     autoDeploy: true
     envVars:
       - key: ASPNETCORE_ENVIRONMENT
