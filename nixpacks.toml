@@ -1,4 +1,8 @@
-﻿# Minimal Nixpacks config - detect .NET 8
+﻿providers = ["dotnet"]
+
+[build]
+base = "mcr.microsoft.com/dotnet/aspnet:8.0"
+
 [phases.build]
 cmds = ["dotnet publish CafeWebsite.csproj -c Release -o out --no-restore"]
 
