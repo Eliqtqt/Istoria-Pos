@@ -4,28 +4,29 @@
 }
 
 <style>
-    /* Coffee Shop Theme - Matching Users.cshtml */
     .detail-header {
-        background: linear-gradient(135deg, #3e2723 0%, #5d4037 50%, #4e342e 100%);
+        background: linear-gradient(135deg, #000 0%, #1a0f0a 50%, #0d0705 100%);
         padding: 2rem 3rem;
         margin-bottom: 2.5rem;
         border-radius: 16px;
         color: #fff;
-        box-shadow: 0 8px 32px rgba(62, 39, 35, 0.3);
+        box-shadow: 0 8px 32px rgba(44, 24, 16, 0.4);
+        border: 1px solid rgba(212, 175, 135, 0.2);
     }
-    
+
     .detail-header h1 {
         font-family: 'Playfair Display', Georgia, serif;
         font-size: 1.8rem;
-        font-weight: 600;
+        font-weight: 400;
+        letter-spacing: 1px;
         display: flex;
         align-items: center;
         gap: 0.75rem;
     }
-    
+
     .back-btn {
-        background: rgba(255,255,255,0.15);
-        color: #fff;
+        background: #fff;
+        color: #000;
         padding: 0.75rem 1.5rem;
         border-radius: 25px;
         text-decoration: none;
@@ -36,52 +37,52 @@
         font-weight: 500;
         font-size: 0.9rem;
     }
-    
+
     .back-btn:hover {
-        background: rgba(255,255,255,0.25);
-        color: #fff;
+        background: #f5f0eb;
+        color: #000;
         transform: translateX(-3px);
     }
-    
+
     .coffee-card {
         background: #fff;
-        border: none;
+        border: 1px solid #e8e0d8;
         border-radius: 16px;
-        box-shadow: 0 4px 24px rgba(0,0,0,0.08);
         overflow: hidden;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.06);
         margin-bottom: 1.5rem;
     }
-    
+
     .coffee-card .card-header {
-        background: linear-gradient(135deg, #5d4037 0%, #4e342e 100%);
+        background: linear-gradient(135deg, #000 0%, #333 100%);
         color: #fff;
         padding: 1.25rem 1.5rem;
         border: none;
         font-family: 'Helvetica Neue', sans-serif;
-        letter-spacing: 0.5px;
-        font-size: 0.9rem;
+        letter-spacing: 1px;
+        font-size: 0.85rem;
         display: flex;
         align-items: center;
         gap: 0.5rem;
     }
-    
+
     .coffee-card .card-body {
         padding: 2rem;
     }
-    
+
     .info-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
         gap: 1.5rem;
     }
-    
+
     .info-item {
         padding: 1.25rem;
         background: #faf8f5;
         border-radius: 12px;
-        border-left: 3px solid #6d4c41;
+        border-left: 3px solid #000;
     }
-    
+
     .info-item dt {
         color: #666;
         font-size: 0.75rem;
@@ -89,17 +90,16 @@
         letter-spacing: 1px;
         margin-bottom: 0.5rem;
     }
-    
+
     .info-item dd {
-        color: #3e2723;
+        color: #000;
         font-size: 1.1rem;
         font-weight: 600;
         margin: 0;
     }
-    
-    /* Role badges */
+
     .badge-admin {
-        background: linear-gradient(135deg, #3e2723 0%, #5d4037 100%);
+        background: linear-gradient(135deg, #000 0%, #333 100%);
         color: #fff;
         padding: 0.5rem 1rem;
         border-radius: 20px;
@@ -109,11 +109,11 @@
         align-items: center;
         gap: 0.5rem;
     }
-    
+
     .badge-customer {
-        background: #f5f0eb;
-        color: #5d4037;
-        border: 1px solid #d7ccc8;
+        background: #faf8f5;
+        color: #000;
+        border: 1px solid #e8e0d8;
         padding: 0.5rem 1rem;
         border-radius: 20px;
         font-size: 0.8rem;
@@ -122,27 +122,26 @@
         align-items: center;
         gap: 0.5rem;
     }
-    
-    /* Form styling */
+
     .coffee-form-select {
         width: 100%;
         padding: 0.75rem 1rem;
-        border: 1px solid #d7ccc8;
+        border: 1px solid #e8e0d8;
         border-radius: 12px;
         background: #faf8f5;
-        color: #3e2723;
+        color: #000;
         font-size: 0.95rem;
         transition: all 0.3s ease;
     }
-    
+
     .coffee-form-select:focus {
         outline: none;
-        border-color: #6d4c41;
-        box-shadow: 0 0 0 3px rgba(109, 76, 65, 0.1);
+        border-color: #000;
+        box-shadow: 0 0 0 3px rgba(44, 24, 16, 0.1);
     }
-    
+
     .coffee-btn {
-        background: linear-gradient(135deg, #6d4c41 0%, #5d4037 100%);
+        background: linear-gradient(135deg, #000 0%, #333 100%);
         color: #fff;
         padding: 0.85rem 1.5rem;
         border: none;
@@ -153,56 +152,54 @@
         align-items: center;
         gap: 0.5rem;
         font-size: 0.9rem;
+        cursor: pointer;
     }
-    
+
     .coffee-btn:hover {
-        background: linear-gradient(135deg, #5d4037 0%, #3e2723 100%);
+        background: linear-gradient(135deg, #333 0%, #000 100%);
         color: #fff;
         transform: translateY(-2px);
-        box-shadow: 0 6px 16px rgba(62, 39, 35, 0.4);
+        box-shadow: 0 6px 16px rgba(44, 24, 16, 0.4);
     }
-    
-    /* Info alert */
+
     .coffee-alert {
         background: linear-gradient(135deg, #faf8f5 0%, #f5f0eb 100%);
-        border: 1px solid #d7ccc8;
+        border: 1px solid #e8e0d8;
         border-radius: 12px;
         padding: 1.25rem 1.5rem;
-        color: #5d4037;
+        color: #000;
         display: flex;
         align-items: center;
         gap: 0.75rem;
     }
-    
-    /* Table styling */
+
     .coffee-table {
         width: 100%;
         border-collapse: collapse;
     }
-    
+
     .coffee-table th {
         background: #faf8f5;
-        color: #3e2723;
+        color: #000;
         font-weight: 700;
         padding: 1.25rem 1.5rem;
         text-align: left;
-        border-bottom: 2px solid #d7ccc8;
+        border-bottom: 2px solid #000;
         font-size: 0.8rem;
         text-transform: uppercase;
         letter-spacing: 1px;
     }
-    
+
     .coffee-table td {
         padding: 1.25rem 1.5rem;
-        border-bottom: 1px solid #eee8e5;
+        border-bottom: 1px solid #f0ebe5;
         color: #4a4a4a;
     }
-    
+
     .coffee-table tr:hover {
         background: #faf8f5;
     }
-    
-    /* Status badges */
+
     .badge-pending {
         background: #fff3e0;
         color: #e65100;
@@ -211,7 +208,7 @@
         font-size: 0.75rem;
         font-weight: 600;
     }
-    
+
     .badge-confirmed {
         background: #e3f2fd;
         color: #1565c0;
@@ -220,7 +217,7 @@
         font-size: 0.75rem;
         font-weight: 600;
     }
-    
+
     .badge-preparing {
         background: #f3e5f5;
         color: #7b1fa2;
@@ -229,7 +226,7 @@
         font-size: 0.75rem;
         font-weight: 600;
     }
-    
+
     .badge-ready {
         background: #e8f5e9;
         color: #2e7d32;
@@ -238,7 +235,7 @@
         font-size: 0.75rem;
         font-weight: 600;
     }
-    
+
     .badge-completed {
         background: #f5f5f5;
         color: #616161;
@@ -247,7 +244,7 @@
         font-size: 0.75rem;
         font-weight: 600;
     }
-    
+
     .badge-cancelled {
         background: #ffebee;
         color: #c62828;
@@ -256,29 +253,28 @@
         font-size: 0.75rem;
         font-weight: 600;
     }
-    
+
     .order-total {
-        color: #3e2723;
+        color: #000;
         font-weight: 700;
     }
-    
+
     .empty-state {
         padding: 4rem 2rem;
         text-align: center;
-        color: #666;
+        color: #999;
     }
-    
+
     .empty-state i {
         font-size: 3rem;
-        color: #bcaaa4;
+        color: #ccc;
         margin-bottom: 1rem;
     }
-    
-    /* User avatar */
+
     .user-avatar-large {
         width: 80px;
         height: 80px;
-        background: linear-gradient(135deg, #6d4c41 0%, #4e342e 100%);
+        background: linear-gradient(135deg, #000 0%, #333 100%);
         color: #fff;
         border-radius: 50%;
         display: inline-flex;
@@ -286,7 +282,7 @@
         justify-content: center;
         font-weight: 700;
         font-size: 2rem;
-        box-shadow: 0 4px 16px rgba(62, 39, 35, 0.3);
+        box-shadow: 0 4px 16px rgba(44, 24, 16, 0.3);
     }
 </style>
 
@@ -364,23 +360,23 @@
                             <i class="fas fa-shield-alt"></i>
                             <div>
                                 <strong>Administrator Account</strong>
-                                <p style="margin: 0; font-size: 0.9rem; opacity: 0.8;">This user has full access to the admin panel.</p>
+                                <p style="margin: 0; font-size: 0.9rem; color: #666;">This user has full access to the admin panel.</p>
                             </div>
                         </div>
                     }
                     else
                     {
-                        <p style="color: #5d4037; margin-bottom: 1rem;">Promote this customer to admin to grant them access to the admin panel.</p>
+                        <p style="color: #000; margin-bottom: 1rem;">Promote this customer to admin to grant them access to the admin panel.</p>
                         <form asp-action="UpdateUserRole" method="post">
                             <input type="hidden" name="id" value="@Model.Id" />
                             <div class="mb-3">
-                                <label for="role" class="form-label" style="color: #3e2723; font-weight: 600;">Select New Role</label>
+                                <label for="role" class="form-label" style="color: #000; font-weight: 600;">Select New Role</label>
                                 <select name="role" id="role" class="coffee-form-select">
                                     <option value="Customer" selected>Customer</option>
                                     <option value="Admin">Admin</option>
                                 </select>
                             </div>
-                            <button type="submit" class="coffee-btn w-100">
+                            <button type="submit" class="coffee-btn" style="width: 100%;">
                                 <i class="fas fa-save"></i> Update Role
                             </button>
                         </form>
@@ -419,7 +415,7 @@
                                         <span class="badge-@order.Status.ToLower()">@order.Status</span>
                                     </td>
                                     <td class="order-total">@order.TotalAmount.ToString("C")</td>
-                                    <td><i class="fas fa-mug-hot" style="color: #6d4c41;"></i> @order.OrderItems?.Count items</td>
+                                    <td><i class="fas fa-mug-hot" style="color: #888;"></i> @order.OrderItems?.Count items</td>
                                 </tr>
                             }
                         </tbody>
@@ -436,4 +432,3 @@
         </div>
     </div>
 </div>
-
