@@ -3,7 +3,7 @@
     ViewData["Title"] = "Events";
 }
 
-<section class="hero-section" style="background: url('/Images/coffee-bg.jpg') center center / cover no-repeat; background-attachment: fixed;">
+<section class="hero-section" style="background: url('/Images/cement.jpg') center center / cover no-repeat; background-attachment: fixed; background-color: #f8f8f8;">
     <div class="hero-overlay"></div>
     <div class="hero-content">
         <h1 class="animate-fade-in">Events</h1>
@@ -40,7 +40,7 @@
                         <div class="event-icon">
                             @if (!string.IsNullOrEmpty(item.ImagePath))
                             {
-                                <img src="@item.ImagePath" alt="@item.Title" class="event-image" />
+                                <img src="@item.ImagePath" alt="@item.Title" class="event-image" loading="lazy" />
                             }
                             else
                             {
