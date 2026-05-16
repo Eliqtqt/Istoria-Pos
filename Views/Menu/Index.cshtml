@@ -62,11 +62,17 @@
         </div>
      }
  
-      <!-- Menu Grid -->
-      <div class="menu-grid">
-          @foreach (var item in Model)
-          {
-                  <div class="menu-card" data-category="@item.Category.ToLower()">
+     <!-- Menu Grid -->
+     <div class="menu-grid">
+         @foreach (var item in Model)
+         {
+              var isDrink = item.Category.ToLower() == "coffee" || item.Category.ToLower() == "non-coffee" || 
+                            item.Category.ToLower() == "specials" || item.Category.ToLower() == "latte" ||
+                            item.Category.ToLower() == "tea" || item.Category.ToLower() == "frappe" || 
+                            item.Category.ToLower() == "milk tea";
+              
+                <div class="menu-card" data-category="@item.Category.ToLower()">
+                  <!-- Card Image -->
                   <div class="card-image">
                       @if (!string.IsNullOrEmpty(item.ImageUrl) && item.ImageUrl.StartsWith("http"))
                       {
@@ -92,39 +98,53 @@
                   </div>
                   
                    <!-- Product Info (below image) -->
-                    <div class="product-info">
-                        <h3 class="product-name">@item.Name</h3>
+                   <div class="product-info">
+                       <h3 class="product-name">@item.Name</h3>
+                       <p class="product-description">@item.Description</p>
 
-                        @if (item.Rating > 0)
-                        {
-                            <div class="rating-wrapper">
-                                <div class="stars">
-                                    @for (int i = 1; i <= 5; i++)
-                                    {
-                                        <i class="fas fa-star" style="color: @(i <= item.Rating ? "#000" : "#ddd")"></i>
-                                    }
-                                </div>
-                                <span class="rating-value">@item.Rating.ToString("F1")</span>
-                            </div>
-                        }
+                       @if (item.Rating > 0)
+                       {
+                           <div class="rating-wrapper">
+                               <div class="stars">
+                                   @for (int i = 1; i <= 5; i++)
+                                   {
+                                       <i class="fas fa-star" style="color: @(i <= item.Rating ? "#000" : "#ddd")"></i>
+                                   }
+                               </div>
+                               <span class="rating-value">@item.Rating.ToString("F1")</span>
+                           </div>
+                       }
 
-                        <div class="product-actions">
-                            <span class="price">&#8369;@item.Price.ToString("F2")</span>
-                            <div class="action-buttons">
-                                <form asp-controller="Cart" asp-action="Add" method="post">
-                                    <input type="hidden" name="id" value="@item.Id" />
-                                    <input type="hidden" name="name" value="@item.Name" />
-                                    <input type="hidden" name="price" value="@item.Price" />
-                                    <input type="hidden" name="quantity" value="1" />
-                                    <button type="submit" class="btn-add"><i class="fas fa-plus"></i> Add</button>
-                                </form>
-                                <a href="@Url.Action("Details", "Menu", new { id = item.Id })" class="btn-view">View</a>
-                            </div>
-                        </div>
-                    </div>
-               </div>
-          }
-      </div>
+                       <div class="product-actions">
+                           <span class="price">&#8369;@item.Price.ToString("F2")</span>
+                           <div class="action-buttons">
+                               @if (isDrink)
+                               {
+                                   <button type="button" class="btn-customize" onclick="openCustomizeModal(@item.Id, &quot;@item.Name&quot;, @item.Price, true)">
+                                       Customize
+                                   </button>
+                               }
+                               else
+                               {
+                                   <form asp-controller="Cart" asp-action="Add" method="post">
+                                       <input type="hidden" name="id" value="@item.Id" />
+                                       <input type="hidden" name="name" value="@item.Name" />
+                                       <input type="hidden" name="price" value="@item.Price" />
+                                       <input type="hidden" name="quantity" value="1" />
+                                       <button type="submit" class="btn-add">
+                                           <i class="fas fa-plus"></i> Add
+                                       </button>
+                                   </form>
+                               }
+                               <a href="@Url.Action("Details", "Menu", new { id = item.Id })" class="btn-view">
+                                   View
+                               </a>
+                           </div>
+                       </div>
+                   </div>
+              </div>
+         }
+     </div>
 </div>
 
 <!-- Customization Modal -->
