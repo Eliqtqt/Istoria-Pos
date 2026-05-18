@@ -7,10 +7,15 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/chat.css" asp-append-version="true" />
+
+    <!-- SignalR client — loaded in <head> so it is available before chat.js runs -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/8.0.0/signalr.min.js"
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer-when-downgrade"></script>
 </head>
 <body>
     <header>
@@ -127,21 +132,6 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-    <script src="~/js/chat.js" asp-append-version="true"></script>
-
-    <!-- SignalR client (loaded before chat.js, with jQuery noConflict guard) -->
-    <script>
-      /* Ensure SignalR is available before chat.js initialises */
-      (function () {
-        if (typeof signalR !== 'undefined') return;
-        /* Use the version that ships with Microsoft.AspNetCore.SignalR (net8 built-in) */
-        var s = document.createElement('script');
-        s.src = 'https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/8.0.0/signalr.min.js';
-        s.crossOrigin = 'anonymous';
-        s.onload = function () { console.log('[Chat] SignalR client loaded from CDN'); };
-        document.head.appendChild(s);
-      })();
-    </script>
 
     <!-- Floating Chat Button -->
     <button class="chat-fab" id="chatFab" aria-label="Open live chat">
@@ -157,7 +147,7 @@
                 <i class="fas fa-comments chat-header-icon"></i>
                 <div>
                     <h2>Chat with Us</h2>
-                        <span class="chat-status"><span class="status-dot online" id="chatStatusDot"></span> <span id="chatStatusText">Connecting&hellip;</span></span>
+                    <span class="chat-status"><span class="status-dot" id="chatStatusDot"></span> <span id="chatStatusText">Connecting&hellip;</span></span>
                 </div>
             </div>
             <button class="chat-close" id="chatClose" aria-label="Close chat">&times;</button>
@@ -180,6 +170,8 @@
             </div>
         </form>
     </div>
+
+    <script src="~/js/chat.js" asp-append-version="true"></script>
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>
