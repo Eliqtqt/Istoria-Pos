@@ -215,18 +215,13 @@ body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 80px;
-  height: 80px;
-  background: var(--bw-white);
-  color: var(--bw-black);
-  text-decoration: none;
-  font-size: 0.7rem;
-  font-weight: 600;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  transition: all 0.4s ease;
-  border: 1px solid var(--bw-white);
-  border-radius: 50%;
+  width: auto;
+  min-width: 180px;
+  height: 70px;
+  border-radius: 35px;
+  padding: 0 2rem;
+  font-size: 0.85rem;
+  line-height: 1.2;
 }
 
 .btn-elegant-round:hover {
@@ -1228,7 +1223,7 @@ body {
   background: #000;
   color: #fff;
   padding: 0.35rem 0.75rem;
-  font-size: 0.7rem;
+  font-size: 0.85rem;
   font-weight: 600;
   letter-spacing: 0.5px;
   text-transform: uppercase;
