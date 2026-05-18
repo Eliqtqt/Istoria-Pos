@@ -179,6 +179,8 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
+app.MapHub<CafeWebsite.Hubs.ChatHub>("/chatHub");
+
 app.Run();
 
 public static class SessionExtensions

@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/chat.css" asp-append-version="true" />
 </head>
 <body>
     <header>
@@ -126,6 +127,46 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/chat.js" asp-append-version="true"></script>
+
+    <!-- Floating Chat Button -->
+    <button class="chat-fab" id="chatFab" aria-label="Open live chat">
+        <i class="fas fa-comment-dots" id="chatFabIcon"></i>
+        <span class="chat-badge" id="chatBadge"></span>
+    </button>
+
+    <!-- Chat Panel (shared layout) -->
+    <div class="chat-panel-overlay" id="chatPanelOverlay"></div>
+    <div class="chat-panel" id="chatPanel">
+        <div class="chat-header">
+            <div class="chat-header-info">
+                <i class="fas fa-comments chat-header-icon"></i>
+                <div>
+                    <h2>Chat with Us</h2>
+                    <span class="chat-status"><span class="status-dot online"></span> Online &mdash; we usually reply instantly</span>
+                </div>
+            </div>
+            <button class="chat-close" id="chatClose" aria-label="Close chat">&times;</button>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+            <div class="chat-system-msg">
+                <i class="fas fa-coffee"></i> Welcome to Istoria Coffee! Send us a message anytime.
+            </div>
+        </div>
+        <form method="post" asp-action="Index" asp-controller="Chat" id="chatForm" class="chat-input-area">
+            @Html.AntiForgeryToken()
+            <div class="chat-name-row">
+                <input type="text" id="chatVisitorName" placeholder="Your name (optional)" class="chat-name-input" maxlength="50" />
+            </div>
+            <div class="chat-send-row">
+                <textarea id="chatMessageInput" placeholder="Type your message..." rows="1" required></textarea>
+                <button type="submit" class="chat-send-btn" aria-label="Send">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </form>
+    </div>
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
