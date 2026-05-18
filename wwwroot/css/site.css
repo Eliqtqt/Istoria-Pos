@@ -211,6 +211,29 @@ body {
     line-height: 1.8;
 }
 
+.btn-elegant-round {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+  background: var(--bw-white);
+  color: var(--bw-black);
+  text-decoration: none;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  transition: all 0.4s ease;
+  border: 1px solid var(--bw-white);
+  border-radius: 50%;
+}
+
+.btn-elegant-round:hover {
+  background: transparent;
+  color: var(--bw-white);
+}
+
 /* Elegant Button */
 .btn-elegant {
   display: inline-block;
