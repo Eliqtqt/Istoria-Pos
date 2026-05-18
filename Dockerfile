@@ -1,5 +1,5 @@
-# Build arg to invalidate cache - 2026-05-16
-ARG CACHE_BUST=2026-05-16T08:15Z
+# Build arg to invalidate cache - 2026-05-19T03:21Z
+ARG CACHE_BUST=2026-05-19T03:21Z
 
 # Build stage
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
