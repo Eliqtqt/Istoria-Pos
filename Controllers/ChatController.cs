@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using CafeWebsite.Data;
+using CafeWebsite.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,6 +14,8 @@ namespace CafeWebsite.Controllers
         public IActionResult Index()
         {
             ViewData["Title"] = "Live Chat";
+            if (TempData["ChatError"] != null)
+                ViewBag.ChatError = TempData["ChatError"];
             return View();
         }
 
@@ -25,17 +29,24 @@ namespace CafeWebsite.Controllers
             var senderName = HttpContext.Session.GetString("ChatVisitorName") ?? "Visitor";
             var senderIsAdmin = User?.Identity != null && User.Identity.IsAuthenticated && User.IsInRole("Admin");
 
-            var msg = new Models.ChatMessage
+            try
             {
-                SenderName = senderName,
-                SenderIsAdmin = senderIsAdmin,
-                MessageText = message.Trim(),
-                SentAt = DateTime.Now,
-                IsRead = false
-            };
+                var msg = new ChatMessage
+                {
+                    SenderName = senderName,
+                    SenderIsAdmin = senderIsAdmin,
+                    MessageText = message.Trim(),
+                    SentAt = DateTime.Now,
+                    IsRead = false
+                };
 
-            _db.ChatMessages.Add(msg);
-            await _db.SaveChangesAsync();
+                _db.ChatMessages.Add(msg);
+                await _db.SaveChangesAsync();
+            }
+            catch
+            {
+                TempData["ChatError"] = "Database unavailable — your message was not saved. Please try again.";
+            }
 
             return RedirectToAction(nameof(Index));
         }
@@ -43,21 +54,28 @@ namespace CafeWebsite.Controllers
         [HttpGet]
         public async Task<IActionResult> History()
         {
-            var messages = await _db.ChatMessages
-                .OrderBy(m => m.SentAt)
-                .Take(100)
-                .Select(m => new
-                {
-                    id = m.Id,
-                    senderName = m.SenderName,
-                    senderIsAdmin = m.SenderIsAdmin,
-                    messageText = m.MessageText,
-                    sentAt = m.SentAt.ToString("hh:mm tt"),
-                    isRead = m.IsRead
-                })
-                .ToListAsync();
+            try
+            {
+                var messages = await _db.ChatMessages
+                    .OrderBy(m => m.SentAt)
+                    .Take(100)
+                    .Select(m => new ChatMessageDto
+                    {
+                        Id = m.Id,
+                        SenderName = m.SenderName,
+                        SenderIsAdmin = m.SenderIsAdmin,
+                        MessageText = m.MessageText,
+                        SentAt = m.SentAt.ToString("hh:mm tt"),
+                        IsRead = m.IsRead
+                    })
+                    .ToListAsync();
 
-            return Json(messages);
+                return Json(messages);
+            }
+            catch
+            {
+                return Json(new List<ChatMessageDto>());
+            }
         }
     }
 }
