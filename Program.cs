@@ -27,6 +27,7 @@ if (environment != "Development")
 }
 
 builder.Services.AddControllersWithViews();
+builder.Services.AddSignalR();
 
 // Register email sender service
 builder.Services.AddSingleton<IEmailSender, EmailSender>();
