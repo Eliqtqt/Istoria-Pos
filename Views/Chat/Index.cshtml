@@ -9,6 +9,10 @@
         crossorigin="anonymous"></script>
 
 <div class="chat-page">
+    @if (ViewBag.ChatError != null)
+    {
+        <div class="chat-error-banner" id="chatErrorBanner">@ViewBag.ChatError</div>
+    }
     <div class="chat-container" id="chatContainer">
         <div class="chat-header">
             <div class="chat-header-info">
