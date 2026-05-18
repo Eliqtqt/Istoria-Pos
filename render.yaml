@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: istoria-pos
+    env: docker
+    region: ohio
+    dockerfilePath: Dockerfile
+    autoDeploy: true
+    envVars:
+      - key: ASPNETCORE_ENVIRONMENT
+        value: Production
+      - key: ASPNETCORE_URLS
+        value: http://+:8080
+      - key: DATABASE_URL
+        sync: false
+      - key: DOTNET_USE_POLLING_FILE_WATCHER
+        value: '1'
+      - key: DOTNET_SKIP_FIRST_TIME_EXPERIENCE
+        value: '1'

@@ -165,7 +165,7 @@ body {
     min-height: 70vh;
     display: flex;
     align-items: center;
-    background: url('/Images/image.png') center center / cover no-repeat;
+    background: url('/Images/background.jpg') center center / cover no-repeat;
     background-attachment: fixed;
     position: relative;
     overflow: hidden;
