@@ -142,6 +142,7 @@
 }
 
 .status-dot.online { background: #4caf50; }
+.status-dot.connecting { background: #ffc107; }
 
 .chat-close {
   background: none;

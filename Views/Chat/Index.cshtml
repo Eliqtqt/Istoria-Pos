@@ -2,12 +2,6 @@
     ViewData["Title"] = "Live Chat";
 }
 
-<!-- SignalR client loaded from CDN -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/8.0.0/signalr.min.js"
-        asp-fallback-href-include="**/signalr.min.js"
-        asp-fallback-test="window.signalR"
-        crossorigin="anonymous"></script>
-
 <div class="chat-page">
     @if (ViewBag.ChatError != null)
     {
@@ -19,7 +13,7 @@
                 <i class="fas fa-comments chat-header-icon"></i>
                 <div>
                     <h2>Chat with Us</h2>
-                    <span class="chat-status"><span class="status-dot online"></span> We typically reply within a few minutes</span>
+                    <span class="chat-status"><span class="status-dot" id="chatStatusDot"></span> <span id="chatStatusText">Connected</span></span>
                 </div>
             </div>
             <button class="chat-close" id="chatClose" aria-label="Close chat">&times;</button>
